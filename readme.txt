@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: login, custom login, logo
 Requires at least: 2.5
 Tested up to: 2.9
-Stable tag: 0.3
+Stable tag: trunk
 
 
 == Description ==
@@ -35,6 +35,11 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 There are no screenshots at this time.
 
 == Changelog ==
+
+**Version 0.3.1**
+
+* Bug: "login form backgound url" overwrote "login form backgound color"
+* Auto install into double directory
 
 **Version 0.3**
 

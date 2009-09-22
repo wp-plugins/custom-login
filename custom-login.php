@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
- * Description: Display custom login screen at the '/wp-login.php?action=login' screen.
- * Version: 0.3
+ * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
+ * Version: 0.3.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
@@ -96,7 +96,7 @@ function custom_login() {
 		
 		echo '/* Diplays the custom graphics for the login screen*/' . "\n";
 		echo '#login form {' . "\n";
-		echo 'background:#' . $custom_login[ 'cl_login_form_background' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
+		echo 'background:#' . $custom_login[ 'cl_login_form_background_color' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
 		echo 'padding-top:100px; }' . "\n\n";
 		
 		echo '/* Hides the default Wordpress Login content*/' . "\n";

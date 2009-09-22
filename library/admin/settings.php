@@ -167,7 +167,7 @@
                 <input id="<?php echo $data['cl_login_form_background']; ?>" name="<?php echo $data['cl_login_form_background']; ?>" value="<?php echo $val['cl_login_form_background']; ?>" size="40" /><br />
                 Upload an image and put the full path here.
                 Suggeted size: <code>308px X 108px</code><br />
-                <small>(Suggested: Use a transparent .png or .gif. <a href="<?php echo CUSTOM_LOGIN_URL . '/psd/custom-login.psd' ?>">Download included .pdf file</a>).</small>
+                <small>(Suggested: Use a transparent .png or .gif. <a href="<?php echo CUSTOM_LOGIN_URL . '/psd/custom-login.psd' ?>">Download included .psd file</a>).</small>
             </td>
    		</tr>
         
