@@ -96,7 +96,12 @@ function custom_login() {
 		
 		echo '/* Diplays the custom graphics for the login screen*/' . "\n";
 		echo '#login form {' . "\n";
-		echo 'background:#' . $custom_login[ 'cl_login_form_background_color' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
+		
+		if ( $custom_login[ 'cl_login_form_background_color' ] != '' ) 
+			echo 'background: #' . $custom_login[ 'cl_login_form_background_color' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
+		else 
+			echo 'background: transparent url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
+		
 		echo 'padding-top:100px; }' . "\n\n";
 		
 		echo '/* Hides the default Wordpress Login content*/' . "\n";

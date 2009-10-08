@@ -36,6 +36,10 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.3.2**
+
+* Bug: "if login form background color was empty, image wouldn't show"
+
 **Version 0.3.1**
 
 * Bug: "login form backgound url" overwrote "login form backgound color"
