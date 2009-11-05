@@ -36,6 +36,10 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.3.2.1**
+
+* Style: "Addded css style to `Delete/Reset` button"
+
 **Version 0.3.2**
 
 * Bug: "if login form background color was empty, image wouldn't show"

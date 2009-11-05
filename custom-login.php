@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.3.2
+ * Version: 0.3.2.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
