@@ -1,0 +1,25 @@
+html {
+	background:#000111 url( ../../images/html-fade.jpg ) left top repeat-x; }
+	
+/* Diplays the custom graphics for the login screen*/
+#login form {
+	background: #000111 url( ../../images/custom-login.png ) center top no-repeat;
+	padding-top:100px; }
+
+/* Hides the default Wordpress Login content*/	
+#login form {
+	-moz-border-radius: 11px;
+	-khtml-border-radius: 11px;
+	-webkit-border-radius: 11px;
+	border-radius: 11px;
+	border: 1px solid #00FFFF;
+	-moz-box-shadow: 5px 5px 18px #00FFFF;
+	-webkit-box-shadow: 5px 5px 18px #00FFFF;
+	-khtml-box-shadow: 5px 5px 18px #00FFFF;
+	box-shadow: 5px 5px 18px #00FFFF; }
+
+#login h1 {
+	display: none; }
+
+label {
+	color: #fff !important; }
