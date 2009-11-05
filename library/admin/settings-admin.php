@@ -52,6 +52,9 @@ function custom_login_settings_args() {
  * @since 0.3
  */
 function custom_login_page() {
+	echo '<style type="text/css">';
+	echo 'input.swg_warning:hover {background:#ce0000; color:#fff!important; text-shadow:none; }';
+	echo '</style>';
 
 	/*
 	* Main settings variables
