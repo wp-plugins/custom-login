@@ -138,6 +138,16 @@
                 <small>(faded color, where bottom color matches html background color).</small>
             </td>
    		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_html_background_repeat']; ?>">html backgound repeat:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_html_background_repeat']; ?>" name="<?php echo $data['cl_html_background_repeat']; ?>" value="<?php echo $val['cl_html_background_repeat']; ?>" size="40" /><br />
+                <small>use repeat, repeat-x or repeat-y.</small>
+            </td>
+   		</tr>
     </table>
 
 </div>

@@ -24,6 +24,7 @@ function custom_login_settings_args() {
 		/* html */
 		'cl_html_background_color' => '',
 		'cl_html_background_url' => '',
+		'cl_html_background_repeat' => 'repeat-x',
 		
 		/* Login form */
 		'cl_login_form_background_color' => '',

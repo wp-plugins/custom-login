@@ -92,7 +92,10 @@ function custom_login() {
 		echo '<style type="text/css">' . "\n";
 		echo 'html {' . "\n";
 		/* html background */
-		echo 'background:#' . $custom_login[ 'cl_html_background_color' ] . ' url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top repeat-x; }' . "\n\n";
+		if ( $custom_login[ 'cl_html_background_color' ] != '' ) 
+			echo 'background:#' . $custom_login[ 'cl_html_background_color' ] . ' url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
+		else 
+			echo 'background: transparent url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
 		
 		echo '/* Diplays the custom graphics for the login screen*/' . "\n";
 		echo '#login form {' . "\n";

@@ -36,6 +36,11 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.3.3**
+
+* Added ability to have transparent background image for `html`
+* Added `html > background-repeat`
+
 **Version 0.3.2.1**
 
 * Style: "Addded css style to `Delete/Reset` button"
