@@ -50,6 +50,12 @@
 	add_action( 'login_head', 'custom_login' );
 
 /**
+ * Filters.
+ * @since 0.3.3
+ */	
+	add_filter( 'plugin_action_links', 'custom_login_plugin_actions', 10, 2 ); //Add a settings page to the plugin menu
+
+/**
  * Load the RSS Shortcode settings if in the WP admin.
  * @since 0.1
  */
@@ -141,37 +147,46 @@ function custom_login() {
  * @since 0.3
  * @package Admin
  */
-function wpcult_feed( $attr ) {
-	
-	global $wpdb;
-	
-	include_once( ABSPATH . WPINC . '/rss.php' );
-	
-	$rss = fetch_rss( $attr );
-	
-	$items = array_slice( $rss->items, 0, 3 );
-	
-	echo '<ul id="wpcult-feed">';
-	
-	if ( empty( $items ) ) echo '<li>No items</li>';
-	
-	else
-	
-	foreach ( $items as $item ) : ?>
-    
-	<li>
-    
-    <a href='<?php echo $item[ 'link' ]; ?>' title='<?php echo $item[ 'description' ]; ?>'><?php echo $item[ 'title' ]; ?></a><br /> 
-    
-	<span style="font-size:10px; color:#aaa;"><?php echo date( 'F, j Y', strtotime( $item[ 'pubdate' ] ) ); ?></span>
-    
-    </li>
-    
-	<?php endforeach;
-	
-	echo '</ul>';
-	
-}
+if ( !function_exists( 'wpcult_feed' ) ) :
+	function wpcult_feed( $attr ) {
+		
+		global $wpdb;
+		
+		include_once( ABSPATH . WPINC . '/rss.php' );
+		
+		$rss = fetch_rss( $attr );
+		
+		$items = array_slice( $rss->items, 0, 3 );
+		
+		echo '<ul id="wpcult-feed">';
+		
+		if ( empty( $items ) ) echo '<li>No items</li>';
+		
+		else
+		
+		foreach ( $items as $item ) : ?>
+		
+		<li>
+		
+		<a href='<?php echo $item[ 'link' ]; ?>' title='<?php echo $item[ 'description' ]; ?>'><?php echo $item[ 'title' ]; ?></a><br /> 
+		
+		<span style="font-size:10px; color:#aaa;"><?php echo date( 'F, j Y', strtotime( $item[ 'pubdate' ] ) ); ?></span>
+		
+		</li>
+		
+		<?php endforeach;
+		
+		echo '</ul>';
+		
+	}
+endif;
 
+function custom_login_plugin_actions( $links, $file ) {
+ 	if( $file == 'custom-login/custom-login.php' && function_exists( "admin_url" ) ) {
+		$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login.php' ) . '">' . __('Settings') . '</a>';
+		array_unshift( $links, $settings_link ); // before other links
+	}
+	return $links;
+}
 
 ?>
