@@ -1,0 +1,6 @@
+#dock.fixed {
+	position: fixed;
+	top: 15px; 
+	width: 315px;
+	z-index: 999;
+	}

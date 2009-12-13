@@ -40,7 +40,7 @@
 
 <h3>Color picker</h3>
 
-<div class="inside">
+<div id="dock" class="inside">
 	<div id="lets-get-this-color"></div>	
 </div>
 </div>

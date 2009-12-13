@@ -13,6 +13,12 @@ A custom login screen for your `wp-login.php?action=login`.
 
 * Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
 
+See some working examples:
+1.[Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
+2.[WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
+3.[WPCult login](http://wpcult.com/wp-login.php?action=login)
+
+
 == Installation ==
 
 Follow the steps below to install the plugin.
@@ -21,8 +27,6 @@ Follow the steps below to install the plugin.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Settings/custom-login to edit your settings.
 
-
-== Help ==
 
 == Frequently Asked Questions ==
 
@@ -35,6 +39,10 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 There are no screenshots at this time.
 
 == Changelog ==
+
+**Version 0.4.1**
+
+* Added a `position:fixed` style to the color picker if the window scrolls below the view of the *Color picker*
 
 **Version 0.4**
 

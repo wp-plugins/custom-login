@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.4
+ * Version: 0.4.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
@@ -77,6 +77,7 @@
 function custom_login_admin_init() {
 	wp_register_style( 'farbtastic', CUSTOM_LOGIN_CSS . '/farbtastic.css' );
 	wp_register_style( 'custom-login-tabs', CUSTOM_LOGIN_CSS . '/tabs.css' );
+	wp_register_style( 'custom-login-dock', CUSTOM_LOGIN_CSS . '/dock.css' );
 }
 
 /**
@@ -98,6 +99,7 @@ function custom_login_add_pages() {
 function custom_login_admin_style() {
 	wp_enqueue_style( 'farbtastic' );
 	wp_enqueue_style( 'custom-login-tabs' );
+	wp_enqueue_style( 'custom-login-dock' );
 }
 
 /**
@@ -107,6 +109,7 @@ function custom_login_admin_style() {
 function custom_login_admin_script() {
 	wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
+	wp_enqueue_script( 'custom-login-dock', CUSTOM_LOGIN_JS . '/dock.js', array( 'jquery' ), '0.1', false );
 }
 
 
