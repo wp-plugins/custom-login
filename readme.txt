@@ -36,6 +36,11 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.4**
+
+* Added jQuery javascript color picker
+* Remeber to use the new color selections with **#** before the six `hex` keys!
+
 **Version 0.3.3**
 
 * Added ability to have transparent background image for `html`

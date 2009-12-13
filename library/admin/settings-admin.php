@@ -37,10 +37,10 @@ function custom_login_settings_args() {
 			'cl_login_form_box_shadow_1' => '5',
 			'cl_login_form_box_shadow_2' => '5',
 			'cl_login_form_box_shadow_3' => '18',
-			'cl_login_form_box_shadow_4' => '464646',
+			'cl_login_form_box_shadow_4' => '#464646',
 		
 		/* Label color */
-		'cl_label_color' => 'ffffff',
+		'cl_label_color' => '#ffffff',
 		
 	);
 	
@@ -53,9 +53,12 @@ function custom_login_settings_args() {
  * @since 0.3
  */
 function custom_login_page() {
-	echo '<style type="text/css">';
-	echo 'input.swg_warning:hover {background:#ce0000; color:#fff!important; text-shadow:none; }';
-	echo '</style>';
+	echo '<style type="text/css">' . "\n";
+	echo 'input.swg_warning:hover {background:#ce0000; color:#fff!important; text-shadow:none; }' . "\n";
+	echo '.colorwell { border: 1px solid; cursor: pointer; }' . "\n";
+	echo 'body .colorwell-selected { border: 2px solid #000; font-weight: bold;	}'  . "\n";
+	echo '.farbtastic { margin:0 auto; }' . "\n";
+	echo '</style>' . "\n";
 
 	/*
 	* Main settings variables

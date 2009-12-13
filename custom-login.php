@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.3.3
+ * Version: 0.4
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
@@ -41,11 +41,13 @@
 	
 	define( CUSTOM_LOGIN_ADMIN, WP_PLUGIN_DIR . '/custom-login/library/admin' );
 	define( CUSTOM_LOGIN_CSS, WP_PLUGIN_URL . '/custom-login/library/css' );
+	define( CUSTOM_LOGIN_JS, WP_PLUGIN_URL . '/custom-login/library/js' );
 
 /**
  * Add the settings page to the admin menu.
  * @since 0.3
  */
+	add_action( 'admin_init', 'custom_login_admin_init' );
 	add_action( 'admin_menu', 'custom_login_add_pages' );
 	add_action( 'login_head', 'custom_login' );
 
@@ -68,14 +70,45 @@
  */
 	$custom_login = get_option( 'custom_login_settings' );
 
+ /**
+ * Load the stylesheet
+ * @since 0.4
+ */   
+function custom_login_admin_init() {
+	wp_register_style( 'farbtastic', CUSTOM_LOGIN_CSS . '/farbtastic.css' );
+	wp_register_style( 'custom-login-tabs', CUSTOM_LOGIN_CSS . '/tabs.css' );
+}
+
 /**
  * Function to add the settings page
  * @since 0.3
+ * @modified 0.4
  */
 function custom_login_add_pages() {
 	if ( function_exists( 'add_options_page' ) ) 
-		add_options_page( 'Custom Login Settings', 'Custom Login', 10, 'custom-login.php', custom_login_page );
+		$page = add_options_page( 'Custom Login Settings', 'Custom Login', 10, 'custom-login.php', custom_login_page );
+			add_action( 'admin_print_styles-' . $page, 'custom_login_admin_style' );
+			add_action( 'admin_print_scripts-' . $page, 'custom_login_admin_script' );
 }
+
+/**
+ * Function to add the style to the settings page
+ * @since 0.4
+ */
+function custom_login_admin_style() {
+	wp_enqueue_style( 'farbtastic' );
+	wp_enqueue_style( 'custom-login-tabs' );
+}
+
+/**
+ * Function to add the script to the settings page
+ * @since 0.4
+ */
+function custom_login_admin_script() {
+	wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
+	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
+}
+
 
 /**
  * Add stylesheet to the login head
@@ -99,7 +132,7 @@ function custom_login() {
 		echo 'html {' . "\n";
 		/* html background */
 		if ( $custom_login[ 'cl_html_background_color' ] != '' ) 
-			echo 'background:#' . $custom_login[ 'cl_html_background_color' ] . ' url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
+			echo 'background:' . $custom_login[ 'cl_html_background_color' ] . ' url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
 		else 
 			echo 'background: transparent url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
 		
@@ -107,7 +140,7 @@ function custom_login() {
 		echo '#login form {' . "\n";
 		
 		if ( $custom_login[ 'cl_login_form_background_color' ] != '' ) 
-			echo 'background: #' . $custom_login[ 'cl_login_form_background_color' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
+			echo 'background:' . $custom_login[ 'cl_login_form_background_color' ] . ' url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
 		else 
 			echo 'background: transparent url( \'' . $custom_login[ 'cl_login_form_background' ] . '\' ) center top no-repeat;' . "\n";
 		
@@ -121,19 +154,19 @@ function custom_login() {
 		echo '-webkit-border-radius: ' . $custom_login[ 'cl_login_form_border_radius' ] . 'px;' . "\n";
 		echo 'border-radius: ' . $custom_login[ 'cl_login_form_border_radius' ] . 'px;' . "\n";
 		/* border */
-		echo 'border: ' . $custom_login[ 'cl_login_form_border' ] . 'px solid #' . $custom_login[ 'cl_login_form_border_color' ] . ';' . "\n";
+		echo 'border: ' . $custom_login[ 'cl_login_form_border' ] . 'px solid ' . $custom_login[ 'cl_login_form_border_color' ] . ';' . "\n";
 		/* box shadow */
-		echo '-moz-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px #' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
-		echo '-webkit-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px #' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
-		echo '-khtml-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px #' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
-		echo 'box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px #' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
+		echo '-moz-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
+		echo '-webkit-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
+		echo '-khtml-box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
+		echo 'box-shadow: ' . $custom_login[ 'cl_login_form_box_shadow_1' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_2' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_3' ] . 'px ' . $custom_login[ 'cl_login_form_box_shadow_4' ] . ';' . "\n";
 		echo '}' . "\n\n";
 		
 		echo '#login h1 {' . "\n";
 		echo 'display: none; }' . "\n";
 		
 		echo 'label {' . "\n";
-		echo 'color: #' . $custom_login[ 'cl_label_color' ] . ' !important; }' . "\n";
+		echo 'color: ' . $custom_login[ 'cl_label_color' ] . ' !important; }' . "\n";
 		echo '</style>' . "\n\n";
 		
 		echo '<!-- End Custom Login by Austin Passy - @link: http://austinpassy.com -->' . "\n\n";
@@ -148,7 +181,7 @@ function custom_login() {
  * @package Admin
  */
 if ( !function_exists( 'wpcult_feed' ) ) :
-	function wpcult_feed( $attr ) {
+	function wpcult_feed( $attr, $count ) {
 		
 		global $wpdb;
 		
@@ -158,7 +191,9 @@ if ( !function_exists( 'wpcult_feed' ) ) :
 		
 		$items = array_slice( $rss->items, 0, 3 );
 		
-		echo '<ul id="wpcult-feed">';
+		echo '<div class="tab-content t' . $count . ' postbox open feed">';
+		
+		echo '<ul>';
 		
 		if ( empty( $items ) ) echo '<li>No items</li>';
 		
@@ -177,6 +212,8 @@ if ( !function_exists( 'wpcult_feed' ) ) :
 		<?php endforeach;
 		
 		echo '</ul>';
+		
+		echo '</div>';
 		
 	}
 endif;

@@ -38,6 +38,15 @@
 
 <div class="postbox open">
 
+<h3>Color picker</h3>
+
+<div class="inside">
+	<div id="lets-get-this-color"></div>	
+</div>
+</div>
+
+<div class="postbox open">
+
 <h3>Support This Plugin</h3>
 
 <div class="inside">
@@ -77,11 +86,23 @@
 
 <div class="postbox open">
 
-<h3>WPCult Feed</h3>
+<h3><a href="http://thefrosty.net">TheFrosty Network</a> feeds</h3>
 
-<div class="inside">
+<div id="tab" class="inside">
 
-	<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpcult.com/feed' );	?>
+	<ul class="tabs">
+    
+    	<li class="t1 t"><a>WPCult</a></li>
+    	<li class="t2 t"><a>wpWorkShopLA</a></li>
+    	<li class="t3 t"><a>WordCampLA</a></li>
+        
+	</ul>
+
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpcult.com/feed', '1' );	?>
+
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpworkshop.la/feed', '2' ); ?>
+    
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wordcamp.la/feed', '3' ); ?>
     
 </div>
 </div>
@@ -122,8 +143,8 @@
             	<label for="<?php echo $data['cl_html_background_color']; ?>">html backgound color:</label> 
             </th>
             <td>
-                #<input id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="6" />
-                Use HEX color <strong>without</strong> &prime;#&prime; !
+                <input class="colorwell" id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="7" />
+                Use HEX color <strong>WITH</strong> &prime;#&prime; !
             </td>
    		</tr>
         
@@ -145,7 +166,7 @@
             </th>
             <td>
                 <input id="<?php echo $data['cl_html_background_repeat']; ?>" name="<?php echo $data['cl_html_background_repeat']; ?>" value="<?php echo $val['cl_html_background_repeat']; ?>" size="40" /><br />
-                <small>use repeat, repeat-x or repeat-y.</small>
+                <small>use <code>no-repeat, repeat, repeat-x or repeat-y</code>.</small>
             </td>
    		</tr>
     </table>
@@ -164,8 +185,8 @@
             	<label for="<?php echo $data['cl_login_form_background_color']; ?>">login form backgound color:</label> 
             </th>
             <td>
-                <input id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="40" maxlength="6" /><br />
-                Use HEX color <strong>without</strong> &prime;#&prime; !
+                <input class="colorwell" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="7" /><br />
+                Use HEX color <strong>WITH</strong> &prime;#&prime; !
             </td>
    		</tr>
         
@@ -206,8 +227,8 @@
             	<label for="<?php echo $data['cl_login_form_border_color']; ?>">login form border color:</label> 
             </th>
             <td>
-                #<input id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="20" maxlength="6" /><br />
-                Use HEX color <strong>without</strong> &prime;#&prime; !
+                <input class="colorwell" id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="10" maxlength="7" /><br />
+                Use HEX color <strong>WITH</strong> &prime;#&prime; !
             </td>
    		</tr>
         
@@ -219,8 +240,8 @@
                 <input id="<?php echo $data['cl_login_form_box_shadow_1']; ?>" name="<?php echo $data['cl_login_form_box_shadow_1']; ?>" value="<?php echo $val['cl_login_form_box_shadow_1']; ?>" size="2" maxlength="2" />px
                 <input id="<?php echo $data['cl_login_form_box_shadow_2']; ?>" name="<?php echo $data['cl_login_form_box_shadow_2']; ?>" value="<?php echo $val['cl_login_form_box_shadow_2']; ?>" size="2" maxlength="2" />px
                 <input id="<?php echo $data['cl_login_form_box_shadow_3']; ?>" name="<?php echo $data['cl_login_form_box_shadow_3']; ?>" value="<?php echo $val['cl_login_form_box_shadow_3']; ?>" size="2" maxlength="2" />px
-                #<input id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="20" maxlength="6" /><br />
-                Choose your box shadow settings, ie <code>5px 5px 18px #464646</code>
+                <input class="colorwell" id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="10" maxlength="7" /><br />
+                Choose your box shadow settings, ie <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em>
             </td>
    		</tr>
     </table>
@@ -239,8 +260,8 @@
             	<label for="<?php echo $data['cl_label_color']; ?>">label font color:</label> 
             </th>
             <td>
-                #<input id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="6" />
-                Use HEX color <strong>without</strong> &prime;#&prime; !
+                <input class="colorwell" id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="7" />
+                Use HEX color <strong>WITH</strong> &prime;#&prime; !
             </td>
    		</tr>
     </table>
