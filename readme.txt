@@ -14,8 +14,11 @@ A custom login screen for your `wp-login.php?action=login`.
 * Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
 
 See some working examples:
+
 1.[Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
+
 2.[WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
+
 3.[WPCult login](http://wpcult.com/wp-login.php?action=login)
 
 
@@ -39,6 +42,10 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 There are no screenshots at this time.
 
 == Changelog ==
+
+**Version 0.4.1.1**
+
+* Bug fix: `Dock` is in the wrong div
 
 **Version 0.4.1**
 

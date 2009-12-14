@@ -36,11 +36,11 @@
 </div>
 </div>
 
-<div class="postbox open">
+<div id="dock" class="postbox open">
 
 <h3>Color picker</h3>
 
-<div id="dock" class="inside">
+<div class="inside">
 	<div id="lets-get-this-color"></div>	
 </div>
 </div>
