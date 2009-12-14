@@ -1,4 +1,5 @@
 window.onload = function() {
+	
 	jQuery( window ).scroll( function( ){ 
 
 		var scroller_object = jQuery( '#dock' );
