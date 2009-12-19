@@ -4,3 +4,9 @@
 	width: 315px;
 	z-index: 999;
 	}
+#dock .submit {
+	display: none;
+	}
+#dock.fixed .submit {
+	display: block;
+	}

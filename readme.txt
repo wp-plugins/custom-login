@@ -43,6 +43,10 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.4.2**
+
+* Added an additional save button under the scrolling window dock when the window height is causing the window to jump.
+
 **Version 0.4.1.1**
 
 * Bug fix: `Dock` is in the wrong div

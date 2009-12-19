@@ -41,7 +41,13 @@
 <h3>Color picker</h3>
 
 <div class="inside">
-	<div id="lets-get-this-color"></div>	
+	<div id="lets-get-this-color"></div>
+    
+    <p class="submit" style="text-align: center;">
+        <input type="submit" name="Submit"  class="button-primary" value="Save Changes" />
+        <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y" />
+    </p>
+    	
 </div>
 </div>
 
