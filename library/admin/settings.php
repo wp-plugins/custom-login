@@ -164,6 +164,8 @@
 	<h3>You may need to maunally add the <strong>#</strong> into the color input sections</h3>
 </div>
 
+<div class="postbox open">
+
 <h3>Custom Login CSS - html</h3>
 
 <div class="inside">
