@@ -46,9 +46,27 @@ jQuery(document).ready(
 		}
 	);
 	
-	//Dock h3 toggle
+	// Dock h3 toggle
 	jQuery('#dock h3').click(function() {
 		jQuery(this).next().toggle(280);
+	});
+	
+	// #left h3 toggle
+	//jQuery('#left .postbox .inside').hide();
+	//jQuery('#left .postbox:first .inside').show();
+	jQuery('#left .postbox h3').append('<span><abbr title="Click here to hide the box below">click to toggle</abbr></span>');
+	jQuery('#left .postbox h3').click(function() {
+
+		jQuery(this).next().toggle(280);
+
+	});
+	
+	// #left Warning h3 hide
+	jQuery('#left .postbox.warning h3').append('<span class="hide"><abbr title="HIDE!!">Click to remove this box!</abbr></span>');
+	jQuery('#left .postbox.warning h3').click(function() {
+
+		jQuery(this).parent().hide();
+
 	});
 	
 });

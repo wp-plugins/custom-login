@@ -36,6 +36,7 @@
 </div>
 </div>
 
+<div id="docktop"></div>
 <div id="dock" class="postbox open">
 
 <h3>Color picker <span><abbr title="Click here to hide the color box below">click to toggle</abbr></span></h3>
@@ -113,9 +114,11 @@
 </div>
 </div>
 
+<div id="dockbottom"></div>
+
 </div> <!-- /float:right -->
 
-<div style="float:left; width:66%;">
+<div id="left" style="float:left; width:66%;">
 
 <div class="postbox open">
 
@@ -138,6 +141,10 @@
 </div>
 </div>
 
+<div class="postbox warning">
+	<h3 style="background:#d9df2a!important">Click any header to expand/contract the box below!</h3>
+</div>
+
 <div class="postbox open">
 
 <h3>Custom Login CSS &ndash; Your custom CSS code</h3>
@@ -149,8 +156,10 @@
             	<label for="<?php echo $data['cl_login_custom_code']; ?>">Enter custom CSS:</label>  
             </th>
             <td>
+                &lt;style typle="text/css"&gt;<br />
                 <textarea id="<?php echo $data['cl_login_custom_code']; ?>" name="<?php echo $data['cl_login_custom_code']; ?>" cols="60" rows="5" style="width: 98%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_code'] ), 1, 0, 1 ); ?></textarea><br />
-                Use this box to enter any custom CSS coded that may not be shown below.
+                &lt;/style&gt;<br />
+                Use this box to enter any custom CSS coded that may not be shown below.<br />
                 <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
             </td>
    		</tr>
@@ -161,7 +170,7 @@
 </div>
 
 <div class="postbox warning">
-	<h3>You may need to maunally add the <strong>#</strong> into the color input sections</h3>
+	<h3 style="background:#d9df2a!important">You may need to maunally add the <strong>#</strong> into the color input sections</h3>
 </div>
 
 <div class="postbox open">

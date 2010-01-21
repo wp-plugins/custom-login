@@ -46,6 +46,11 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 
 == Changelog ==
 
+**Version 0.4.5**
+
+* Removed: #dock scroller (position fixed)
+* Added collapsing/expanding boxes on left to allow for visibility of color wheel.
+
 **Version 0.4.4.1**
 
 * Error: Missed a period, caused fatal error.

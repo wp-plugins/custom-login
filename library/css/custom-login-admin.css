@@ -1,0 +1,22 @@
+.postbox h3 span { 
+	display: none;
+	}
+
+.postbox h3:hover span {
+	color: #aaa;
+	display: inline-block;
+	float: right;
+	}
+.postbox.warning h3:hover span {
+	display: none !important;
+	}
+.postbox.warning h3:hover span.hide {
+	color: #aaa;
+	display: inline-block;
+	float: right;
+	}
+
+.postbox h3:hover { 
+	cursor: pointer;
+	cursor: n-resize;
+	}
