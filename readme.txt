@@ -44,6 +44,10 @@ There are no screenshots at this time.
 
 == Changelog ==
 
+**Version 0.4.4.1**
+
+* Error: Missed a period, caused fatal error. 
+
 **Version 0.4.4**
 
 * Added custom field box to add in your own CSS

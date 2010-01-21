@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.4.4
+ * Version: 0.4.4.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
@@ -131,7 +131,7 @@ function custom_login() {
 	
 		echo '<!-- Start Custom Login by Austin Passy -->' . "\n\n";
 		
-		echo $custom_login[ 'cl_login_form_border_radius' ] "\n\n";
+		//echo $custom_login[ 'cl_login_form_border_radius' ] . "\n\n"; //Don't know why this is here? On accident I moved it?
 		
 		echo '<style type="text/css">' . "\n";
 		
