@@ -46,7 +46,9 @@ There are no screenshots at this time.
 
 **Version 0.4.4.1**
 
-* Error: Missed a period, caused fatal error. 
+* Error: Missed a period, caused fatal error.
+* Noticed issue with color picker error, try to reload page while I troubleshoot.
+* Fixed missing `div` tag on settings page.
 
 **Version 0.4.4**
 
