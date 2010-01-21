@@ -51,6 +51,7 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 * Error: Missed a period, caused fatal error.
 * Noticed issue with color picker error, try to reload page while I troubleshoot.
 * Fixed missing `div` tag on settings page.
+* Added two screenshots, one of settings page, one example.
 
 **Version 0.4.4**
 
