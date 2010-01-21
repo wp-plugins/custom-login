@@ -21,6 +21,9 @@ function custom_login_settings_args() {
 		/* Use CSS */
 		'use_custom' => false,
 		
+		/* Custom Code */		
+		'cl_login_custom_code' => '',
+		
 		/* html */
 		'cl_html_background_color' => '',
 		'cl_html_background_url' => '',
@@ -58,6 +61,9 @@ function custom_login_page() {
 	echo '.colorwell { border: 1px solid; cursor: pointer; }' . "\n";
 	echo 'body .colorwell-selected { border: 2px solid #000; font-weight: bold;	}'  . "\n";
 	echo '.farbtastic { margin:0 auto; }' . "\n";
+	echo '#dock h3 span { display: none; }' . "\n";
+	echo '#dock h3:hover span { color: #aaa; display: inline-block; float: right; }' . "\n";
+	echo '#dock h3:hover { cursor: pointer;	cursor: n-resize; }' . "\n";
 	echo '</style>' . "\n";
 
 	/*

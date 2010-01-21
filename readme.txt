@@ -1,7 +1,7 @@
 === Custom Login ===
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
-Tags: login, custom login, logo
+Tags: login, custom login, logo, admin
 Requires at least: 2.5
 Tested up to: 2.9
 Stable tag: trunk
@@ -9,7 +9,8 @@ Stable tag: trunk
 
 == Description ==
 
-A custom login screen for your `wp-login.php?action=login`.
+A simple way to customize your login screen (located at `wp-login.php?action=login`). 
+Use the built in settings to do the work for you, no need to understand CSS at all!
 
 * Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
 
@@ -42,6 +43,15 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 There are no screenshots at this time.
 
 == Changelog ==
+
+**Version 0.4.4**
+
+* Added custom field box to add in your own CSS
+* Added in new toggle (hide the color box when you click on the `h3` title so as not to interfere when it auto scrolls)  
+
+**Version 0.4.3**
+
+* Bug: When first installed, color fields need the `#` before the HEX numbers shows.
 
 **Version 0.4.2**
 

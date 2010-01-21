@@ -38,7 +38,7 @@
 
 <div id="dock" class="postbox open">
 
-<h3>Color picker</h3>
+<h3>Color picker <span><abbr title="Click here to hide the color box below">click to toggle</abbr></span></h3>
 
 <div class="inside">
 	<div id="lets-get-this-color"></div>
@@ -139,6 +139,30 @@
 </div>
 
 <div class="postbox open">
+
+<h3>Custom Login CSS &ndash; Your custom CSS code</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_custom_code']; ?>">Enter custom CSS:</label>  
+            </th>
+            <td>
+                <textarea id="<?php echo $data['cl_login_custom_code']; ?>" name="<?php echo $data['cl_login_custom_code']; ?>" cols="60" rows="5" style="width: 98%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_code'] ), 1, 0, 1 ); ?></textarea><br />
+                Use this box to enter any custom CSS coded that may not be shown below.
+                <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
+            </td>
+   		</tr>
+        
+    </table>
+    
+</div>
+</div>
+
+<div class="postbox warning">
+	<h3>You may need to maunally add the <strong>#</strong> into the color input sections</h3>
+</div>
 
 <h3>Custom Login CSS - html</h3>
 

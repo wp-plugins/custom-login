@@ -3,11 +3,11 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.4.2
+ * Version: 0.4.4
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
- * @copyright 2009
+ * @copyright 2009 - 2010
  * @author Austin Passy
  * @link http://frostywebdesigns.com/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -131,7 +131,14 @@ function custom_login() {
 	
 		echo '<!-- Start Custom Login by Austin Passy -->' . "\n\n";
 		
+		echo $custom_login[ 'cl_login_form_border_radius' ] "\n\n";
+		
 		echo '<style type="text/css">' . "\n";
+		
+		/* Custom user CSS - hand coded */
+		echo $custom_login[ 'cl_login_custom_code' ] . "\n\n";
+		/* End custom */
+		
 		echo 'html {' . "\n";
 		/* html background */
 		if ( $custom_login[ 'cl_html_background_color' ] != '' ) 
