@@ -40,7 +40,9 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 
 == Screenshots ==
 
-There are no screenshots at this time.
+1. Custom Login Settings page.
+
+2. Example of custom login page.
 
 == Changelog ==
 
