@@ -51,6 +51,10 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 
 == Changelog ==
 
+**Version 0.4.6.1**
+
+* CSS Bug.
+
 **Version 0.4.6**
 
 * Added custom html coded box. Will only be in use if the box is checked.
