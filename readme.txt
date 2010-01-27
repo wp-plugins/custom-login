@@ -1,27 +1,30 @@
 === Custom Login ===
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
-Tags: login, custom login, logo, admin
+Tags: admin, branding, customization, custom login, login, logo
 Requires at least: 2.5
-Tested up to: 2.9
+Tested up to: 3.0
 Stable tag: trunk
 
 
 == Description ==
 
-A simple way to customize your login screen (located at `wp-login.php?action=login`). 
-Use the built in settings to do the work for you, no need to understand CSS at all!
+A simple way to customize your WordPress login screen!
+Use the built in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
+And now featureing a HTML &amp; CSS box for advanced users!
 
-* Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
+1. Allow you login screen to be visable if you change up your theme.
+2. Works great for CMS installs and for clients.
+3. The plugin has a Photoshop template included in the library files.
+3. Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
 
-See some working examples:
+See a few live working examples (from my sites):
 
 1.[Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
-
 2.[WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
-
 3.[WPCult login](http://wpcult.com/wp-login.php?action=login)
 
+**For those looking to showeoff your login screen I've now created a [Flickr group](http://flickr.com/groups/custom-login/) to share you designs with the community! **
 
 == Installation ==
 
