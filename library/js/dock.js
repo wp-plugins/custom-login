@@ -2,7 +2,7 @@ window.onload = function() {
 	
 	jQuery( window ).scroll( function( ){ 
 
-		var scroller_object = jQuery( '#dock' );
+		var scroller_object = jQuery( '#colordock' );
 	
 		if( document.documentElement.scrollTop >= 299 || window.pageYOffset >= 299 )
 		{

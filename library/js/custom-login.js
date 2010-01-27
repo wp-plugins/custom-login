@@ -47,7 +47,7 @@ jQuery(document).ready(
 	);
 	
 	// Dock h3 toggle
-	jQuery('#dock h3').click(function() {
+	jQuery('#colordock h3').click(function() {
 		jQuery(this).next().toggle(280);
 	});
 	

@@ -41,7 +41,7 @@
 </div>
 
 <div id="docktop"></div>
-<div id="dock" class="postbox open">
+<div id="colordock" class="postbox open">
 
 <h3>Color picker <span><abbr title="Click here to hide the color box below">click to toggle</abbr></span></h3>
 
