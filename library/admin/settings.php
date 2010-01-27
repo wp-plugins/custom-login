@@ -21,7 +21,7 @@
 
 	<tr>
 		<th style="width:20%;">Description:</th>
-		<td><?php echo $plugin_data[ 'Description' ]; ?></td>
+		<td><?php echo 'A simple way to customize your WordPress login screen!' //$plugin_data[ 'Short Description' ]; ?></td>
 	</tr>
 	<tr>
 		<th style="width:20%;">Version:</th>
@@ -29,7 +29,11 @@
 	</tr>
 	<tr>
 		<th style="width:20%;">Support:</th>
-		<td><a href="http://wpcult.com/forum" title="Get support for this plugin">Visit the support forums.</a></td>
+		<td><a href="http://wpcult.com/forum" title="Get support for this plugin">WPCult support forums.</a></td>
+	</tr>
+	<tr>
+		<th style="width:20%;">Support:</th>
+		<td><a href="http://wordpress.org/tags/custom-login?forum_id=10" title="Get support for this plugin">WordPress support forums.</a></td>
 	</tr>
 
 	</table>
@@ -67,6 +71,10 @@
 		<th style="width:20%;">Rate:</th>
 		<td><a href="http://www.wordpress.org/extend/plugins/custom-login/" title="WordPress.org Rating">This plugin on WordPress.org</a>.</td>
 	</tr>
+	<tr>
+		<th style="width:20%;">Share:</th>
+		<td><a href="http://www.flickr.com/groups/custom-login/" title="Flick Group">Your design in the <span style="color:#0066DC;font-weight:bold;">Flick</span><span style="color:#ff0084;font-weight:bold;">r</span> group</a>. <sup style="color:#FF0000;font-weight:bold;text-decoration:blink;">new</sup></td>
+	</tr>
     
 	</table>
 </div>
@@ -99,17 +107,17 @@
 
 	<ul class="tabs">
     
-    	<li class="t1 t"><a>WPCult</a></li>
-    	<li class="t2 t"><a>wpWorkShopLA</a></li>
-    	<li class="t3 t"><a>WordCampLA</a></li>
+    	<li class="t1 t"><a>WordCampLA</a></li>
+    	<li class="t2 t"><a>WPCult</a></li>
+    	<li class="t3 t"><a>wpWorkShopLA</a></li>
         
 	</ul>
-
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpcult.com/feed', '1' );	?>
-
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpworkshop.la/feed', '2' ); ?>
     
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wordcamp.la/feed', '3' ); ?>
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wordcamp.la/feed', '1' ); ?>
+
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpcult.com/feed', '2' );	?>
+
+		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpworkshop.la/feed', '3' ); ?>
     
 </div>
 </div>
@@ -131,7 +139,7 @@
             	<label for="<?php echo $data['use_custom']; ?>">Use your own CSS:</label> 
             </th>
             <td>
-                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" /><br />
+                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" />
                 Check this box to use your own CSS, leave unchecked to leave the default style.
             </td>
    		</tr>
@@ -139,10 +147,6 @@
     </table>
     
 </div>
-</div>
-
-<div class="postbox warning">
-	<h3 style="background:#d9df2a!important">Click any header to expand/contract the box below!</h3>
 </div>
 
 <div class="postbox open">
@@ -193,7 +197,8 @@
                 Use this box to enter any custom CSS coded that may not be shown below.<br />
                 <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
                 	<br />
-                <strong>Example:</strong> <code>.#snow { display:block; posistion:absolute; } #snow img { height:auto; width:100%; }</code> *example for custom html code..
+                <strong>&sup2;Example:</strong> <code>#snow { display:block; posistion:absolute; } #snow img { height:auto; width:100%; }</code><br />
+                	&sup2;example for custom html code..
             </td>
    		</tr>
         
@@ -230,7 +235,7 @@
                 <input id="<?php echo $data['cl_html_background_url']; ?>" name="<?php echo $data['cl_html_background_url']; ?>" value="<?php echo $val['cl_html_background_url']; ?>" size="40" /><br />
                 Upload an image and put the full path here.<br />
                 Suggeted size: <code>10px X 500px</code><br />
-                <small>(faded color, where bottom color matches html background color).</small>
+                <small>(faded color, where bottom color matches html background color?).</small>
             </td>
    		</tr>
         
