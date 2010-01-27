@@ -24,6 +24,10 @@ function custom_login_settings_args() {
 		/* Custom Code */		
 		'cl_login_custom_code' => '',
 		
+		/* Custom HTML Code */	
+		'cl_USE_custom_html_code' => false,	
+		'cl_login_custom_html_code' => '',
+		
 		/* html */
 		'cl_html_background_color' => '',
 		'cl_html_background_url' => '',

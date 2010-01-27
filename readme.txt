@@ -46,6 +46,11 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 
 == Changelog ==
 
+**Version 0.4.6**
+
+* Added custom html coded box. Will only be in use if the box is checked.
+* New html box used jQuery to write to the page.
+
 **Version 0.4.5**
 
 * Removed: #dock scroller (position fixed)

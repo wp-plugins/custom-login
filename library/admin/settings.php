@@ -147,6 +147,37 @@
 
 <div class="postbox open">
 
+<h3>Custom Login HTML &ndash; Your custom HTML code</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+        	<th>
+            	<label for="<?php echo $data['cl_USE_custom_html_code']; ?>">Use custom HTML:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_USE_custom_html_code']; ?>" name="<?php echo $data['cl_USE_custom_html_code']; ?>" type="checkbox" <?php if ( $val['cl_USE_custom_html_code'] ) echo 'checked="checked"'; ?> value="true" />
+                Check this box to use the custom HTML box below.
+            </td>
+        </tr>
+		<tr>           
+            <th>
+            	<label for="<?php echo $data['cl_login_custom_html_code']; ?>">Enter custom HTML:</label>  
+            </th>
+            <td>
+                <textarea id="<?php echo $data['cl_login_custom_html_code']; ?>" name="<?php echo $data['cl_login_custom_html_code']; ?>" cols="60" rows="2" style="width: 98%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_html_code'] ), 1, 0, 1 ); ?></textarea><br />
+                Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box. Be sure to include a comma after each entry as show in the example<br />
+                <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;, &lt;div id="snow-bird"&gt; &lt;/div&gt;</code>
+            </td>
+   		</tr>
+        
+    </table>
+    
+</div>
+</div>
+
+<div class="postbox open">
+
 <h3>Custom Login CSS &ndash; Your custom CSS code</h3>
 
 <div class="inside">
@@ -161,6 +192,8 @@
                 &lt;/style&gt;<br />
                 Use this box to enter any custom CSS coded that may not be shown below.<br />
                 <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
+                	<br />
+                <strong>Example:</strong> <code>.#snow { display:block; posistion:absolute; } #snow img { height:auto; width:100%; }</code> *example for custom html code..
             </td>
    		</tr>
         

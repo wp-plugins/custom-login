@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://wpcult.com/custom-login-plugin
  * Description: Display custom login screen at the '/wp-login.php?action=login' screen. Sweet!
- * Version: 0.4.5
+ * Version: 0.4.6
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  *
@@ -50,6 +50,13 @@
 	add_action( 'admin_init', 'custom_login_admin_init' );
 	add_action( 'admin_menu', 'custom_login_add_pages' );
 	add_action( 'login_head', 'custom_login' );
+	add_action( 'login_head', 'custom_login_html' );
+	
+/**
+ * Add jquery if using custom html
+ * @since 0.4.6
+ */
+	add_action( 'login_head', 'custom_login_jquery', 1 );
 
 /**
  * Filters.
@@ -183,6 +190,38 @@ function custom_login() {
 		
 		echo '<!-- End Custom Login by Austin Passy - @link: http://austinpassy.com -->' . "\n\n";
 	
+	endif;
+
+}
+
+ /**
+ * Load jQuery if "USE_custom_html_code" checkbox is checked
+ * @since 0.4.6
+ */   
+function custom_login_jquery() {
+	global $custom_login;
+	
+	if ( $custom_login[ 'cl_USE_custom_html_code' ] != false )
+		echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4"></script>' . "\n";
+}
+
+/**
+ * Add html after the body class
+ * @since 0.4.6
+ */
+function custom_login_html() {
+	global $custom_login;
+	
+	if ( $custom_login[ 'cl_USE_custom_html_code' ] != false ) :
+		echo '<script type="text/javascript">' . "\n";
+		echo 'jQuery(document).ready(' . "\n";
+		echo '	function() {' . "\n";
+				/* Custom user HTML - hand coded */
+		echo '		jQuery(\'html body.login\').append(\'' . $custom_login[ 'cl_login_custom_html_code' ] . '\');' . "\n";
+				/* End custom */
+		echo '	}' . "\n";
+		echo ');' . "\n";
+		echo '</script>' . "\n";
 	endif;
 
 }
