@@ -21,10 +21,12 @@ And now featureing a HTML &amp; CSS box for advanced users!
 See a few live working examples (from my sites):
 
 1.[Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
+
 2.[WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
+
 3.[WPCult login](http://wpcult.com/wp-login.php?action=login)
 
-**For those looking to showeoff your login screen I've now created a [Flickr group](http://flickr.com/groups/custom-login/) to share you designs with the community! **
+** For those looking to showeoff your login screen I've now created a [Flickr group](http://flickr.com/groups/custom-login/) to share you designs with the community! **
 
 == Installation ==
 
