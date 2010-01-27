@@ -26,7 +26,7 @@ See a few live working examples (from my sites):
 
 3.[WPCult login](http://wpcult.com/wp-login.php?action=login)
 
-** For those looking to showeoff your login screen I've now created a [Flickr group](http://flickr.com/groups/custom-login/) to share you designs with the community! **
+** For those looking to showoff your login screen. Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community! **
 
 == Installation ==
 
