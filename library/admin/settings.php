@@ -124,6 +124,16 @@
 
 <div id="dockbottom"></div>
 
+<div id="preview-box" class="postbox open">
+
+<h3>Preview</h3>    
+        
+<div class="inside">
+    <p style="font-weight:bold;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title="">Click here to see a live preview!</a></p>
+    
+</div>
+</div>
+
 <div id="uninstall" class="postbox open">
 
 <h3>Uninstaller <span><abbr title="Click here to show the box below">Don't do it!</abbr></span><span class="watchingyou">:O You did it...</span></h3>  

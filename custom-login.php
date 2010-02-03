@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
- * Version: 0.4.7
+ * Version: 0.4.8
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -105,6 +105,7 @@ function custom_login_add_pages() {
  * @since 0.4
  */
 function custom_login_admin_style() {
+	wp_enqueue_style( 'thickbox' );
 	wp_enqueue_style( 'farbtastic' );
 	wp_enqueue_style( 'custom-login-tabs' );
 	//wp_enqueue_style( 'custom-login-dock' );
@@ -116,6 +117,8 @@ function custom_login_admin_style() {
  * @since 0.4
  */
 function custom_login_admin_script() {
+	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_script( 'theme-preview' );
 	wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
 	wp_enqueue_script( 'autoresize', CUSTOM_LOGIN_JS . '/autoresize.min.js', array( 'jquery' ), '1.04', false );
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
