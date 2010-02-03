@@ -11,14 +11,14 @@ Stable tag: trunk
 
 A simple way to customize your WordPress login screen!
 Use the built in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
-And now featureing a HTML &amp; CSS box for advanced users!
+And now featureing a HTML &amp; CSS box for advanced users (get crazy customized)!
 
-1. Allow you login screen to be visable if you change up your theme.
+1. Allow your login screen design to be visable if you change up your theme.
 2. Works great for CMS installs and for clients.
-3. The plugin has a Photoshop template included in the library files.
-3. Find out more about the [Custom Login Plugin](http://wpcult.com/custom-login-plugin/).
+3. Comes with a Photoshop template included in the library files.
+3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/).
 
-See a few live working examples (from my sites):
+See a few *live working* examples (from my sites):
 
 1. [Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
 
@@ -42,14 +42,27 @@ Follow the steps below to install the plugin.
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WPCult.com](http://wpcult.com/wp-login.php?action=login).
 
+= Where can I upload and share my cool login screen? =
+Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
 
 == Screenshots ==
 
-1. Custom Login Settings page.
+Screenshots of working example in our [Flickr group](http://flickr.com/groups/custom-login/)
 
-2. Example of custom login page.
+1. Custom Login Settings page (as of v 0.4.7).
+
+2. Example of a custom login page.
 
 == Changelog ==
+
+**Version 0.4.7**
+
+* Added ability to use RGB/A colors to all color selectors. Max charactors is now `21` istead of `7`
+* Cleaned up options page.
+* Added expanding textarea's for better coding space.
+* Allow for expanding help section per item basses.
+* Added an uninstaller (remove options from the database) *use the uninstall.php script*
+* **NEW** defualt style.
 
 **Version 0.4.6.1**
 

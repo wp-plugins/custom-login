@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
- * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!!
- * Version: 0.4.6.1
+ * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
+ * Version: 0.4.7
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -117,6 +117,7 @@ function custom_login_admin_style() {
  */
 function custom_login_admin_script() {
 	wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
+	wp_enqueue_script( 'autoresize', CUSTOM_LOGIN_JS . '/autoresize.min.js', array( 'jquery' ), '1.04', false );
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
 	//wp_enqueue_script( 'custom-login-dock', CUSTOM_LOGIN_JS . '/dock.js', array( 'jquery' ), '0.1', false );
 }
@@ -134,6 +135,24 @@ function custom_login() {
 		
 		echo '<!-- Start Custom Login by Austin Passy -->' . "\n\n";
 		echo '<link rel="stylesheet" type="text/css" href="' . CUSTOM_LOGIN_CSS . '/custom-login.css" />' . "\n\n";
+		
+			echo '<script type="text/javascript">' . "\n";
+			echo 'jQuery(document).ready(' . "\n";
+			echo '	function() {' . "\n";
+			
+			echo '		jQuery(\'html body.login h1 a\').removeAttr(\'href\').attr(\'href\',\'' . get_bloginfo('url') . '\');' . "\n";
+			
+			echo '		jQuery(\'html body.login p#nav\').append(\'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290" title="Like this plugin? Please help me out, and donate">Dontate $1</a>\');' . "\n";
+			
+			echo '		jQuery(\'html body.login p#backtoblog\').append(\'<span class="byauthor"><a href="http://austinpassy.com/wordpress-plugin/custom-login/" title="Custom Login">Custom Login</a> by <a href="http://austinpassy.com/" title="Austin Passy">Austin Passy</a></span>\');' . "\n";
+			
+			echo '		jQuery(\'html meta\').removeAttr(\'content\').attr(\'content\',\'index,follow\');' . "\n";
+			
+			echo '	}' . "\n";
+			echo ');' . "\n";
+			echo '</script>' . "\n";
+			
+		
 		echo '<!-- End Custom Login by Austin Passy - @link: http://austinpassy.com -->' . "\n\n";
 	
 	else :
@@ -201,7 +220,7 @@ function custom_login() {
 function custom_login_jquery() {
 	global $custom_login;
 	
-	if ( $custom_login[ 'cl_USE_custom_html_code' ] != false )
+	if ( $custom_login[ 'cl_USE_custom_html_code' ] != false || $custom_login[ 'use_custom' ] != true ) 
 		echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4"></script>' . "\n";
 }
 

@@ -46,9 +46,16 @@ jQuery(document).ready(
 		}
 	);
 	
-	// Dock h3 toggle
+	// #right Dock h3 toggle
 	jQuery('#colordock h3').click(function() {
 		jQuery(this).next().toggle(280);
+	});
+	
+	// #right Uninstall script toggle
+	jQuery('#uninstall .inside, #uninstall h3 span.watchingyou').hide();
+	jQuery('#uninstall h3').click(function() {
+		jQuery(this).next().toggle(280);
+		jQuery(this).find('span.watchingyou').toggle().prev().toggleClass('hide');
 	});
 	
 	// #left h3 toggle
@@ -67,6 +74,19 @@ jQuery(document).ready(
 
 		jQuery(this).parent().hide();
 
+	});
+	
+	// #left a.question toggle span.hide
+	jQuery('#left  span.hide').hide();
+	jQuery('#left a.question').click(function() {
+		jQuery(this).next().next().toggleClass('hide').toggleClass('show').toggle(380);
+	});
+	
+	jQuery('textarea#cl_login_custom_html_code, textarea#cl_login_custom_code').autoResize({
+		// Quite slow animation:
+		animateDuration : 300,
+		// More extra space:
+		extraSpace : 40
 	});
 	
 });
