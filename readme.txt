@@ -57,12 +57,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 **Version 0.4.7**
 
-* Added ability to use RGB/A colors to all color selectors. Max charactors is now `21` istead of `7`
+* Added ability to use RGB/A colors to all color selectors. Max characters is now `21` instead of `7`
 * Cleaned up options page.
 * Added expanding textarea's for better coding space.
 * Allow for expanding help section per item basses.
 * Added an uninstaller (remove options from the database) *use the uninstall.php script*
-* **NEW** defualt style.
+* **NEW** default style.
 
 **Version 0.4.6.1**
 
