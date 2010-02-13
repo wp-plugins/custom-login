@@ -175,9 +175,8 @@
 
 
 <div class="postbox ad" <?php if ( $val['cl_login_hide_ad'] ) echo 'style="display:none;"'; ?>>
-	<h3><sup style="color:rgba(51,66,70,0.6); float:right; top:-15px; position:relative;">Powered by: 
-    	<a href="http://bit.ly/wpadsnet" title="Inline plugin adversisment by &ldquo;http://wpads.net&rdquo;" style="color:rgba(51,66,70,0.6); cursor:help;">WP<em>Ads</em></a></sup>
-			<script type="text/javascript" src="http://wpads.com/wp-content/plugins/oiopub-direct/js.php?type=link&align=center&zone=1"></script>
+	<h3>
+		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
     </h3>
 </div>
 
