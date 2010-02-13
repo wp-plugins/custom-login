@@ -1,5 +1,8 @@
 jQuery(document).ready(
 	function() {
+	/** Hide the old color picker
+	 * @ since 0.5
+	 *
 		var f = jQuery.farbtastic('#lets-get-this-color');
 		var p = jQuery('#lets-get-this-color').css('opacity', 0.25);
 		var selected;
@@ -13,6 +16,8 @@ jQuery(document).ready(
 		p.css('opacity', 1);
 		jQuery(selected = this).css('opacity', 1).addClass('colorwell-selected');
 	});
+	 *
+	 */
 			
 	// Setting the tabs in the sidebar hide and show, setting the current tab
 	jQuery('.tab-content').hide();
@@ -68,6 +73,9 @@ jQuery(document).ready(
 
 	});
 	
+	// .ad Block
+	jQuery('#left .postbox.ad h3 span').css('display','none');
+	
 	// #left Warning h3 hide
 	jQuery('#left .postbox.warning h3').append('<span class="hide"><abbr title="HIDE!!">Click to remove this box!</abbr></span>');
 	jQuery('#left .postbox.warning h3').click(function() {
@@ -88,5 +96,12 @@ jQuery(document).ready(
 		// More extra space:
 		extraSpace : 40
 	});
+	
+	// External window!
+	jQuery('a.external').attr('target','_blank');
+	if ( jQuery('a.external').attr('title') !== undefined )
+		null;
+	else
+		jQuery(this).attr('title','opens in a new tab');
 	
 });

@@ -20,6 +20,7 @@ function custom_login_settings_args() {
 	$settings_arr = array(
 		/* Use CSS */
 		'use_custom' => false,
+		'cl_login_hide_ad' => false,
 		
 		/* Custom Code */		
 		'cl_login_custom_code' => '',
@@ -29,11 +30,13 @@ function custom_login_settings_args() {
 		'cl_login_custom_html_code' => '',
 		
 		/* html */
+		'cl_html_border_top_color' => '',
 		'cl_html_background_color' => '',
 		'cl_html_background_url' => '',
 		'cl_html_background_repeat' => 'repeat-x',
 		
 		/* Login form */
+		'cl_login_form_border_top_color' => '',
 		'cl_login_form_background_color' => '',
 		'cl_login_form_background' => '',
 		'cl_login_form_border_radius' => '11',

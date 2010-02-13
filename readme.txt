@@ -55,9 +55,17 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+**Version 0.5**
+
+* **NEW** Javascript color picker [jscolor](http://jscolor.com)
+* **NEW** New field allows for colorization of the *body* `border-top` color
+* More options added
+* Cleaned up code
+* Testing new inline ad feature from [wpAds](http://bit.ly/wpadsnet) *Please leave [feedback/comments](http://austinpassy.com/2010/02/custom-login-version-0-5/) on this feature*
+
 **Version 0.4.8**
 
-* **NEW** Thickbox preview link :) *Let me know if you like the placement of it [in these comments](http://austinpassy.com/2010/02/custom-login-version-0-4-8/)*
+* Thickbox preview link :) *Let me know if you like the placement of it [in these comments](http://austinpassy.com/2010/02/custom-login-version-0-4-8/)*
 
 **Version 0.4.7**
 

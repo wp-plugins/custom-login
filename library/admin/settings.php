@@ -29,11 +29,11 @@
 	</tr>
 	<tr style="display:none;">
 		<th style="width:20%;">Support:</th>
-		<td><a href="http://wpcult.com/forum" title="Get support for this plugin">WPCult support forums.</a></td>
+		<td><a href="http://wpcult.com/forum" title="Get support for this plugin" class="external">WPCult support forums.</a></td>
 	</tr>
 	<tr>
 		<th style="width:20%;">Support:</th>
-		<td><a href="http://wordpress.org/tags/custom-login?forum_id=10" title="Get support for this plugin">WordPress support forums.</a></td>
+		<td><a href="http://wordpress.org/tags/custom-login?forum_id=10" title="Get support for this plugin" class="external">WordPress support forums.</a></td>
 	</tr>
 
 	</table>
@@ -43,7 +43,7 @@
 <div id="docktop"></div>
 <div id="colordock" class="postbox open">
 
-<h3>Color picker <span><abbr title="Click here to hide the color box below">click to toggle</abbr></span></h3>
+<h3>Quick Save <span><abbr title="Click here to hide the color box below">click to toggle</abbr></span></h3>
 
 <div class="inside">
 	<div id="lets-get-this-color"></div>
@@ -65,15 +65,15 @@
 
 	<tr>
 		<th style="width:20%;">Donate:</th>
-		<td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7329157" title="Donate on PayPal">PayPal</a>.</td>
+		<td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7329157" title="Donate on PayPal" class="external">PayPal</a>.</td>
 	</tr>
 	<tr>
 		<th style="width:20%;">Rate:</th>
-		<td><a href="http://www.wordpress.org/extend/plugins/custom-login/" title="WordPress.org Rating">This plugin on WordPress.org</a>.</td>
+		<td><a href="http://www.wordpress.org/extend/plugins/custom-login/" title="WordPress.org Rating" class="external">This plugin on WordPress.org</a>.</td>
 	</tr>
 	<tr>
 		<th style="width:20%;">Share:</th>
-		<td><a href="http://www.flickr.com/groups/custom-login/" title="Flick Group">Your design in the <span style="color:#0066DC;font-weight:bold;">Flick</span><span style="color:#ff0084;font-weight:bold;">r</span> group</a>. <sup style="color:#FF0000;font-weight:bold;text-decoration:blink;">new</sup></td>
+		<td><a href="http://www.flickr.com/groups/custom-login/" title="Flick Group" class="external">Your design in the <span style="color:#0066DC;font-weight:bold;">Flick</span><span style="color:#ff0084;font-weight:bold;">r</span> group</a>. <sup style="color:#FF0000;font-weight:bold;text-decoration:blink;">new</sup></td>
 	</tr>
     
 	</table>
@@ -90,9 +90,9 @@
     
 		<li><?php echo $plugin_data[ 'Author' ]; ?>: Freelance web design / developer &amp; WordPress guru. Also head organizer of <a href="http://wordcamp.la">WordCamp.LA</a></li>
         
-		<li><a href="http://twitter.com/TheFrosty" title="Austin Passy on Twitter">Follow me on twitter</a>.</li>
+		<li><a href="http://twitter.com/TheFrosty" title="Austin Passy on Twitter" class="external">Follow me on twitter</a>.</li>
         
-		<li>Need a WP expert? <a href="http://frostywebdesigns.com/" title="Frosty Web Designs">Hire me</a>.</li>
+		<li>Need a WP expert? <a href="http://frostywebdesigns.com/" title="Frosty Web Designs" class="external">Hire me</a>.</li>
         
 	</ul>
     
@@ -141,6 +141,10 @@
 <div class="inside">
     <p style="text-align:justify;">If you really have to, use this <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">script</a> to uninstall the plugin and completly remove all options from your WordPress database.</p>
     
+    <p><label for="<?php echo $data['cl_login_hide_ad']; ?>">Hide ad?</label>
+    	&nbsp;<input id="<?php echo $data['cl_login_hide_ad']; ?>" name="<?php echo $data['cl_login_hide_ad']; ?>" type="checkbox" <?php if ( $val['cl_login_hide_ad'] ) echo 'checked="checked"'; ?> value="true" />	Please only hide the ad if you've <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7329157" title="Donate on PayPal" class="external">donated</a>.
+    </p>
+    
 </div>
 </div>
 
@@ -159,14 +163,22 @@
             	<label for="<?php echo $data['use_custom']; ?>">Use your own CSS:</label> 
             </th>
             <td>
-                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" />
-                Check this box to use your own CSS, leave unchecked to leave the default style.
+                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"> Check this box to use your own CSS, leave unchecked to use the default style.</span>
             </td>
-   		</tr>
-        
+		</tr>        
     </table>
     
 </div>
+</div>
+
+
+
+<div class="postbox ad" <?php if ( $val['cl_login_hide_ad'] ) echo 'style="display:none;"'; ?>>
+	<h3><sup style="color:rgba(51,66,70,0.6); float:right; top:-15px; position:relative;">Powered by: 
+    	<a href="http://bit.ly/wpadsnet" title="Inline plugin adversisment by &ldquo;http://wpads.net&rdquo;" style="color:rgba(51,66,70,0.6); cursor:help;">WP<em>Ads</em></a></sup>
+			<script type="text/javascript" src="http://wpads.com/wp-content/plugins/oiopub-direct/js.php?type=link&align=center&zone=1"></script>
+    </h3>
 </div>
 
 <div class="postbox open">
@@ -181,7 +193,9 @@
             </th>
             <td>
                 <input id="<?php echo $data['cl_USE_custom_html_code']; ?>" name="<?php echo $data['cl_USE_custom_html_code']; ?>" type="checkbox" <?php if ( $val['cl_USE_custom_html_code'] ) echo 'checked="checked"'; ?> value="true" />
-                Check this box to use the custom HTML box below.
+                Check this box to use the custom HTML box below. <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Checking this box will use <a href="http://jquery.com/" class="external">jQuery</a> and the <a href="http://api.jquery.com/append/" class="external">append</a> attribute. 
+                </span>
             </td>
         </tr>
 		<tr>
@@ -226,9 +240,6 @@
 </div>
 </div>
 
-<div class="postbox warning">
-	<h3 style="background:#d9df2a!important">You may need to manually add the &ldquo;#&rdquo; to get the color picker to work properly.</h3>
-</div>
 
 <div class="postbox open">
 
@@ -238,10 +249,21 @@
 	<table class="form-table">
 		<tr>
             <th>
+            	<label for="<?php echo $data['cl_html_border_top_color']; ?>">html border-top color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_border_top_color']; ?>" name="<?php echo $data['cl_html_border_top_color']; ?>" value="<?php echo $val['cl_html_border_top_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				<strong>This is the top 30px border you see on the login page.</strong><br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+        
+            <th>
             	<label for="<?php echo $data['cl_html_background_color']; ?>">html background color:</label> 
             </th>
             <td>
-                <input class="colorwell" id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
@@ -284,7 +306,7 @@
             	<label for="<?php echo $data['cl_login_form_background_color']; ?>">login form background color:</label> 
             </th>
             <td>
-                <input class="colorwell" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="7" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="7" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
@@ -326,7 +348,7 @@
             	<label for="<?php echo $data['cl_login_form_border_color']; ?>">login form border color:</label> 
             </th>
             <td>
-                <input class="colorwell" id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
@@ -340,7 +362,7 @@
                 <input id="<?php echo $data['cl_login_form_box_shadow_1']; ?>" name="<?php echo $data['cl_login_form_box_shadow_1']; ?>" value="<?php echo $val['cl_login_form_box_shadow_1']; ?>" size="2" maxlength="2" />px
                 <input id="<?php echo $data['cl_login_form_box_shadow_2']; ?>" name="<?php echo $data['cl_login_form_box_shadow_2']; ?>" value="<?php echo $val['cl_login_form_box_shadow_2']; ?>" size="2" maxlength="2" />px
                 <input id="<?php echo $data['cl_login_form_box_shadow_3']; ?>" name="<?php echo $data['cl_login_form_box_shadow_3']; ?>" value="<?php echo $val['cl_login_form_box_shadow_3']; ?>" size="2" maxlength="2" />px
-                <input class="colorwell" id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Choose your box shadow settings, i.e. <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em></span>
             </td>
    		</tr>
@@ -360,7 +382,7 @@
             	<label for="<?php echo $data['cl_label_color']; ?>">label font color:</label> 
             </th>
             <td>
-                <input class="colorwell" id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>

@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
- * Version: 0.4.8
+ * Version: 0.5
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -47,6 +47,7 @@
  * Add the settings page to the admin menu.
  * @since 0.3
  */
+	//add_action( 'init', 'custom_login_admin_warnings' );
 	add_action( 'admin_init', 'custom_login_admin_init' );
 	add_action( 'admin_menu', 'custom_login_add_pages' );
 	add_action( 'login_head', 'custom_login' );
@@ -106,7 +107,7 @@ function custom_login_add_pages() {
  */
 function custom_login_admin_style() {
 	wp_enqueue_style( 'thickbox' );
-	wp_enqueue_style( 'farbtastic' );
+	//wp_enqueue_style( 'farbtastic' );
 	wp_enqueue_style( 'custom-login-tabs' );
 	//wp_enqueue_style( 'custom-login-dock' );
 	wp_enqueue_style( 'custom-login-admin' );
@@ -119,10 +120,11 @@ function custom_login_admin_style() {
 function custom_login_admin_script() {
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script( 'theme-preview' );
-	wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
+	//wp_enqueue_script( 'farbtastic', CUSTOM_LOGIN_JS . '/farbtastic.js', array( 'jquery' ), '1.2', false );
 	wp_enqueue_script( 'autoresize', CUSTOM_LOGIN_JS . '/autoresize.min.js', array( 'jquery' ), '1.04', false );
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
 	//wp_enqueue_script( 'custom-login-dock', CUSTOM_LOGIN_JS . '/dock.js', array( 'jquery' ), '0.1', false );
+	wp_enqueue_script( 'jscolor', CUSTOM_LOGIN_JS . '/jscolor.js', false, '1.3.1', false );
 }
 
 
@@ -149,7 +151,7 @@ function custom_login() {
 			
 			echo '		jQuery(\'html body.login p#backtoblog\').append(\'<span class="byauthor"><a href="http://austinpassy.com/wordpress-plugin/custom-login/" title="Custom Login">Custom Login</a> by <a href="http://austinpassy.com/" title="Austin Passy">Austin Passy</a></span>\');' . "\n";
 			
-			echo '		jQuery(\'html meta\').removeAttr(\'content\').attr(\'content\',\'index,follow\');' . "\n";
+			//echo '		jQuery(\'html meta\').removeAttr(\'content\').attr(\'content\',\'index,follow\');' . "\n";
 			
 			echo '	}' . "\n";
 			echo ');' . "\n";
@@ -176,6 +178,11 @@ function custom_login() {
 			echo 'background:' . $custom_login[ 'cl_html_background_color' ] . ' url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
 		else 
 			echo 'background: transparent url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
+		
+		if ( $custom_login[ 'cl_html_border_top_color' ] != '' ) :
+			echo 'body.login {' . "\n"; 
+			echo 'border-top-color:' . $custom_login[ 'cl_html_border_top_color' ] . '; }' . "\n\n";
+		endif;
 		
 		echo '/* Diplays the custom graphics for the login screen*/' . "\n";
 		echo '#login form {' . "\n";
@@ -291,12 +298,45 @@ if ( !function_exists( 'wpcult_feed' ) ) :
 	}
 endif;
 
+/**
+ * Plugin Action /Settings on plugins page
+ * @since 0.4.2
+ * @package plugin
+ */
 function custom_login_plugin_actions( $links, $file ) {
  	if( $file == 'custom-login/custom-login.php' && function_exists( "admin_url" ) ) {
 		$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login.php' ) . '">' . __('Settings') . '</a>';
 		array_unshift( $links, $settings_link ); // before other links
 	}
 	return $links;
+}
+
+/**
+ * Warnings
+ * @since 0.5
+ * @package admin
+ */
+function custom_login_admin_warnings() {
+	global $custom_login;
+		
+		function custom_login_warning() {
+			global $custom_login;
+
+			if ( $custom_login[ 'use_custom' ] != true )
+				echo '<div id="custom-login-warning" class="updated fade"><p><strong>Custom Login plugin is not configured yet.</strong> It will use the defualt theme unless you configure the <a href="options-general.php?page=custom-login.php">options</a>.</p></div>';
+		}
+
+		function custom_login_wrong_settings() {
+			global $custom_login;
+
+			if ( $custom_login[ 'cl_login_hide_ad' ] != false )
+				echo '<div id="custom-login-warning" class="updated fade"><p><strong>You&prime;ve just hid the ad.</strong> Thanks for <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7329157" title="Donate on PayPal" class="external">donating</a>!</p></div>';
+		}
+
+		add_action( 'admin_notices', 'custom_login_warning' );
+		add_action( 'admin_notices', 'custom_login_wrong_settings' );
+
+return;
 }
 
 ?>
