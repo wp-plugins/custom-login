@@ -305,7 +305,7 @@
             	<label for="<?php echo $data['cl_login_form_background_color']; ?>">login form background color:</label> 
             </th>
             <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="7" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
