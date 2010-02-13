@@ -253,7 +253,7 @@
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_border_top_color']; ?>" name="<?php echo $data['cl_html_border_top_color']; ?>" value="<?php echo $val['cl_html_border_top_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				<strong>This is the top 30px border you see on the login page.</strong><br />
+				<strong>This is the top 15px border color sections</strong><br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
    		</tr>
