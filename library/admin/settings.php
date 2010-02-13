@@ -175,9 +175,8 @@
 
 
 <div class="postbox ad" <?php if ( $val['cl_login_hide_ad'] ) echo 'style="display:none;"'; ?>>
-	<h3><sup style="color:rgba(51,66,70,0.6); float:right; top:-15px; position:relative;">Powered by: 
-    	<a href="http://bit.ly/wpadsnet" title="Inline plugin adversisment by &ldquo;http://wpads.net&rdquo;" style="color:rgba(51,66,70,0.6); cursor:help;">WP<em>Ads</em></a></sup>
-			<script type="text/javascript" src="http://wpads.com/wp-content/plugins/oiopub-direct/js.php?type=link&align=center&zone=1"></script>
+	<h3>
+		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
     </h3>
 </div>
 
@@ -254,7 +253,7 @@
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_border_top_color']; ?>" name="<?php echo $data['cl_html_border_top_color']; ?>" value="<?php echo $val['cl_html_border_top_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				<strong>This is the top 30px border you see on the login page.</strong><br />
+				<strong>This is the top 15px border color sections</strong><br />
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
    		</tr>
