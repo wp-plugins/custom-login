@@ -173,12 +173,14 @@
 </div>
 
 
-
+<?php if ( $val['cl_login_hide_ad'] ) : return;
+	else : ?>
 <div class="postbox ad" <?php if ( $val['cl_login_hide_ad'] ) echo 'style="display:none;"'; ?>>
 	<h3>
 		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
     </h3>
 </div>
+<?php endif; ?>
 
 <div class="postbox open">
 
