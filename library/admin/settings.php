@@ -56,6 +56,16 @@
 </div>
 </div>
 
+<div id="preview-box" class="postbox open">
+
+<h3>Preview</h3>    
+        
+<div class="inside">
+    <p style="font-weight:bold;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title="">Click here to see a live preview!</a></p>
+    
+</div>
+</div>
+
 <div class="postbox open">
 
 <h3>Support This Plugin</h3>
@@ -113,26 +123,17 @@
         
 	</ul>
     
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wordcamp.la/feed', '1' ); ?>
+		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wordcamp.la/feed', '1' ); ?>
 
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpcult.com/feed', '2' );	?>
+		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wpcult.com/feed', '2' );	?>
 
-		<?php if ( function_exists( 'wpcult_feed' ) ) wpcult_feed( 'http://wpworkshop.la/feed', '3' ); ?>
+		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wpworkshop.la/feed', '3' ); ?>
     
 </div>
 </div>
 
 <div id="dockbottom"></div>
 
-<div id="preview-box" class="postbox open">
-
-<h3>Preview</h3>    
-        
-<div class="inside">
-    <p style="font-weight:bold;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title="">Click here to see a live preview!</a></p>
-    
-</div>
-</div>
 
 <div id="uninstall" class="postbox open">
 
@@ -173,9 +174,9 @@
 </div>
 
 
-<?php if ( $val['cl_login_hide_ad'] ) : return;
+<?php if ( $val['cl_login_hide_ad'] ) : '';
 	else : ?>
-<div class="postbox ad" <?php if ( $val['cl_login_hide_ad'] ) echo 'style="display:none;"'; ?>>
+<div class="postbox ad">
 	<h3>
 		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
     </h3>

@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
- * Version: 0.5
+ * Version: 0.5.2
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -71,6 +71,7 @@
  */
 	if ( is_admin() )
 		require_once( CUSTOM_LOGIN_ADMIN . '/settings-admin.php' );
+		require_once( CUSTOM_LOGIN_ADMIN . '/dashboard.php' );
 
 /**
  * Load the settings from the database.
@@ -260,8 +261,8 @@ function custom_login_html() {
  * @since 0.3
  * @package Admin
  */
-if ( !function_exists( 'wpcult_feed' ) ) :
-	function wpcult_feed( $attr, $count ) {
+if ( !function_exists( 'thefrosty_network_feed' ) ) :
+	function thefrosty_network_feed( $attr, $count ) {
 		
 		global $wpdb;
 		

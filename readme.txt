@@ -20,11 +20,11 @@ And now featureing a HTML &amp; CSS box for advanced users (get crazy customized
 
 See a few *live working* examples (from my sites):
 
-1. [Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
+1. [WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
 
-2. [WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
+2. [WPCult login](http://wpcult.com/wp-login.php?action=login)
 
-3. [WPCult login](http://wpcult.com/wp-login.php?action=login)
+3. [Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
 
 **For those looking to showoff your login screen. Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
 
@@ -40,7 +40,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Why create this plugin? =
-I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WPCult.com](http://wpcult.com/wp-login.php?action=login).
+I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://wordcamp.la/wp-login.php?action=login).
 
 = Where can I upload and share my cool login screen? =
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
@@ -54,6 +54,17 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page.
 
 == Changelog ==
+
+**Version 0.5.2**
+
+* Added dashboard widget.
+* Moved preview link higher.
+* Bug fix.
+
+**Version 0.5.1**
+
+* Changes a function name.
+* Max character fix in `border-top-color`.
 
 **Version 0.5**
 
