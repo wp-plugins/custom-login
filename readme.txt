@@ -1,7 +1,7 @@
 === Custom Login ===
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
-Tags: admin, branding, customization, custom login, login, logo
+Tags: admin, branding, customization, custom login, login, logo, error, login error
 Requires at least: 2.5
 Tested up to: 3.0
 Stable tag: trunk
@@ -45,6 +45,12 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 = Where can I upload and share my cool login screen? =
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
 
+= I don't like the default login =
+Well you should check the first box `Use your own CSS` and customize your login screen!
+
+= I think i want to uninstall but... =
+Be sure to click the uninstall script that you **manually** add a value to `define( 'UNINSTALL_CUSTOMLOGIN', '' )` on line 29. That means `1` or like this: `define( 'UNINSTALL_CUSTOMLOGIN', '1' )`. After that run the script and all options should be uninstalled.
+
 == Screenshots ==
 
 Screenshots of working example in our [Flickr group](http://flickr.com/groups/custom-login/)
@@ -54,6 +60,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page.
 
 == Changelog ==
+
+**Version 0.6**
+
+* Addded custom javascript error animation *turned on by default*
+* Cleaned up settings page
 
 **Version 0.5.2**
 

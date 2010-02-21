@@ -10,6 +10,274 @@
  * @package CustomLogin
  */
 ?>
+<!-- Left Sidebar -->
+<div id="left" style="float:left; width:66%;">
+
+<div class="postbox open">
+
+<h3>Custom Login</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+            <th>
+            	<label for="<?php echo $data['use_custom']; ?>">Use your own CSS:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Check this box to use your own CSS, leave unchecked to use the default style.</span>
+            </td>
+		</tr>        
+    </table>
+    
+</div>
+</div>
+
+
+<?php if ( $val['cl_login_hide_ad'] ) : '';
+	else : ?>
+<div class="postbox ad">
+	<h3>
+		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
+    </h3>
+</div>
+<?php endif; ?>
+
+<div class="postbox open">
+
+<h3>Error Handling</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+            <th>
+            	<label for="<?php echo $data['cl_error']; ?>">Use Javascript error:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_error']; ?>" name="<?php echo $data['cl_error']; ?>" type="checkbox" <?php if ( $val['cl_error'] ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Check this box for an animated error when you enter your user or password info incorrect..</span>
+            </td>
+		</tr>        
+    </table>
+    
+</div>
+</div>
+
+<div class="postbox open">
+
+<h3>Custom Login HTML &ndash; Your custom HTML code</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+        	<th>
+            	<label for="<?php echo $data['cl_USE_custom_html_code']; ?>">Use custom HTML:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_USE_custom_html_code']; ?>" name="<?php echo $data['cl_USE_custom_html_code']; ?>" type="checkbox" <?php if ( $val['cl_USE_custom_html_code'] ) echo 'checked="checked"'; ?> value="true" />
+                Check this box to use the custom HTML box below. <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Checking this box will use <a href="http://jquery.com/" class="external">jQuery</a> and the <a href="http://api.jquery.com/append/" class="external">append</a> attribute. 
+                </span>
+            </td>
+        </tr>
+		<tr>
+            <td colspan="2">
+            	<label for="<?php echo $data['cl_login_custom_html_code']; ?>">Enter custom HTML:</label><br />
+                
+                <textarea id="<?php echo $data['cl_login_custom_html_code']; ?>" name="<?php echo $data['cl_login_custom_html_code']; ?>" cols="60" rows="2" style="width: 99%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_html_code'] ), 1, 0, 1 ); ?></textarea>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box. Be sure to include a comma after each entry as show in the example<br />
+                <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;, &lt;div id="snow-bird"&gt; &lt;/div&gt;</code>
+                </span>
+            </td>
+   		</tr>
+        
+    </table>
+    
+</div>
+</div>
+
+<div class="postbox open">
+
+<h3>Custom Login CSS &ndash; Your custom CSS code</h3>
+
+<div class="inside">
+	<table class="form-table">
+    	<tr>
+            <td>
+                &lt;style type="text/css"&gt;<br />
+                <textarea id="<?php echo $data['cl_login_custom_code']; ?>" name="<?php echo $data['cl_login_custom_code']; ?>" cols="60" rows="5" style="width: 99%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_code'] ), 1, 0, 1 ); ?></textarea>
+                &lt;/style&gt;<br />
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use this box to enter any custom CSS coded that may not be shown below.<br />
+                <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
+                	<br />
+                &sect; <strong>Example:</strong> <code>#snow { display:block; position:absolute; } #snow img { height:auto; width:100%; }</code><br />
+                	&sect; example CSS code for custom html code example..
+                </span>
+            </td>
+    	</tr>        
+    </table>
+    
+</div>
+</div>
+
+
+<div class="postbox open">
+
+<h3>Custom Login CSS - html</h3>
+
+<div class="inside">
+	<table class="form-table">
+		<tr>
+            <th>
+            	<label for="<?php echo $data['cl_html_border_top_color']; ?>">html border-top color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_border_top_color']; ?>" name="<?php echo $data['cl_html_border_top_color']; ?>" value="<?php echo $val['cl_html_border_top_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				<strong>This is the top 15px border color sections</strong><br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+        
+            <th>
+            	<label for="<?php echo $data['cl_html_background_color']; ?>">html background color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_html_background_url']; ?>">html background url:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_html_background_url']; ?>" name="<?php echo $data['cl_html_background_url']; ?>" value="<?php echo $val['cl_html_background_url']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Upload an image and put the full path here.<br />
+                Suggested size: <code>10px X 500px</code> (for a repeating background) or<br />
+                Full size image with a 100% stretched to fit window image.</span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_html_background_repeat']; ?>">html background repeat:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_html_background_repeat']; ?>" name="<?php echo $data['cl_html_background_repeat']; ?>" value="<?php echo $val['cl_html_background_repeat']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat.</code></span>
+            </td>
+   		</tr>
+    </table>
+
+</div>
+</div>
+
+<div class="postbox open">
+
+<h3>Custom Login CSS - #login form</h3>
+
+<div class="inside">
+	<table class="form-table">
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_background_color']; ?>">login form background color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_background']; ?>">login form background url:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_login_form_background']; ?>" name="<?php echo $data['cl_login_form_background']; ?>" value="<?php echo $val['cl_login_form_background']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Upload an image and put the full path here. Suggested size: <code>308px X 108px</code><br />
+                My suggestion: use a transparent .png or .gif. <a href="<?php echo CUSTOM_LOGIN_URL . '/psd/custom-login.psd' ?>">Download included .psd file</a>).</span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_border_radius']; ?>">login form border radius:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_login_form_border_radius']; ?>" name="<?php echo $data['cl_login_form_border_radius']; ?>" value="<?php echo $val['cl_login_form_border_radius']; ?>" size="3" maxlength="2" />px <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Choose your border radius, ie <code>8</code> or <code>12</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_border']; ?>">login form border thickness:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_login_form_border']; ?>" name="<?php echo $data['cl_login_form_border']; ?>" value="<?php echo $val['cl_login_form_border']; ?>" size="2" maxlength="2" />px <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Choose your border thickness, i.e. <code>1</code> or <code>2</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_border_color']; ?>">login form border color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="<?php echo $data['cl_login_form_box_shadow_1']; ?>">login form box shadow:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_login_form_box_shadow_1']; ?>" name="<?php echo $data['cl_login_form_box_shadow_1']; ?>" value="<?php echo $val['cl_login_form_box_shadow_1']; ?>" size="2" maxlength="2" />px
+                <input id="<?php echo $data['cl_login_form_box_shadow_2']; ?>" name="<?php echo $data['cl_login_form_box_shadow_2']; ?>" value="<?php echo $val['cl_login_form_box_shadow_2']; ?>" size="2" maxlength="2" />px
+                <input id="<?php echo $data['cl_login_form_box_shadow_3']; ?>" name="<?php echo $data['cl_login_form_box_shadow_3']; ?>" value="<?php echo $val['cl_login_form_box_shadow_3']; ?>" size="2" maxlength="2" />px
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Choose your box shadow settings, i.e. <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em></span>
+            </td>
+   		</tr>
+    </table>
+
+</div>
+</div>
+
+<div class="postbox open">
+
+<h3>Custom Login CSS - label</h3>
+
+<div class="inside">
+	<table class="form-table">
+		<tr>
+            <th>
+            	<label for="<?php echo $data['cl_label_color']; ?>">label font color:</label> 
+            </th>
+            <td>
+                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
+            </td>
+   		</tr>
+    </table>
+
+</div>
+</div>
+
+
+</div> <!-- /float:left -->
+
+<!-- Right Sidebar -->
 <div style="float:right; width:33%;">
 
 <div class="postbox open">
@@ -140,7 +408,7 @@
 <h3>Uninstaller <span><abbr title="Click here to show the box below">Don't do it!</abbr></span><span class="watchingyou">:O You did it...</span></h3>  
         
 <div class="inside">
-    <p style="text-align:justify;">If you really have to, use this <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">script</a> to uninstall the plugin and completly remove all options from your WordPress database.</p>
+    <p style="text-align:justify;">If you really have to, use this <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">script</a> to uninstall the plugin and completely remove all options from your WordPress database.</p>
     
     <p><label for="<?php echo $data['cl_login_hide_ad']; ?>">Hide ad?</label>
     	&nbsp;<input id="<?php echo $data['cl_login_hide_ad']; ?>" name="<?php echo $data['cl_login_hide_ad']; ?>" type="checkbox" <?php if ( $val['cl_login_hide_ad'] ) echo 'checked="checked"'; ?> value="true" />	Please only hide the ad if you've <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7329157" title="Donate on PayPal" class="external">donated</a>.
@@ -150,251 +418,5 @@
 </div>
 
 </div> <!-- /float:right -->
-
-<div id="left" style="float:left; width:66%;">
-
-<div class="postbox open">
-
-<h3>Custom Login</h3>
-
-<div class="inside">
-	<table class="form-table">
-    	<tr>
-            <th>
-            	<label for="<?php echo $data['use_custom']; ?>">Use your own CSS:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['use_custom']; ?>" name="<?php echo $data['use_custom']; ?>" type="checkbox" <?php if ( $val['use_custom'] ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"> Check this box to use your own CSS, leave unchecked to use the default style.</span>
-            </td>
-		</tr>        
-    </table>
-    
-</div>
-</div>
-
-
-<?php if ( $val['cl_login_hide_ad'] ) : '';
-	else : ?>
-<div class="postbox ad">
-	<h3>
-		<script type='text/javascript' src='http://wpads.net/ads/js.php?type=link&align=center&zone=1'></script>
-    </h3>
-</div>
-<?php endif; ?>
-
-<div class="postbox open">
-
-<h3>Custom Login HTML &ndash; Your custom HTML code</h3>
-
-<div class="inside">
-	<table class="form-table">
-    	<tr>
-        	<th>
-            	<label for="<?php echo $data['cl_USE_custom_html_code']; ?>">Use custom HTML:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_USE_custom_html_code']; ?>" name="<?php echo $data['cl_USE_custom_html_code']; ?>" type="checkbox" <?php if ( $val['cl_USE_custom_html_code'] ) echo 'checked="checked"'; ?> value="true" />
-                Check this box to use the custom HTML box below. <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Checking this box will use <a href="http://jquery.com/" class="external">jQuery</a> and the <a href="http://api.jquery.com/append/" class="external">append</a> attribute. 
-                </span>
-            </td>
-        </tr>
-		<tr>
-            <td colspan="2">
-            	<label for="<?php echo $data['cl_login_custom_html_code']; ?>">Enter custom HTML:</label><br />
-                
-                <textarea id="<?php echo $data['cl_login_custom_html_code']; ?>" name="<?php echo $data['cl_login_custom_html_code']; ?>" cols="60" rows="2" style="width: 99%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_html_code'] ), 1, 0, 1 ); ?></textarea>
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box. Be sure to include a comma after each entry as show in the example<br />
-                <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;, &lt;div id="snow-bird"&gt; &lt;/div&gt;</code>
-                </span>
-            </td>
-   		</tr>
-        
-    </table>
-    
-</div>
-</div>
-
-<div class="postbox open">
-
-<h3>Custom Login CSS &ndash; Your custom CSS code</h3>
-
-<div class="inside">
-	<table class="form-table">
-    	<tr>
-            <td>
-                &lt;style typle="text/css"&gt;<br />
-                <textarea id="<?php echo $data['cl_login_custom_code']; ?>" name="<?php echo $data['cl_login_custom_code']; ?>" cols="60" rows="5" style="width: 99%;"><?php echo wp_specialchars( stripslashes( $val['cl_login_custom_code'] ), 1, 0, 1 ); ?></textarea>
-                &lt;/style&gt;<br />
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use this box to enter any custom CSS coded that may not be shown below.<br />
-                <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code>
-                	<br />
-                &sect; <strong>Example:</strong> <code>#snow { display:block; position:absolute; } #snow img { height:auto; width:100%; }</code><br />
-                	&sect; example CSS code for custom html code example..
-                </span>
-            </td>
-    	</tr>        
-    </table>
-    
-</div>
-</div>
-
-
-<div class="postbox open">
-
-<h3>Custom Login CSS - html</h3>
-
-<div class="inside">
-	<table class="form-table">
-		<tr>
-            <th>
-            	<label for="<?php echo $data['cl_html_border_top_color']; ?>">html border-top color:</label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_border_top_color']; ?>" name="<?php echo $data['cl_html_border_top_color']; ?>" value="<?php echo $val['cl_html_border_top_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				<strong>This is the top 15px border color sections</strong><br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
-            </td>
-   		</tr>
-        
-            <th>
-            	<label for="<?php echo $data['cl_html_background_color']; ?>">html background color:</label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_html_background_color']; ?>" name="<?php echo $data['cl_html_background_color']; ?>" value="<?php echo $val['cl_html_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_html_background_url']; ?>">html background url:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_html_background_url']; ?>" name="<?php echo $data['cl_html_background_url']; ?>" value="<?php echo $val['cl_html_background_url']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Upload an image and put the full path here.<br />
-                Suggested size: <code>10px X 500px</code> (for a repeating background) or<br />
-                Full size image with a 100% streched to fit window image.</span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_html_background_repeat']; ?>">html background repeat:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_html_background_repeat']; ?>" name="<?php echo $data['cl_html_background_repeat']; ?>" value="<?php echo $val['cl_html_background_repeat']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat-y</code>.</span>
-            </td>
-   		</tr>
-    </table>
-
-</div>
-</div>
-
-<div class="postbox open">
-
-<h3>Custom Login CSS - #login form</h3>
-
-<div class="inside">
-	<table class="form-table">
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_background_color']; ?>">login form background color:</label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_background_color']; ?>" name="<?php echo $data['cl_login_form_background_color']; ?>" value="<?php echo $val['cl_login_form_background_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_background']; ?>">login form background url:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_login_form_background']; ?>" name="<?php echo $data['cl_login_form_background']; ?>" value="<?php echo $val['cl_login_form_background']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Upload an image and put the full path here. Suggested size: <code>308px X 108px</code><br />
-                My suggestion: use a transparent .png or .gif. <a href="<?php echo CUSTOM_LOGIN_URL . '/psd/custom-login.psd' ?>">Download included .psd file</a>).</span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_border_radius']; ?>">login form border radius:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_login_form_border_radius']; ?>" name="<?php echo $data['cl_login_form_border_radius']; ?>" value="<?php echo $val['cl_login_form_border_radius']; ?>" size="3" maxlength="2" />px <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your border radius, ie <code>8</code> or <code>12</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_border']; ?>">login form border thickness:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_login_form_border']; ?>" name="<?php echo $data['cl_login_form_border']; ?>" value="<?php echo $val['cl_login_form_border']; ?>" size="2" maxlength="2" />px <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your border thickness, i.e. <code>1</code> or <code>2</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_border_color']; ?>">login form border color:</label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_border_color']; ?>" name="<?php echo $data['cl_login_form_border_color']; ?>" value="<?php echo $val['cl_login_form_border_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
-            </td>
-   		</tr>
-        
-        <tr>
-            <th>
-            	<label for="<?php echo $data['cl_login_form_box_shadow_1']; ?>">login form box shadow:</label> 
-            </th>
-            <td>
-                <input id="<?php echo $data['cl_login_form_box_shadow_1']; ?>" name="<?php echo $data['cl_login_form_box_shadow_1']; ?>" value="<?php echo $val['cl_login_form_box_shadow_1']; ?>" size="2" maxlength="2" />px
-                <input id="<?php echo $data['cl_login_form_box_shadow_2']; ?>" name="<?php echo $data['cl_login_form_box_shadow_2']; ?>" value="<?php echo $val['cl_login_form_box_shadow_2']; ?>" size="2" maxlength="2" />px
-                <input id="<?php echo $data['cl_login_form_box_shadow_3']; ?>" name="<?php echo $data['cl_login_form_box_shadow_3']; ?>" value="<?php echo $val['cl_login_form_box_shadow_3']; ?>" size="2" maxlength="2" />px
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_login_form_box_shadow_4']; ?>" name="<?php echo $data['cl_login_form_box_shadow_4']; ?>" value="<?php echo $val['cl_login_form_box_shadow_4']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your box shadow settings, i.e. <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em></span>
-            </td>
-   		</tr>
-    </table>
-
-</div>
-</div>
-
-<div class="postbox open">
-
-<h3>Custom Login CSS - label</h3>
-
-<div class="inside">
-	<table class="form-table">
-		<tr>
-            <th>
-            	<label for="<?php echo $data['cl_label_color']; ?>">label font color:</label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="<?php echo $data['cl_label_color']; ?>" name="<?php echo $data['cl_label_color']; ?>" value="<?php echo $val['cl_label_color']; ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
-            </td>
-   		</tr>
-    </table>
-
-</div>
-</div>
-
-
-</div> <!-- /float:left -->
 
 <br style="clear:both;" />

@@ -22,6 +22,9 @@ function custom_login_settings_args() {
 		'use_custom' => false,
 		'cl_login_hide_ad' => false,
 		
+		/* Use Error Javascript */
+		'cl_error' => true,
+		
 		/* Custom Code */		
 		'cl_login_custom_code' => '',
 		

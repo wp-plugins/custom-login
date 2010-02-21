@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
- * Version: 0.5.2
+ * Version: 0.6
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -126,6 +126,7 @@ function custom_login_admin_script() {
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
 	//wp_enqueue_script( 'custom-login-dock', CUSTOM_LOGIN_JS . '/dock.js', array( 'jquery' ), '0.1', false );
 	wp_enqueue_script( 'jscolor', CUSTOM_LOGIN_JS . '/jscolor.js', false, '1.3.1', false );
+	wp_enqueue_script( 'shake', CUSTOM_LOGIN_JS . '/shake.js', false, '0.1', false );
 }
 
 
@@ -156,14 +157,34 @@ function custom_login() {
 			
 			echo '	}' . "\n";
 			echo ');' . "\n";
-			echo '</script>' . "\n";
-			
+			echo '</script>' . "\n";			
 		
 		echo '<!-- End Custom Login by Austin Passy - @link: http://austinpassy.com -->' . "\n\n";
 	
 	else :
 	
 		echo '<!-- Start Custom Login by Austin Passy -->' . "\n\n";
+		
+		/** Error handling
+		 * @since 0.6
+		 */
+		if ( $custom_login[ 'cl_error' ] != false ) :
+			echo '<!-- START Error Handling javascript -->' ."\n";
+			echo '<script type="text/javascript" src="' . CUSTOM_LOGIN_JS . '/jquery.easing.1.3.js?ver=0.1"></script>' . "\n";
+			echo '<script type="text/javascript" src="' . CUSTOM_LOGIN_JS . '/shake.js?ver=0.1"></script>' . "\n";
+			
+			if ( isset($_POST[ 'log' ] ) && isset( $_POST[ 'pwd' ] ) ) {
+				echo '<script type="text/javascript">' . "\n";
+				echo 'jQuery(document).ready(' . "\n\t";
+				echo 'function() {' . "\n\t\t";
+				echo 'jQuery("div#login").shake(3,20,500);' . "\n\t";
+				echo '}' . "\n";
+				echo ');' . "\n";
+				echo '</script>' . "\n\n";
+			}
+				
+			echo '<!-- END Error Handling javascript -->' ."\n";
+		endif;
 		
 		//echo $custom_login[ 'cl_login_form_border_radius' ] . "\n\n"; //Don't know why this is here? On accident I moved it?
 		
@@ -232,7 +253,7 @@ function custom_login_jquery() {
 	global $custom_login;
 	
 	if ( $custom_login[ 'cl_USE_custom_html_code' ] != false || $custom_login[ 'use_custom' ] != true ) 
-		echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4"></script>' . "\n";
+		echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js?ver=1.4.1"></script>' . "\n";
 }
 
 /**
