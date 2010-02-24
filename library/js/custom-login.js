@@ -91,10 +91,10 @@ jQuery(document).ready(
 	});
 	
 	jQuery('textarea#cl_login_custom_html_code, textarea#cl_login_custom_code').autoResize({
-		// Quite slow animation:
-		animateDuration : 300,
-		// More extra space:
-		extraSpace : 40
+		// No animation:
+		animate: false,
+		// Extra space:
+		extraSpace: 25
 	});
 	
 	// External window!

@@ -61,6 +61,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+**Version 0.6.1**
+
+* Turned off the animated Autoresizer for expanding textareas, as it was buggy.
+
 **Version 0.6**
 
 * Addded custom javascript error animation *turned on by default*
