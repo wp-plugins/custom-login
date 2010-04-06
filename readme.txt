@@ -18,14 +18,6 @@ And now featureing a HTML &amp; CSS box for advanced users (get crazy customized
 3. Comes with a Photoshop template included in the library files.
 3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/).
 
-See a few *live working* examples (from my sites):
-
-1. [WordCampLA login](http://wordcamp.la/wp-login.php?action=login)
-
-2. [WPCult login](http://wpcult.com/wp-login.php?action=login)
-
-3. [Austin Passy login](http://austinpassy.com/wp-login.php?action=login)
-
 **For those looking to showoff your login screen. Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
 
 == Installation ==
