@@ -9,6 +9,11 @@
  *
  * @package CustomLogin
  */
+ 	global $wp_db_version;
+	$version3 = 'false';
+	if ( $wp_db_version > 13000 ) {
+		$version3 = 'true'; //Version 3.0 or greater!
+	}
 ?>
 <!-- Left Sidebar -->
 <div id="left" style="float:left; width:66%;">
@@ -43,6 +48,8 @@
 </div>
 <?php endif; ?>
 
+
+<?php if ( $version3 == 'false' ) { //If it's less than version 3 ?>
 <div class="postbox open">
 
 <h3>Error Handling</h3>
@@ -51,10 +58,10 @@
 	<table class="form-table">
     	<tr>
             <th>
-            	<label for="<?php echo $data['cl_error']; ?>">Use Javascript error:</label> 
+            	<label for="<?php echo $data['cl_error']; ?>">Use Javascript error: <?php echo $v; ?></label> 
             </th>
             <td>
-                <input id="<?php echo $data['cl_error']; ?>" name="<?php echo $data['cl_error']; ?>" type="checkbox" <?php if ( $val['cl_error'] ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <input id="<?php echo $data['cl_error']; ?>" name="<?php echo $data['cl_error']; ?>" type="checkbox" <?php if ( $val['cl_error'] && $version3 == 'false' ) echo 'checked="checked"'; ?> value="true" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Check this box for an animated error when you enter your user or password info incorrect..</span>
             </td>
 		</tr>        
@@ -62,6 +69,7 @@
     
 </div>
 </div>
+<?php } ?>
 
 <div class="postbox open">
 
@@ -129,6 +137,7 @@
 
 <div class="inside">
 	<table class="form-table">
+		<?php if ( $version3 == 'false' ) { //If it's less than version 3 ?>
 		<tr>
             <th>
             	<label for="<?php echo $data['cl_html_border_top_color']; ?>">html border-top color:</label> 
@@ -140,6 +149,20 @@
 				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code></span>
             </td>
    		</tr>
+        <?php } else { ?>
+		<tr>
+            <th>
+            	<label for="<?php echo $data['cl_html_border_top_background']; ?>">html body background:</label> 
+            </th>
+            <td>
+                <input id="<?php echo $data['cl_html_border_top_background']; ?>" name="<?php echo $data['<strong>cl_html_background_url</strong>']; ?>" value="<?php echo $val['cl_html_border_top_background']; ?>" size="40" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide">This can replace the new background image at the top of the login screen*<br />
+                Upload an image and put the full path here.<br />
+                Suggested size: <code>1px X 31px</code> (for a repeating background)<br />
+                *WordPRess 3.0+</span>
+            </td>
+   		</tr>
+        <?php } ?>
         
             <th>
             	<label for="<?php echo $data['cl_html_background_color']; ?>">html background color:</label> 
@@ -351,7 +374,7 @@
 	</tr>
 	<tr>
 		<th style="width:20%;">Share:</th>
-		<td><a href="http://www.flickr.com/groups/custom-login/" title="Flick Group" class="external">Your design in the <span style="color:#0066DC;font-weight:bold;">Flick</span><span style="color:#ff0084;font-weight:bold;">r</span> group</a>. <sup style="color:#FF0000;font-weight:bold;text-decoration:blink;">new</sup></td>
+		<td><a href="http://www.flickr.com/groups/custom-login/" title="Flick Group" class="external">Your design in the <span style="color:#0066DC;font-weight:bold;">Flick</span><span style="color:#ff0084;font-weight:bold;">r</span> group</a>.</td>
 	</tr>
     
 	</table>
@@ -386,14 +409,14 @@
 	<ul class="tabs">
     
     	<li class="t1 t"><a>WordCampLA</a></li>
-    	<li class="t2 t"><a>WPCult</a></li>
-    	<li class="t3 t"><a>wpWorkShopLA</a></li>
+    	<li class="t2 t"><a>Me!</a></li>
+    	<li class="t3 t"><a>wpWorkShop</a></li>
         
 	</ul>
     
-		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wordcamp.la/feed', '1' ); ?>
+		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://2010.wordcamp.la/feed', '1' ); ?>
 
-		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wpcult.com/feed', '2' );	?>
+		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://austinpassy.com/feed', '2' );	?>
 
 		<?php if ( function_exists( 'thefrosty_network_feed' ) ) thefrosty_network_feed( 'http://wpworkshop.la/feed', '3' ); ?>
     

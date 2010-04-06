@@ -61,6 +61,15 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+**Version 0.7**
+
+* Updated `array_slice` error
+* Added `wp_wb_version` check for WordPress 3+
+* Added new option for WordPress 3+, *body background*.
+* Added check for version in animated error.
+** WP3 now includes the jQuery error
+* Now 100% compatible with WordPress 3.x
+
 **Version 0.6.1**
 
 * Turned off the animated Autoresizer for expanding textareas, as it was buggy.

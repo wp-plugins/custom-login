@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com//wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in and easy to use <a href="./options-general.php?page=custom-login.php">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Sweet! Share you logins via the <a href="http://flickr.com/groups/custom-login/">Flickr</a> group!! <a href="../wp-content/plugins/custom-login/uninstall.php" title="Uninstall the Custom Login plugin with this script">Uninstall script</a>
- * Version: 0.6.1
+ * Version: 0.7
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -18,6 +18,16 @@
  *
  * @package CustomLogin
  */
+
+/**
+ * Version 3.0 checker
+ * @since 0.7
+ */
+ 	global $wp_db_version;
+	$version = 'false';
+	if ( $wp_db_version > 13000 ) {
+		$version = 'true'; //Version 3.0 or greater!
+	}
 
 /**
  * Make sure we get the correct directory.
@@ -117,6 +127,7 @@ function custom_login_admin_style() {
 /**
  * Function to add the script to the settings page
  * @since 0.4
+ * @modified 0.7
  */
 function custom_login_admin_script() {
 	wp_enqueue_script( 'thickbox' );
@@ -126,13 +137,14 @@ function custom_login_admin_script() {
 	wp_enqueue_script( 'custom-login', CUSTOM_LOGIN_JS . '/custom-login.js', array( 'jquery' ), '0.1', false );
 	//wp_enqueue_script( 'custom-login-dock', CUSTOM_LOGIN_JS . '/dock.js', array( 'jquery' ), '0.1', false );
 	wp_enqueue_script( 'jscolor', CUSTOM_LOGIN_JS . '/jscolor.js', false, '1.3.1', false );
+	
+ 	if ( $version3 == 'false' ) //If it's less than version 3
 	wp_enqueue_script( 'shake', CUSTOM_LOGIN_JS . '/shake.js', false, '0.1', false );
 }
 
 
 /**
  * Add stylesheet to the login head
- *
  * @since 0.3
  */
 function custom_login() {
@@ -167,8 +179,9 @@ function custom_login() {
 		
 		/** Error handling
 		 * @since 0.6
+		 * @modified 0.7 //No longer valid
 		 */
-		if ( $custom_login[ 'cl_error' ] != false ) :
+		if ( $custom_login[ 'cl_error' ] != false && $version3 == 'false' ) : //If it's less than version 3
 			echo '<!-- START Error Handling javascript -->' ."\n";
 			echo '<script type="text/javascript" src="' . CUSTOM_LOGIN_JS . '/jquery.easing.1.3.js?ver=0.1"></script>' . "\n";
 			echo '<script type="text/javascript" src="' . CUSTOM_LOGIN_JS . '/shake.js?ver=0.1"></script>' . "\n";
@@ -201,9 +214,14 @@ function custom_login() {
 		else 
 			echo 'background: transparent url( \'' . $custom_login[ 'cl_html_background_url' ] . '\' ) left top '. $custom_login[ 'cl_html_background_repeat' ] . '; }' . "\n\n";
 		
-		if ( $custom_login[ 'cl_html_border_top_color' ] != '' ) :
+		if ( $custom_login[ 'cl_html_border_top_color' ] != '' && $version3 == 'false' ) :
 			echo 'body.login {' . "\n"; 
 			echo 'border-top-color:' . $custom_login[ 'cl_html_border_top_color' ] . '; }' . "\n\n";
+		endif;
+		
+		if ( $custom_login[ 'cl_html_border_top_background' ] != '' && $version3 == 'true' ) :
+			echo 'body.login {' . "\n"; 
+			echo 'background: transparent url( \'' . $custom_login[ 'cl_html_border_top_background' ] . '\' ) left top repeat-x; }' . "\n\n";
 		endif;
 		
 		echo '/* Diplays the custom graphics for the login screen*/' . "\n";
@@ -291,7 +309,7 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) :
 		
 		$rss = fetch_rss( $attr );
 		
-		$items = array_slice( $rss->items, 0, 3 );
+		$items = array_slice( $rss->items, 0, '3' );
 		
 		echo '<div class="tab-content t' . $count . ' postbox open feed">';
 		

@@ -33,7 +33,8 @@ function custom_login_settings_args() {
 		'cl_login_custom_html_code' => '',
 		
 		/* html */
-		'cl_html_border_top_color' => '',
+		'cl_html_border_top_color' => '', //Depreciated after WP3
+		'cl_html_border_top_background' => '', //New in WP3
 		'cl_html_background_color' => '',
 		'cl_html_background_url' => '',
 		'cl_html_background_repeat' => 'repeat-x',
