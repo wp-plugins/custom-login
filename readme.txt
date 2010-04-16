@@ -53,6 +53,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+**Version 0.7.1**
+
+* Dashboard widget bug, upgrade mandatory.
+
 **Version 0.7**
 
 * Updated `array_slice` error
@@ -184,3 +188,8 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 * Initial release.
 
+
+== Upgrade Notice ==
+
+= 0.7.1 =
+Compatiblity issue with my other plugin [@Anywhere](http://austinpassy.com/anywhere-plugin) fixed.

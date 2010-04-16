@@ -4,6 +4,7 @@
  */
 	add_action( 'wp_dashboard_setup', 'cl_register_dashboard_widget' );
 
+if ( !function_exists( 'cl_register_dashboard_widget' ) ) :
 function cl_register_dashboard_widget() {
 	wp_register_sidebar_widget('cl_dashboard', __('The Frosty Network <em>feeds</em>'), 'cl_dashboard',
 		array(
@@ -14,11 +15,13 @@ function cl_register_dashboard_widget() {
 		)
 	);
 }
+endif;
 
 
 // Function: Add Dashboard Widget
 	add_filter( 'wp_dashboard_widgets', 'cl_add_dashboard_widget' );
 	
+if ( !function_exists( 'cl_add_dashboard_widget' ) ) :
 function cl_add_dashboard_widget($widgets) {
 	global $wp_registered_widgets;
 	if (!isset($wp_registered_widgets['cl_dashboard'])) {
@@ -27,9 +30,11 @@ function cl_add_dashboard_widget($widgets) {
 	array_splice($widgets, sizeof($widgets)-1, 0, 'cl_dashboard');
 	return $widgets;
 }
+endif;
 
 
 // Function: Print Dashboard Widget
+if ( !function_exists( 'cl_dashboard' ) ) :
 function cl_dashboard($sidebar_args) {
 	global $wpdb;
 	extract( array($sidebar_args, EXTR_SKIP));
@@ -68,5 +73,6 @@ function cl_dashboard($sidebar_args) {
 			
 	echo $after_widget;
 }
+endif;
 
 ?>
