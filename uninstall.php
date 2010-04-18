@@ -1,13 +1,15 @@
 <?php
-
-	//removes database entries from the plugin on deletion
-
-	//if ( !defined( 'ABSPATH' ) && !defined( 'WP_UNINSTALL_PLUGIN' ) )
-	//exit();
-
-	//delete_option( 'custom_login_settings' );
+/**
+ * Version 3.0 checker
+ * @since 0.7.2
+ */
+ 	global $wp_db_version;
+	$version = 'false';
+	if ( $wp_db_version > 13000 ) {
+		$version = 'true'; //Version 3.0 or greater!
+	}
 	
-?>
+if ( $version3 == 'false' ) { //If it's less than version 3 ?>
 <html>
 <head>
 <title>Custom Login Uninstall Script</title>
@@ -64,3 +66,4 @@ if ( $_POST[ 'uninstall' ] ) {
 ?>
 </body>
 </html>
+<?php } ?>

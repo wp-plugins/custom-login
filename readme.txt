@@ -53,6 +53,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+**Version 0.7.2**
+
+* Fixed bug when plugin isn't allowed to be *deleted* when using WordPress 3.0+.
+
 **Version 0.7.1**
 
 * Dashboard widget bug, upgrade mandatory.
@@ -190,6 +194,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 0.7.2 =
+Uninstall script no longer valid for WordPress 3.0+
 
 = 0.7.1 =
 Compatiblity issue with my other plugin [@Anywhere](http://austinpassy.com/anywhere-plugin) fixed.
