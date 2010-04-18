@@ -55,7 +55,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 **Version 0.7.2**
 
-* Fixed bug when plugin isn't allowed to be *deleted* when using WordPress 3.0+.
+* Fixed bug where plugin isn't allowed to be *deleted*(removed) when using WordPress 3.0+.
 
 **Version 0.7.1**
 
