@@ -32,7 +32,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Why create this plugin? =
-I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://wordcamp.la/wp-login.php?action=login).
+I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://2010.wordcamp.la/wp-login.php?action=login).
 
 = Where can I upload and share my cool login screen? =
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
