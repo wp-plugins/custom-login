@@ -740,9 +740,9 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 		
 		include_once( ABSPATH . WPINC . '/rss.php' );		
 		$rss = fetch_rss( $attr );		
-		//$items = array_slice( $rss->items, 0, '3' );
-		for( $i = 0; $i < 3; $i++ ) { 
-			$item = $rss->items[$i];
+		$items = array_slice( $rss->items, 0, '3' );
+		//for( $i = 0; $i < 3; $i++ ) { 
+			//$item = $rss->items[$i];
 			echo '<div class="t' . $count . ' tab-content postbox open feed">';		
 			echo '<ul>';		
 			if ( empty( $items ) ) 
@@ -756,7 +756,7 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 			<?php endforeach;		
 			echo '</ul>';		
 			echo '</div>';	
-		}
+		//}
 	}
 }
 
