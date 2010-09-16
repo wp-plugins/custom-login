@@ -4,14 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: admin, branding, customization, custom login, login, logo, error, login error
 Requires at least: 2.5
 Tested up to: 3.1
-Stable tag: 0.7.2
+Stable tag: trunk
 
-Use this plugin to customize your login screen, great for client sites!
+Use [this plugin](http://austinpassy.com/wordpress-plugins/custom-login) to customize your login screen, great for client sites!
 
 == Description ==
 
-Visit the plugin page: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com//wordpress-plugins/custom-login)
-Visit my portfolio: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com//wordpress-plugins/custom-login)
+Visit the plugin page: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
+Visit my portfolio: [http:/austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -43,8 +43,8 @@ Check out the newly created [Flickr group](http://flickr.com/groups/custom-login
 = I don't like the default login =
 Well you should check the first box `Use your own CSS` and customize **your** login screen!
 
-= I think i want to uninstall but =
-Just deactive.
+= I think i want to uninstall =
+Just de-active.
 
 == Screenshots ==
 
@@ -52,7 +52,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 1. Custom Login Settings page (as of v 0.8).
 
-2. Example of a custom login page.
+2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
 
