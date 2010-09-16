@@ -8,7 +8,7 @@ if ( !function_exists( 'cl_register_dashboard_widget' ) ) :
 function cl_register_dashboard_widget() {
 	wp_register_sidebar_widget('cl_dashboard', __('The Frosty Network <em>feeds</em>'), 'cl_dashboard',
 		array(
-		'all_link' => 'http://thefrosty.net/feed.php',
+		'all_link' => 'http://thefrosty.net/',
 		'feed_link' => 'http://pipes.yahoo.com/pipes/pipe.run?_id=52c339c010550750e3e64d478b1c96ea&_render=rss',
 		'width' => 'half', // OR 'fourth', 'third', 'half', 'full' (Default: 'half')
 		'height' => 'double', // OR 'single', 'double' (Default: 'single')
@@ -48,8 +48,8 @@ function cl_dashboard($sidebar_args) {
 			
 		$rss = fetch_rss('http://pipes.yahoo.com/pipes/pipe.run?_id=52c339c010550750e3e64d478b1c96ea&_render=rss');
 		// See: http://alexpolski.com/2009/03/25/how-to-merge-multiple-feeds-to-one-feed/
-		$items = array_slice($rss->items, 0, 6);
-		
+		//$items = array_slice($rss->items, 0, 6);
+		for( $i = 0; $i < 6; $i++ ) {
 		if (empty($items)) echo '<p>Nothing to see people..</p>';
 		
 		else
@@ -69,6 +69,7 @@ function cl_dashboard($sidebar_args) {
 		}
 			
 		endforeach;
+		}
 		
 			
 	echo $after_widget;

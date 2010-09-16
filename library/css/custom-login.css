@@ -1,5 +1,7 @@
 html {
-	background: #7a7c84 url( ../../images/html-fade.jpg ) left top repeat-x;
+	background: #7a7c84;
+	-moz-linear-gradient(0% 50% 90deg,#7A7C84, #26BEC9);
+	-webkit-gradient(linear, 0% 0%, 0% 100%, from(#7A7C84), to(#175C66), color-stop(.6,#333333));
 	}
 body.login {
 	border-top-color: rgba(39,149,139,0.4);
@@ -31,7 +33,7 @@ body.login {
 	margin: 0 0 0 0;
 	}
 #login h1 a {
-	background: transparent url( ../../images/custom-login.png ) center top no-repeat;
+	background: transparent url( ./images/custom-login.png ) center top no-repeat;
 	}
 	
 #nav a {

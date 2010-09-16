@@ -3,22 +3,24 @@ Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error
 Requires at least: 2.5
-Tested up to: 3.0
-Stable tag: trunk
+Tested up to: 3.1
+Stable tag: 0.7.2
 
+Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-A simple way to customize your WordPress login screen!
-Use the built in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
-And now featureing a HTML &amp; CSS box for advanced users (get crazy customized)!
+Visit the plugin page: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com//wordpress-plugins/custom-login)
+Visit my portfolio: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com//wordpress-plugins/custom-login)
 
-1. Allow your login screen design to be visable if you change up your theme.
-2. Works great for CMS installs and for clients.
-3. Comes with a Photoshop template included in the library files.
+Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
+Now featureing a HTML &amp; CSS box for advanced users to up the customization!
+
+1. Works great for client site installs.
+2. Comes with a Photoshop template included in the library files (default theme).
 3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/).
 
-**For those looking to showoff your login screen. Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
+**For those looking to showoff your login screen, check out the [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
 
 == Installation ==
 
@@ -27,6 +29,7 @@ Follow the steps below to install the plugin.
 1. Upload the `custom-login` directory to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Settings/custom-login to edit your settings.
+4. **Be sure to *check* active** to remove the *default* login screen.
 
 
 == Frequently Asked Questions ==
@@ -38,20 +41,31 @@ I created this plugin to allow for custom login of any WordPress login screen. S
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
 
 = I don't like the default login =
-Well you should check the first box `Use your own CSS` and customize your login screen!
+Well you should check the first box `Use your own CSS` and customize **your** login screen!
 
-= I think i want to uninstall but... =
-Be sure to click the uninstall script that you **manually** add a value to `define( 'UNINSTALL_CUSTOMLOGIN', '' )` on line 29. That means `1` or like this: `define( 'UNINSTALL_CUSTOMLOGIN', '1' )`. After that run the script and all options should be uninstalled.
+= I think i want to uninstall but =
+Just deactive.
 
 == Screenshots ==
 
 Screenshots of working example in our [Flickr group](http://flickr.com/groups/custom-login/)
 
-1. Custom Login Settings page (as of v 0.4.7).
+1. Custom Login Settings page (as of v 0.8).
 
 2. Example of a custom login page.
 
 == Changelog ==
+
+= Version 0.8 =
+
+* Important! Users will have to re-save their settings after updating to version 0.8.
+* Completely recoded the plugin from the ground up for a much needed code overhaul.
+* Removed unistall script.
+* Removed [wpads.net](http://wpads.net).
+* Cleaned up options.
+* Removed easing.js, farbtastic.js, dock.js
+* Removed unused images.
+* Added `license.txt`, `readme.html`.
 
 = Version 0.7.2 =
 
@@ -194,6 +208,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 0.8 =
+Complete rewrite, you will have to re-save your settings!
 
 = 0.7.2 =
 Uninstall script no longer valid for WordPress 3.0+
