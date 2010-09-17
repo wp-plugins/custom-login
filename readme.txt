@@ -6,7 +6,7 @@ Requires at least: 2.5
 Tested up to: 3.1
 Stable tag: trunk
 
-Use [this plugin](http://austinpassy.com/wordpress-plugins/custom-login) to customize your login screen, great for client sites!
+Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
