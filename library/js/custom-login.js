@@ -3,7 +3,7 @@ jQuery(document).ready(
 		
 	$('.upload_image_button').click(function() {
 		formfield = $(this).parent().find('.upload_image').attr('name');
-		console.log(formfield);
+		//console.log(formfield);
 		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
 		return false;
 	});
