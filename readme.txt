@@ -10,15 +10,15 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Visit the plugin page: [http://austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
-Visit my portfolio: [http:/austinpassy.com//wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
+Visit the plugin page: [http://austinpassy.com/wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
+Visit my portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 
 1. Works great for client site installs.
 2. Comes with a Photoshop template included in the library files (default theme).
-3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/).
+3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/) & [most recent blog post](http://austinpassy.com/2010/09/custom-login-version-0-8/).
 
 **For those looking to showoff your login screen, check out the [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
 
