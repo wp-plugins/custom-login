@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.1 =
+
+* Fixed CSS code that was converting single and double quotes to HTML entities.
+
 = Version 0.8 =
 
 * Important! Users will have to re-save their settings after updating to version 0.8.
@@ -208,6 +212,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 0.8.1 =
+Complete rewrite, you will have to re-save your settings!
 
 = 0.8 =
 Complete rewrite, you will have to re-save your settings!

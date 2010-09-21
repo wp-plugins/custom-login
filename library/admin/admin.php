@@ -212,6 +212,7 @@ function custom_login_save_settings() {
 function custom_login_create_settings_meta_boxes() {
 	global $custom_login;
 
+
 	add_meta_box( 'custom-login-activate-meta-box', __( 'Avtivation &mdash; <em>to infinity and beyond</em>', 'custom-login' ), 'custom_login_activate_meta_box', $custom_login->settings_page, 'normal', 'high' );
 
 	add_meta_box( 'custom-login-announcement-meta-box', __( 'Announcements', 'custom-login' ), 'custom_login_announcement_meta_box', $custom_login->settings_page, 'normal', 'high' );
@@ -347,7 +348,7 @@ function custom_login_advanced_meta_box() { ?>
             	<label for="custom_css"><?php _e( 'Custom CSS:', 'custom-login' ); ?></label> 
             </th>
             <td>             
-                <textarea id="custom_css" name="custom_css" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ); ?></textarea>
+                <textarea id="custom_css" name="custom_css" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ); ?></textarea>
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Use this box to enter any custom CSS code that may not be shown below.<br />
                 <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code><br />

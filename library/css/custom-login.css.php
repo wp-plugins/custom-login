@@ -15,7 +15,7 @@
  */
 
 /* Start Custom user input */
-<?php echo custom_login_get_setting( 'custom_css' ) . "\n\n"; ?>
+<?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ) . "\n\n"; ?>
 /* End custom user input */
 
 /* html background */
