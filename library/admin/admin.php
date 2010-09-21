@@ -464,7 +464,7 @@ function custom_login_general_meta_box() { ?>
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide">Upload an image and put the full path here.<br />
-                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave black if not in use.
+                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave black if not in use. NOTE: Will go <strong>above</strong> the form and it&prime;s border.
                 </span>
             </td>
    		</tr>        
@@ -576,7 +576,8 @@ function custom_login_tabs_meta_box() { ?>
             <li class="t3 t"><a class="t3 tab">wpWorkShop</a></li>  
             <li class="t4 t"><a class="t4 tab"><em>WP</em>Wag</a></li> 
             <li class="t5 t"><a class="t5 tab">Float-O-holics</a></li>  
-            <li class="t6 t"><a class="t6 tab">Great Escape</a></li>             
+            <li class="t6 t"><a class="t6 tab">Great Escape</a></li>   
+            <li class="t7 t"><a class="t7 tab">PDXbyPix</a></li>             
         </ul>
         
 		<?php 
@@ -586,7 +587,8 @@ function custom_login_tabs_meta_box() { ?>
        		thefrosty_network_feed( 'http://wpworkshop.la/feed', '3' );
         	thefrosty_network_feed( 'http://wpwag.com/feed', '4' ); 
         	thefrosty_network_feed( 'http://floatoholics.com/feed', '5' );
-        	thefrosty_network_feed( 'http://greatescapecabofishing.com/feed', '6' );  
+        	thefrosty_network_feed( 'http://greatescapecabofishing.com/feed', '6' ); 
+        	thefrosty_network_feed( 'http://pdxbypix.com/feed', '7' );  
 		} ?>
         
     	</div>
