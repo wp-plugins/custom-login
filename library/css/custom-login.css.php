@@ -20,7 +20,7 @@
 
 /* html background */
 html {
-	background: transparent <?php echo custom_login_get_setting( 'html_background_color' ); ?> url( '<?php echo custom_login_get_setting( 'html_background_url' ); ?>' ) left top <?php echo custom_login_get_setting( 'html_background_repeat' ); ?>;
+	background: <?php if ( custom_login_get_setting( 'html_background_color' ) != '' ) echo custom_login_get_setting( 'html_background_color' ); else echo 'transparent'; ?> url( '<?php echo custom_login_get_setting( 'html_background_url' ); ?>' ) left top <?php echo custom_login_get_setting( 'html_background_repeat' ); ?>;
 }
 
 <?php if ( custom_login_get_setting( 'html_border_top_color' ) != '' && !is_version( '3.0' ) ) { ?>
