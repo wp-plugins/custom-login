@@ -2,7 +2,7 @@
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error
-Requires at least: 2.5
+Requires at least: 2.9
 Tested up to: 3.1
 Stable tag: trunk
 
