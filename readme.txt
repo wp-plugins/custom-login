@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.2 =
+
+* Fixed CSS code on the login page.
+
 = Version 0.8.1 =
 
 * Fixed CSS code that was converting single and double quotes to HTML entities.
