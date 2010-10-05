@@ -100,13 +100,15 @@ function custom_login_get_setting( $option = '' ) {
  *
  * @since 0.8
  */
-function is_version( $version = '3.0' ) {
-	global $wp_version;
-	
-	if ( version_compare( $wp_version, $version, '<' ) ) {
-		return false;
+if ( ! function_exists( 'is_version' ) ) {
+	function is_version( $version = '3.0' ) {
+		global $wp_version;
+		
+		if ( version_compare( $wp_version, $version, '<' ) ) {
+			return false;
+		}
+		return true;
 	}
-	return true;
 }
 
 /**

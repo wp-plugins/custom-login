@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.3 =
+
+* Added missing `gravatar.js` file.
+
 = Version 0.8.2 =
 
 * Fixed CSS code on the login page.
@@ -217,8 +221,8 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
-= 0.8.1 =
-Complete rewrite, you will have to re-save your settings!
+= 0.8.3 =
+Complete rewrite in version `0.8`, you will have to re-save your settings! Sorry.
 
 = 0.8 =
 Complete rewrite, you will have to re-save your settings!
