@@ -56,6 +56,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.4 =
+
+* Don't add `gravatar.js` if it's not needed.
+* fixed bug where multiple installs in a single server of different WP installs exist.
+
 = Version 0.8.3 =
 
 * Added missing `gravatar.js` file.
@@ -221,7 +226,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
-= 0.8.3 =
+= 0.8.4 =
 Complete rewrite in version `0.8`, you will have to re-save your settings! Sorry.
 
 = 0.8 =

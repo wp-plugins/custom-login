@@ -9,20 +9,13 @@
 		 * Find wp-load.php
 		 * defualt location from this directory is 
 		 * "../../../../../wp-load.php"
+		 *
+		if ( file_exists( '../../../../../wp-load.php' ) ) {
 		 */
-		if ( file_exists( '../../../../../../wp-load.php' ) ) 
-			{
-			require_once( '../../../../../../wp-load.php' );
-			}
-		// Default directory
-	elseif ( file_exists( '../../../../../wp-load.php' ) )
-			{
 			require_once( '../../../../../wp-load.php' );
-			}
-	elseif ( file_exists( '../../../../wp-load.php' ) )
-			{
-			require_once( '../../../../wp-load.php' );
-			}
+		 /*
+		}
+		 */
 	}
 	global $wpdb, $custom_login;
 ?>
