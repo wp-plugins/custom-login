@@ -65,9 +65,11 @@ function custom_login_styles() {
  */
 function custom_login_settings_page_init() {
 	global $custom_login;
+	
+	$role = 'edit_plugins';
 
 	/* Create the theme settings page. */
-	$custom_login->settings_page = add_options_page( __( 'Custom Login', 'custom-login' ), __( 'Custom Login', 'custom-login' ), 10, 'custom-login', 'custom_login_settings_page' );
+	$custom_login->settings_page = add_options_page( __( 'Custom Login', 'custom-login' ), __( 'Custom Login', 'custom-login' ), $role, 'custom-login', 'custom_login_settings_page' );
 
 	/* Register the default theme settings meta boxes. */
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_create_settings_meta_boxes' );
@@ -90,7 +92,7 @@ function custom_login_settings() {
 	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
 	
 	$settings = array(
-		'version' => '0.8',
+		'version' => '0.8.6',
 		/* Activate */
 		'custom' => false,		
 		/* Custom css */	
@@ -571,10 +573,10 @@ function custom_login_tabs_meta_box() { ?>
         <div id="tab" class="tabbed inside">
     	
         <ul class="tabs">        
-            <li class="t1 t"><a class="t1 tab">WordCampLA</a></li>
-            <li class="t2 t"><a class="t2 tab">Austin Passy</a></li>
-            <li class="t3 t"><a class="t3 tab">wpWorkShop</a></li>  
-            <li class="t4 t"><a class="t4 tab"><em>WP</em>Wag</a></li> 
+            <li class="t2 t"><a class="t1 tab">Austin Passy</a></li>
+            <li class="t1 t"><a class="t2 tab">WordCampLA</a></li>
+            <li class="t4 t"><a class="t3 tab">Themelit</a></li> 
+            <li class="t3 t"><a class="t4 tab">wpWorkShop</a></li>  
             <li class="t5 t"><a class="t5 tab">Float-O-holics</a></li>  
             <li class="t6 t"><a class="t6 tab">Great Escape</a></li>   
             <li class="t7 t"><a class="t7 tab">PDXbyPix</a></li>             
@@ -582,10 +584,10 @@ function custom_login_tabs_meta_box() { ?>
         
 		<?php 
 		if ( function_exists( 'thefrosty_network_feed' ) ) {
-			thefrosty_network_feed( 'http://2010.wordcamp.la/feed', '1' );
-        	thefrosty_network_feed( 'http://austinpassy.com/feed', '2' );
-       		thefrosty_network_feed( 'http://wpworkshop.la/feed', '3' );
-        	thefrosty_network_feed( 'http://wpwag.com/feed', '4' ); 
+        	thefrosty_network_feed( 'http://austinpassy.com/feed', '1' );
+			thefrosty_network_feed( 'http://2011.wordcamp.la/feed', '2' );
+        	thefrosty_network_feed( 'http://themelit.com/feed', '3' ); 
+       		thefrosty_network_feed( 'http://wpworkshop.la/feed', '4' );
         	thefrosty_network_feed( 'http://floatoholics.com/feed', '5' );
         	thefrosty_network_feed( 'http://greatescapecabofishing.com/feed', '6' ); 
         	thefrosty_network_feed( 'http://pdxbypix.com/feed', '7' );  
@@ -704,7 +706,7 @@ function custom_login_settings_page_load_scripts() {
  */
 function custom_login_plugin_actions( $links, $file ) {
  	if( $file == 'custom-login/custom-login.php' && function_exists( "admin_url" ) ) {
-		$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login' ) . '">' . __('Settings') . '</a>';
+		$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login' ) . '">' . __('Settings', 'custom-login' ) . '</a>';
 		array_unshift( $links, $settings_link ); // before other links
 	}
 	return $links;
@@ -741,25 +743,31 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 	function thefrosty_network_feed( $attr, $count ) {		
 		global $wpdb;
 		
-		include_once( ABSPATH . WPINC . '/rss.php' );		
-		$rss = fetch_rss( $attr );		
-		$items = array_slice( $rss->items, 0, '3' );
-		//for( $i = 0; $i < 3; $i++ ) { 
-			//$item = $rss->items[$i];
-			echo '<div class="t' . $count . ' tab-content postbox open feed">';		
-			echo '<ul>';		
-			if ( empty( $items ) ) 
-				echo '<li>No items</li>';		
-			else		
-			foreach ( $items as $item ) : ?>		
-                <li>		
-                	<a href='<?php echo $item[ 'link' ]; ?>' title='<?php echo $item[ 'description' ]; ?>'><?php echo $item[ 'title' ]; ?></a><br /> 		
-                	<span style="font-size:10px; color:#aaa;"><?php echo date( 'F, j Y', strtotime( $item[ 'pubdate' ] ) ); ?></span>		
-                </li>		
-			<?php endforeach;		
-			echo '</ul>';		
-			echo '</div>';	
-		//}
+		include_once( ABSPATH . WPINC . '/class-simplepie.php' );
+		$feed = new SimplePie();
+		//$rss = array();
+		$feed->set_feed_url( $attr );
+		$feed->enable_cache( false );
+		$feed->init();
+		$feed->handle_content_type();
+		//$feed->set_cache_location( trailingslashit( ROLLA_ADMIN ) . 'cache' );
+
+		$items = $feed->get_item();
+		echo '<div class="t' . $count . ' tab-content postbox open feed">';		
+		echo '<ul>';		
+		if ( empty( $items ) ) { 
+			echo '<li>No items</li>';		
+		} else {
+			foreach( $feed->get_items( 0, 3 ) as $item ) : ?>		
+				<li>		
+					<a href='<?php echo $item->get_permalink(); ?>' title='<?php echo $item->get_description(); ?>'><?php echo $item->get_title(); ?></a><br /> 		
+					<span style="font-size:10px; color:#aaa;"><?php echo $item->get_date('F, jS Y | g:i a'); ?></span>		
+				</li>		
+			<?php endforeach;
+		}
+		//print_r( trailingslashit( ROLLA_ADMIN ) . 'cache' );
+		echo '</ul>';		
+		echo '</div>';
 	}
 }
 

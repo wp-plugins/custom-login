@@ -56,10 +56,27 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.6 (2/9/11) =
+
+* Updated the feed parser to comply with deprecated `rss.php` and use `class-simplepie.php`.
+* Moved launguages from `/custom-login/library/launguages` to `/custom-login/launguages`.
+*
+
+= Version 0.8.5 =
+
+* array_slice error fixed.
+
+= Version 0.8.4.1 =
+
+* Moved priority on Setting page.
+* Updated `POT` file.
+
 = Version 0.8.4 =
 
 * Don't add `gravatar.js` if it's not needed.
 * fixed bug where multiple installs in a single server of different WP installs exist.
+* Set role for settings page from `6` to `edit_plugins` to comply with new Roles and Capabilities.
+* 
 
 = Version 0.8.3 =
 
