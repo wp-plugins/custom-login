@@ -59,7 +59,6 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 = Version 0.8.6 (2/9/11) =
 
 * Updated the feed parser to comply with deprecated `rss.php` and use `class-simplepie.php`.
-* Moved launguages from `/custom-login/library/launguages` to `/custom-login/launguages`.
 *
 
 = Version 0.8.5 =

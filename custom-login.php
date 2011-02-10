@@ -29,7 +29,7 @@ add_action( 'plugins_loaded', 'custom_login_setup' );
  */
 function custom_login_setup() {
 	/* Load translations. */
-	load_plugin_textdomain( 'custom-login', false, 'custom-login/languages' );
+	load_plugin_textdomain( 'custom-login', false, 'custom-login/library/languages' );
 
 	/* Set constant path to the Cleaner Gallery plugin directory. */
 	define( 'CUSTOM_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
