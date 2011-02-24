@@ -3,7 +3,7 @@ Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error
 Requires at least: 2.9
-Tested up to: 3.1
+Tested up to: 3.2
 Stable tag: trunk
 
 Use this plugin to customize your login screen, great for client sites!
@@ -56,10 +56,13 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.7 (2/24/11) =
+
+* Removed javascript that was causing hangups.
+
 = Version 0.8.6 (2/9/11) =
 
 * Updated the feed parser to comply with deprecated `rss.php` and use `class-simplepie.php`.
-*
 
 = Version 0.8.5 =
 
