@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com/wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a>!
- * Version: 0.8.7
+ * Version: 0.8.8
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -40,8 +40,10 @@ function custom_login_setup() {
 	define( 'CUSTOM_LOGIN_CSS', CUSTOM_LOGIN_URL . 'library/css/' );
 	define( 'CUSTOM_LOGIN_JS', CUSTOM_LOGIN_URL . 'library/js/' );
 
-	if ( is_admin() )
+	if ( is_admin() ) {
 		require_once( CUSTOM_LOGIN_ADMIN . 'admin.php' );
+		require_once( CUSTOM_LOGIN_ADMIN . 'dashboard.php' );
+	}
 	
 	/* Add a settings page to the plugin menu */
 	add_filter( 'plugin_action_links', 'custom_login_plugin_actions', 10, 2 );

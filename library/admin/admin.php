@@ -92,7 +92,7 @@ function custom_login_settings() {
 	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
 	
 	$settings = array(
-		'version' => '0.8.6',
+		'version' => $plugin_data['Version'],
 		/* Activate */
 		'custom' => false,		
 		/* Custom css */	
@@ -117,6 +117,8 @@ function custom_login_settings() {
 			'login_form_box_shadow_1' => '5',
 			'login_form_box_shadow_2' => '5',
 			'login_form_box_shadow_3' => '18',
+
+
 			'login_form_box_shadow_4' => '#464646',		
 		/* Label color */
 		'label_color' => '#ffffff',
@@ -178,19 +180,20 @@ function custom_login_save_settings() {
 
 	/* Get the current theme settings. */
 	$settings = get_option( 'custom_login_settings' );
+	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
 
-	$settings['version'] = esc_html( $_POST['version'] );
+	$settings['version'] = ( ( isset( $_POST['version'] ) ) ? esc_html( $_POST['version'] ) : $plugin_data['Version'] );
 	$settings['custom'] = ( ( isset( $_POST['custom'] ) ) ? true : false );
 	$settings['gravatar'] = ( ( isset( $_POST['gravatar'] ) ) ? true : false );
 	$settings['custom_css'] = esc_html( $_POST['custom_css'] );
 	$settings['custom_html'] = esc_html( $_POST['custom_html'] );
-	$settings['html_border_top_color'] = esc_html( $_POST['html_border_top_color'] );
+	$settings['html_border_top_color'] = ( ( isset( $_POST['html_border_top_color'] ) ) ? esc_html( $_POST['html_border_top_color'] ) : '' ); // > 3.0.x
 	$settings['html_border_top_background'] = esc_html( $_POST['html_border_top_background'] );
 	$settings['html_background_color'] = esc_html( $_POST['html_background_color'] );
 	$settings['html_background_url'] = esc_html( $_POST['html_background_url'] );
 	$settings['html_background_repeat'] = esc_html( $_POST['html_background_repeat'] );
 	$settings['login_form_logo'] = esc_html( $_POST['login_form_logo'] );
-	$settings['login_form_border_top_color'] = esc_html( $_POST['login_form_border_top_color'] );
+	$settings['login_form_border_top_color'] = ( ( isset( $_POST['login_form_border_top_color'] ) ) ? esc_html( $_POST['login_form_border_top_color'] ) : '' );
 	$settings['login_form_background_color'] = esc_html( $_POST['login_form_background_color'] );
 	$settings['login_form_background'] = esc_html( $_POST['login_form_background'] );
 	$settings['login_form_border_radius'] = esc_html( $_POST['login_form_border_radius'] );
@@ -573,24 +576,26 @@ function custom_login_tabs_meta_box() { ?>
         <div id="tab" class="tabbed inside">
     	
         <ul class="tabs">        
-            <li class="t2 t"><a class="t1 tab">Austin Passy</a></li>
-            <li class="t1 t"><a class="t2 tab">WordCampLA</a></li>
-            <li class="t4 t"><a class="t3 tab">Themelit</a></li> 
-            <li class="t3 t"><a class="t4 tab">wpWorkShop</a></li>  
+            <li class="t1 t"><a class="t1 tab">Austin Passy</a></li>
+            <li class="t2 t"><a class="t2 tab">WordCamp<strong>LA</strong></a></li>
+            <li class="t3 t"><a class="t3 tab">Themelit (WP themes)</a></li> 
+            <li class="t4 t"><a class="t4 tab">wpWorkShop</a></li>  
             <li class="t5 t"><a class="t5 tab">Float-O-holics</a></li>  
             <li class="t6 t"><a class="t6 tab">Great Escape</a></li>   
-            <li class="t7 t"><a class="t7 tab">PDXbyPix</a></li>             
+            <li class="t7 t"><a class="t7 tab">PDXbyPix</a></li>      
+            <li class="t8 t"><a class="t8 tab">Jeana Arter</a></li>             
         </ul>
         
 		<?php 
 		if ( function_exists( 'thefrosty_network_feed' ) ) {
-        	thefrosty_network_feed( 'http://austinpassy.com/feed', '1' );
-			thefrosty_network_feed( 'http://2011.wordcamp.la/feed', '2' );
-        	thefrosty_network_feed( 'http://themelit.com/feed', '3' ); 
+        	thefrosty_network_feed( 'http://feeds.feedburner.com/TheFrosty', '1' );
+			thefrosty_network_feed( 'http://feeds.feedburner.com/WordCampLA', '2' );
+        	thefrosty_network_feed( 'http://feeds.feedburner.com/themelit', '3' ); 
        		thefrosty_network_feed( 'http://wpworkshop.la/feed', '4' );
         	thefrosty_network_feed( 'http://floatoholics.com/feed', '5' );
         	thefrosty_network_feed( 'http://greatescapecabofishing.com/feed', '6' ); 
         	thefrosty_network_feed( 'http://pdxbypix.com/feed', '7' );  
+        	thefrosty_network_feed( 'http://feeds.feedburner.com/JeanaArter', '8' );  
 		} ?>
         
     	</div>
@@ -657,9 +662,7 @@ function custom_login_settings_page() {
  *
  * @since 0.8
  */
-function custom_login_settings_page_enqueue_script() {
-	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
-	
+function custom_login_settings_page_enqueue_script() {	
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'common' );
 	wp_enqueue_script( 'wp-lists' );
@@ -745,12 +748,12 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 		
 		include_once( ABSPATH . WPINC . '/class-simplepie.php' );
 		$feed = new SimplePie();
-		//$rss = array();
+		
 		$feed->set_feed_url( $attr );
 		$feed->enable_cache( false );
 		$feed->init();
 		$feed->handle_content_type();
-		//$feed->set_cache_location( trailingslashit( ROLLA_ADMIN ) . 'cache' );
+		//$feed->set_cache_location( trailingslashit( basename( __FILE__ ) ) . 'cache' );
 
 		$items = $feed->get_item();
 		echo '<div class="t' . $count . ' tab-content postbox open feed">';		
@@ -765,7 +768,6 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 				</li>		
 			<?php endforeach;
 		}
-		//print_r( trailingslashit( ROLLA_ADMIN ) . 'cache' );
 		echo '</ul>';		
 		echo '</div>';
 	}

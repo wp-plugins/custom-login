@@ -56,6 +56,13 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.8 (3/30/11) =
+
+* Updated out of order tabs.
+* Fixed missing index variables that may cause error when runner in debug mode.
+* Fixed header output error.
+* Updated dashboard widget.
+
 = Version 0.8.7 (2/24/11) =
 
 * Removed javascript that was causing hangups.
@@ -245,8 +252,8 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
-= 0.8.4 =
-Complete rewrite in version `0.8`, you will have to re-save your settings! Sorry.
+= 0.8.8 =
+Miscellaneous errors fixed, bugs squashed.
 
 = 0.8 =
 Complete rewrite, you will have to re-save your settings!
