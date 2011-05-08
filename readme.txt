@@ -56,6 +56,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.9 (5/8/11) =
+
+* Added checkbox to turn off dashboard.
+* Added `disabled` to gravatar to remove idex error.
+* Trying to localize as much of the admin text as possible for translation.
+
 = Version 0.8.8 (3/30/11) =
 
 * Updated out of order tabs.

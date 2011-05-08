@@ -14,14 +14,14 @@ add_action( 'init', 'custom_login_admin_init' );
  *
  * @since 0.8
  */
-function custom_login_admin_init() {
-	add_action( 'admin_menu', 'custom_login_settings_page_init' );
-
-	add_action( 'custom_login_update_settings_page', 'custom_login_save_settings' );
+function custom_login_admin_init() {	
+	add_action( 'admin_init', 'custom_login_scripts' );
 	
 	add_action( 'admin_init', 'custom_login_styles' );
 	
-	add_action( 'admin_init', 'custom_login_scripts' );
+	add_action( 'admin_menu', 'custom_login_settings_page_init' );
+
+	add_action( 'custom_login_update_settings_page', 'custom_login_save_settings' );
 }
 
 /**
@@ -94,7 +94,11 @@ function custom_login_settings() {
 	$settings = array(
 		'version' => $plugin_data['Version'],
 		/* Activate */
-		'custom' => false,		
+		'custom' => false,
+		/* Gravatar */
+		'gravatar' => false,
+		/* Dashboard */		
+		'hide_dashboard' => false,
 		/* Custom css */	
 		'custom_css' => '',		
 		/* Custom html */	
@@ -119,6 +123,7 @@ function custom_login_settings() {
 			'login_form_box_shadow_3' => '18',
 
 
+
 			'login_form_box_shadow_4' => '#464646',		
 		/* Label color */
 		'label_color' => '#ffffff',
@@ -137,6 +142,7 @@ function custom_login_load_settings_page() {
 	$settings = get_option( 'custom_login_settings' );
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	// TO BE REMOVED IN VERSION 0.9 //
 	/* If the old settings are available, delete the old settings. */
 	if ( !empty( $settings['use_custom'] ) ) {
 		delete_option( 'custom_login_settings' );
@@ -185,6 +191,7 @@ function custom_login_save_settings() {
 	$settings['version'] = ( ( isset( $_POST['version'] ) ) ? esc_html( $_POST['version'] ) : $plugin_data['Version'] );
 	$settings['custom'] = ( ( isset( $_POST['custom'] ) ) ? true : false );
 	$settings['gravatar'] = ( ( isset( $_POST['gravatar'] ) ) ? true : false );
+	$settings['hide_dashboard'] = ( ( isset( $_POST['hide_dashboard'] ) ) ? true : false );
 	$settings['custom_css'] = esc_html( $_POST['custom_css'] );
 	$settings['custom_html'] = esc_html( $_POST['custom_html'] );
 	$settings['html_border_top_color'] = ( ( isset( $_POST['html_border_top_color'] ) ) ? esc_html( $_POST['html_border_top_color'] ) : '' ); // > 3.0.x
@@ -222,15 +229,17 @@ function custom_login_create_settings_meta_boxes() {
 
 	add_meta_box( 'custom-login-announcement-meta-box', __( 'Announcements', 'custom-login' ), 'custom_login_announcement_meta_box', $custom_login->settings_page, 'normal', 'high' );
 
-	add_meta_box( 'custom-login-general-meta-box', __( 'General Settings', 'custom-login' ), 'custom_login_general_meta_box', $custom_login->settings_page, 'normal', 'high' );
-	
-	add_meta_box( 'custom-login-advanced-meta-box', __( 'Advanced Settings', 'custom-login' ), 'custom_login_advanced_meta_box', $custom_login->settings_page, 'normal', 'high' );
-
 	add_meta_box( 'custom-login-about-meta-box', __( 'About Custom Login', 'custom-login' ), 'custom_login_about_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
 	add_meta_box( 'custom-login-support-meta-box', __( 'Support Custom Login', 'custom-login' ), 'custom_login_support_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
+	add_meta_box( 'custom-login-dasboard-meta-box', __( 'Dashboard Widget', 'custom-login' ), 'custom_login_dashboard_meta_box', $custom_login->settings_page, 'advanced', 'high' );
+	
 	add_meta_box( 'custom-login-preview-meta-box', __( 'Preview your work, <em>Master</em>', 'custom-login' ), 'custom_login_preview_meta_box', $custom_login->settings_page, 'advanced', 'high' );
+
+	add_meta_box( 'custom-login-general-meta-box', __( 'General Settings', 'custom-login' ), 'custom_login_general_meta_box', $custom_login->settings_page, 'normal', 'high' );
+	
+	add_meta_box( 'custom-login-advanced-meta-box', __( 'Advanced Settings', 'custom-login' ), 'custom_login_advanced_meta_box', $custom_login->settings_page, 'normal', 'high' );
 	
 	add_meta_box( 'custom-login-tabs-meta-box', __( 'TheFrosty Network', 'custom-login' ), 'custom_login_tabs_meta_box', $custom_login->settings_page, 'side', 'low' );
 }
@@ -250,21 +259,19 @@ function custom_login_activate_meta_box() { ?>
             <td>
 				<input id="custom" name="custom" type="checkbox" <?php checked( custom_login_get_setting( 'custom' ), true ); ?> value="true" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Check this box to use your own CSS, leave unchecked to use the default style.</span>
+                <span class="hide"><?php _e( 'Check this box to use your own CSS, leave unchecked to use the default style.', 'custom-login' ); ?></span>
             </td>
 		</tr>
-		<?php if ( get_option( 'users_can_register' ) ) { ?>
 		<tr>
 			<th>
             	<label for="gravatar"><?php _e( 'Gravatar:', 'custom-login' ); ?></label> 
             </th>
             <td>
-				<input id="gravatar" name="gravatar" type="checkbox" <?php checked( custom_login_get_setting( 'gravatar' ), true ); ?> value="true" />
+				<input id="gravatar" name="gravatar" type="checkbox" <?php checked( custom_login_get_setting( 'gravatar' ), true ); ?> value="true" <?php if ( get_option( 'users_can_register' ) ) echo 'disabled="disabled" readonly="readonly"'; ?> />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Check this box to activate a AJAX Gravatar image for registration.</span>
+                <span class="hide"><?php _e( 'Check this box to activate a AJAX Gravatar image for registration.', 'custom-login' ); ?> <em><?php if ( get_option( 'users_can_register' ) ) _e( 'Registration is currently disabled', 'custom-login' ); ?></em></span>
             </td>
 		</tr>
-        <?php } ?>
 	</table><!-- .form-table --><?php
 }
 
@@ -335,47 +342,30 @@ function custom_login_support_meta_box() { ?>
  *
  * @since 0.8
  */
-function custom_login_preview_meta_box() { ?>
+function custom_login_dashboard_meta_box() { ?>
 
-    <p style="font-weight: bold; text-align: center;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title="">Click here to see a live preview!</a></p><?php
+    <table class="form-table">
+        <tr>
+			<th>
+            	<label for="hide_dashboard"><?php _e( 'Dashboard:', 'custom-login' ); ?></label> 
+            </th>
+            <td>
+				<input id="hide_dashboard" name="hide_dashboard" type="checkbox" <?php checked( custom_login_get_setting( 'hide_dashboard' ), true ); ?> value="true" />
+                <span class="hide"><?php _e( 'Hide the dashboard widget?', 'custom-login' ); ?></span>
+            </td>
+		</tr>
+	</table><!-- .form-table --><?php
 }
 
 /**
- * Displays the gallery settings meta box.
+ * Displays the preview meta box.
  *
  * @since 0.8
  */
-function custom_login_advanced_meta_box() { ?>
+function custom_login_preview_meta_box() { ?>
 
-	<table class="form-table">
-		<tr>
-			<th>
-            	<label for="custom_css"><?php _e( 'Custom CSS:', 'custom-login' ); ?></label> 
-            </th>
-            <td>             
-                <textarea id="custom_css" name="custom_css" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ); ?></textarea>
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use this box to enter any custom CSS code that may not be shown below.<br />
-                <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code><br />
-                &sect; <strong>Example:</strong> <code>#snow { display:block; position:absolute; } #snow img { height:auto; width:100%; }</code><br />
-                &sect; example CSS code for custom html code example..
-                </span>
-            </td>
-   		</tr>
-        
-		<tr>
-			<th>
-            	<label for="custom_html"><?php _e( 'Custom HTML:', 'custom-login' ); ?></label> 
-            </th>
-            <td>             
-                <textarea id="custom_html" name="custom_html" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_html' ) ), 1, 0, 1 ); ?></textarea>
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box.<br />
-                <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;<br />&lt;div id="snow-bird"&gt; &lt;/div&gt;</code>
-                </span>
-            </td>
-   		</tr>
-	</table><!-- .form-table --><?php
+    <p style="font-weight: bold; text-align: center;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title=""><?php _e( 'Click here to see a live preview!', 'custom-login' ); ?></a></p>
+	<p style="text-align: center;"><small><?php _e( '(May not work as of WordPress 3.1.1)', 'custom-login' ); ?></small></p><?php
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,82 +384,82 @@ function custom_login_general_meta_box() { ?>
 		<?php if ( !is_version( '3.0' ) ) { //If it's less than version 3 ?>
 		<tr>
             <th>
-            	<label for="html_border_top_color">html border-top color:</label> 
+            	<label for="html_border_top_color"><?php _e( 'html border-top color:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="html_border_top_color" name="html_border_top_color" value="<?php echo custom_login_get_setting( 'html_border_top_color' ); ?>" size="10" maxlength="21" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; <strong>or</strong> RGB/A format.<br />
+                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; <strong>or</strong> RGB/A format.<br />
 				<strong>This is the top 15px border color section</strong><br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         <?php } else { //If it's greater than version 3 ?>
 		<tr>
             <th>
-            	<label for="html_border_top_background">html border-top background:</label> 
+            	<label for="html_border_top_background"><?php _e( 'html border-top background:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="upload_image" id="html_border_top_background" name="html_border_top_background" value="<?php echo custom_login_get_setting( 'html_border_top_background' ); ?>" size="40" />
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">This can replace the new background image at the top of the login screen. Upload an image and put the full path here.<br />
-                Suggested size: <code>1px X 31px</code> (for a repeating background).
+                <span class="hide"><?php _e( 'This can replace the new background image at the top of the login screen. Upload an image and put the full path here.<br />
+                Suggested size: <code>1px X 31px</code> (for a repeating background).', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         <?php } ?>
         
             <th>
-            	<label for="html_background_color">html background color:</label> 
+            	<label for="html_background_color"><?php _e( 'html background color:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="html_background_color" name="html_background_color" value="<?php echo custom_login_get_setting( 'html_background_color' ); ?>" size="10" maxlength="21" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; <strong>or</strong> RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>
+                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; <strong>or</strong> RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="html_background_url">html background url:</label> 
+            	<label for="html_background_url"><?php _e( 'html background url:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="upload_image" id="html_background_url" name="html_background_url" value="<?php echo custom_login_get_setting( 'html_background_url' ); ?>" size="40" />
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Upload an image and put the full path here.<br />
+                <span class="hide"><?php _e( 'Upload an image and put the full path here.<br />
                 Suggested size: <code>10px X 500px</code> (for a repeating background) or<br />
-                Full size image with a 100% stretched to fit window image.
+                Full size image with a 100% stretched to fit window image.', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="html_background_repeat">html background repeat:</label> 
+            	<label for="html_background_repeat"><?php _e( 'html background repeat:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input id="html_background_repeat" name="html_background_repeat" value="<?php echo custom_login_get_setting( 'html_background_repeat' ); ?>" size="40" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat.</code></span>
+                <span class="hide"><?php _e( 'Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat.</code>', 'custom-login' ); ?></span>
             </td>
    		</tr>
         <!-- Break -->
         
         <tr style="border-top: 1px solid #eee;">
             <th>
-            	<label for="login_form_logo">Logo:</label> 
+            	<label for="login_form_logo"><?php _e( 'Logo:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="upload_image" id="login_form_logo" name="login_form_logo" value="<?php echo custom_login_get_setting( 'login_form_logo' ); ?>" size="40" />
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Upload an image and put the full path here.<br />
-                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave black if not in use. NOTE: Will go <strong>above</strong> the form and it&prime;s border.
+                <span class="hide"><?php _e( 'Upload an image and put the full path here.<br />
+                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave black if not in use. NOTE: Will go <strong>above</strong> the form and it&prime;s border.', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>        
@@ -477,69 +467,69 @@ function custom_login_general_meta_box() { ?>
         
         <tr style="border-top: 1px solid #eee;">
             <th>
-            	<label for="login_form_background_color">login form background color:</label> 
+            	<label for="login_form_background_color"><?php _e( 'login form background color:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="login_form_background_color" name="login_form_background_color" value="<?php echo custom_login_get_setting( 'login_form_background_color' ); ?>" size="10" maxlength="21" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>
+                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="login_form_background">login form background url:</label> 
+            	<label for="login_form_background"><?php _e( 'login form background url:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="upload_image" id="login_form_background" name="login_form_background" value="<?php echo custom_login_get_setting( 'login_form_background' ); ?>" size="40" />
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Upload an image and put the full path here. Suggested size: <code>308px X 108px</code><br />
-                My suggestion: use a transparent .png or .gif. <a href="<?php echo CUSTOM_LOGIN_URL . 'library/psd/custom-login.psd' ?>">Download included .psd file</a>.
+                <span class="hide"><?php _e( 'Upload an image and put the full path here. Suggested size: <code>308px X 108px</code><br />
+                My suggestion: use a transparent .png or .gif. <a href="' . CUSTOM_LOGIN_URL . 'library/psd/custom-login.psd">Download included .psd file</a>.', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="login_form_border_radius">login form border radius:</label> 
+            	<label for="login_form_border_radius"><?php _e( 'login form border radius:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input id="login_form_border_radius" name="login_form_border_radius" value="<?php echo custom_login_get_setting( 'login_form_border_radius' ); ?>" size="3" maxlength="2" />px
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your border radius, ie <code>8</code> or <code>12</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
+                <span class="hide"><?php _e( 'Choose your border radius, ie <code>8</code> or <code>12</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!', 'custom-login' ); ?></span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="login_form_border">login form border thickness:</label> 
+            	<label for="login_form_border"><?php _e( 'login form border thickness:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input id="login_form_border" name="login_form_border" value="<?php echo custom_login_get_setting( 'login_form_border' ); ?>" size="2" maxlength="2" />px
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your border thickness, i.e. <code>1</code> or <code>2</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!</span>
+                <span class="hide"><?php _e( 'Choose your border thickness, i.e. <code>1</code> or <code>2</code>. Do not put &ldquo;<strong>px</strong>&rdquo;!', 'custom-login' ); ?></span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="login_form_border_color">login form border color:</label> 
+            	<label for="login_form_border_color"><?php _e( 'login form border color:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="login_form_border_color" name="login_form_border_color" value="<?php echo custom_login_get_setting( 'login_form_border_color' ); ?>" size="10" maxlength="21" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>
+                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         
         <tr>
             <th>
-            	<label for="login_form_box_shadow_1">login form box shadow:</label> 
+            	<label for="login_form_box_shadow_1"><?php _e( 'login form box shadow:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input id="login_form_box_shadow_1" name="login_form_box_shadow_1" value="<?php echo custom_login_get_setting( 'login_form_box_shadow_1' ); ?>" size="2" maxlength="2" />px
@@ -547,19 +537,57 @@ function custom_login_general_meta_box() { ?>
                 <input id="login_form_box_shadow_3" name="login_form_box_shadow_3" value="<?php echo custom_login_get_setting( 'login_form_box_shadow_3' ); ?>" size="2" maxlength="2" />px
                 <input class="color {hash:true,required:false,adjust:false}" id="login_form_box_shadow_4" name="login_form_box_shadow_4" value="<?php echo custom_login_get_setting( 'login_form_box_shadow_4' ); ?>" size="10" maxlength="21" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Choose your box shadow settings, i.e. <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em>.
+                <span class="hide"><?php _e( 'Choose your box shadow settings, i.e. <code>5px 5px 18px #464646</code> <em>example code - <code>offset, offset, blur, color</code></em>.', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
         <!-- Break -->
 		<tr style="border-top: 1px solid #eee;">
             <th>
-            	<label for="label_color">label font color:</label> 
+            	<label for="label_color"><?php _e( 'label font color:', 'custom-login' ); ?></label> 
             </th>
             <td>
                 <input class="color {hash:true,required:false,adjust:false}" id="label_color" name="label_color" value="<?php echo custom_login_get_setting( 'label_color' ); ?>" size="10" maxlength="21" /> <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide">Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>
+                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; or RGB/A format.<br />
+				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
+                </span>
+            </td>
+   		</tr>
+	</table><!-- .form-table --><?php
+}
+
+/**
+ * Displays the gallery settings meta box.
+ *
+ * @since 0.8
+ */
+function custom_login_advanced_meta_box() { ?>
+
+	<table class="form-table">
+		<tr>
+			<th>
+            	<label for="custom_css"><?php _e( 'Custom CSS:', 'custom-login' ); ?></label> 
+            </th>
+            <td>             
+                <textarea id="custom_css" name="custom_css" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ); ?></textarea>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'Use this box to enter any custom CSS code that may not be shown below.<br />
+                <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code><br />
+                &sect; <strong>Example:</strong> <code>#snow { display:block; position:absolute; } #snow img { height:auto; width:100%; }</code><br />
+                &sect; example CSS code for custom html code example..', 'custom-login' ); ?>
+                </span>
+            </td>
+   		</tr>
+        
+		<tr>
+			<th>
+            	<label for="custom_html"><?php _e( 'Custom HTML:', 'custom-login' ); ?></label> 
+            </th>
+            <td>             
+                <textarea id="custom_html" name="custom_html" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_html' ) ), 1, 0, 1 ); ?></textarea>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box.<br />
+                <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;<br />&lt;div id="snow-bird"&gt; &lt;/div&gt;</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
@@ -750,7 +778,14 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 		$feed = new SimplePie();
 		
 		$feed->set_feed_url( $attr );
-		$feed->enable_cache( false );
+		
+		if ( false !== strpos( $domain, '/' ) || 'localhost' == $domain || preg_match( '|[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+|', $domain ) ) {
+			$feed->enable_cache( false );
+		} else {
+			$feed->enable_cache( true );
+			$feed->set_cache_location( plugin_dir_path( __FILE__ ) . 'cache' );
+		}
+		
 		$feed->init();
 		$feed->handle_content_type();
 		//$feed->set_cache_location( trailingslashit( basename( __FILE__ ) ) . 'cache' );
