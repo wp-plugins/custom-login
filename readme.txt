@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.8.9.1 (5/9/11) =
+
+* Not disabling the gravatar feature if registration was disabled. Missing `!`.
+
 = Version 0.8.9 (5/8/11) =
 
 * Added checkbox to turn off dashboard.

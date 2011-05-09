@@ -67,9 +67,11 @@ function custom_login_settings_page_init() {
 	global $custom_login;
 	
 	$role = 'edit_plugins';
-
+	$img  = '<div style="width: 16px; height: 16px; overflow: hidden; display: block; float: left;"><img src="' . plugin_dir_url( __FILE__ ) . 'Sprite.jpg" style="background-position: -31px 0 !important" /></div>';
+	$img  = '';
+	
 	/* Create the theme settings page. */
-	$custom_login->settings_page = add_options_page( __( 'Custom Login', 'custom-login' ), __( 'Custom Login', 'custom-login' ), $role, 'custom-login', 'custom_login_settings_page' );
+	$custom_login->settings_page = add_options_page( __( 'Custom Login', 'custom-login' ), $img . __( 'Custom Login', 'custom-login' ), $role, 'custom-login', 'custom_login_settings_page' );
 
 	/* Register the default theme settings meta boxes. */
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_create_settings_meta_boxes' );
@@ -267,9 +269,9 @@ function custom_login_activate_meta_box() { ?>
             	<label for="gravatar"><?php _e( 'Gravatar:', 'custom-login' ); ?></label> 
             </th>
             <td>
-				<input id="gravatar" name="gravatar" type="checkbox" <?php checked( custom_login_get_setting( 'gravatar' ), true ); ?> value="true" <?php if ( get_option( 'users_can_register' ) ) echo 'disabled="disabled" readonly="readonly"'; ?> />
+				<input id="gravatar" name="gravatar" type="checkbox" <?php checked( custom_login_get_setting( 'gravatar' ), true ); ?> value="true" <?php if ( !get_option( 'users_can_register' ) ) echo 'disabled="disabled" readonly="readonly"'; ?> />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"><?php _e( 'Check this box to activate a AJAX Gravatar image for registration.', 'custom-login' ); ?> <em><?php if ( get_option( 'users_can_register' ) ) _e( 'Registration is currently disabled', 'custom-login' ); ?></em></span>
+                <span class="hide"><?php if ( !get_option( 'users_can_register' ) ) { _e( 'This feature only works for sites with registration enabled.', 'custom-login' ); } else { _e( 'Check this box to activate a AJAX Gravatar image for registration.', 'custom-login' ); } ?></span>
             </td>
 		</tr>
 	</table><!-- .form-table --><?php
