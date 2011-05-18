@@ -776,6 +776,8 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 	function thefrosty_network_feed( $attr, $count ) {		
 		global $wpdb;
 		
+		$domain = preg_replace( '|https?://([^/]+)|', '$1', get_option( 'siteurl' ) );
+		
 		include_once( ABSPATH . WPINC . '/class-simplepie.php' );
 		$feed = new SimplePie();
 		

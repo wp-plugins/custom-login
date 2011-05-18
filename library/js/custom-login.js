@@ -2,14 +2,14 @@ jQuery(document).ready(
 	function($) {
 		
 	$('.upload_image_button').click(function() {
-		formfield = $(this).parent().find('.upload_image').attr('name');
+		formfield = $(this).parent().find('.upload_image').prop('name');
 		//console.log(formfield);
 		tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
 		return false;
 	});
 	
 	window.send_to_editor = function(html) {
-		imgurl = $('img',html).attr('src');
+		imgurl = $('img',html).prop('src');
 		$('#' + formfield).val(imgurl);
 		tb_remove();
 	}
@@ -44,6 +44,6 @@ jQuery(document).ready(
 	// External links
 	$('a').filter(function() {
 		return this.hostname && this.hostname !== location.hostname;
-	}).attr('target','_blank');
+	}).prop('target','_blank');
 	
 });
