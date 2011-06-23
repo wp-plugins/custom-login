@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.9.10 (6/23/11) =
+
+* [BUG FIX] An error in the dashboard widget is casuing some large images. Sorry. Always escape.
+
 = Version 0.8.9.2 (5/18/11) =
 
 * Bug Fix: Missing $domain index.
