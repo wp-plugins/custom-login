@@ -270,6 +270,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
+= 0.8.10 =
+Important! Unescaping characters in the dashboard widget/
+
 = 0.8.8 =
 Miscellaneous errors fixed, bugs squashed.
 
