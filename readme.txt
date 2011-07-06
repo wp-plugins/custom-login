@@ -56,11 +56,15 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
-= Version 0.9.11 (6/23/11) =
+= Version 0.9.2 (7/6/11) =
+
+* Added `!important` to the `html` CSS attribute for background because of new CSS rule in WordPress 3.2.
+
+= Version 0.9.1 (6/23/11) =
 
 * Fixed admin jQuery and upload buttons (backwards compatible with jQuery < 1.6)
 
-= Version 0.9.10 (6/23/11) =
+= Version 0.9.0 (6/23/11) =
 
 * [BUG FIX] An error in the dashboard widget is casuing some large images. Sorry. Always escape.
 
