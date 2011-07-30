@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: http://austinpassy.com/wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. So simple a caveboy can do it! Now featuring a HTML &amp; CSS box for advanced users. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a>!
- * Version: 0.9.2
+ * Version: 0.9.3
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -124,13 +124,13 @@ function custom_login() {
 	
 	echo '<meta name="generator" content="Custom Login" />' . "\n";
 	
-	wp_enqueue_script( 'gravatar', CUSTOM_LOGIN_JS . 'gravatar.js', array( 'jquery' ), '1.2', false );
+	wp_register_script( 'gravatar', CUSTOM_LOGIN_JS . 'gravatar.js', array( 'jquery' ), '1.2', false );
 	
 	if ( ( custom_login_get_setting( 'custom_html' ) != '' || custom_login_get_setting( 'gravatar' ) != false ) && get_option( 'users_can_register' ) ) {
 		wp_print_scripts( array( 'jquery', 'gravatar' ) );
 	}
-	wp_enqueue_style( 'custom-login-defualt', CUSTOM_LOGIN_CSS . 'custom-login.css', false, 0.8, 'screen' );
-	wp_enqueue_style( 'custom-login', CUSTOM_LOGIN_CSS . 'custom-login.css.php', false, 0.8, 'screen' );
+	wp_register_style( 'custom-login-defualt', CUSTOM_LOGIN_CSS . 'custom-login.css', false, 0.8, 'screen' );
+	wp_register_style( 'custom-login', CUSTOM_LOGIN_CSS . 'custom-login.css.php', false, 0.8, 'screen' );
 	
 	if ( custom_login_get_setting( 'custom' ) != false ) {		
 		wp_print_styles( 'custom-login' );		

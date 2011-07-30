@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.9.3 (7/30/11) =
+
+* Updated `wp_enqueue_style` to `wp_register_style` for the custom CSS that causes issues in WordPress 3.3
+
 = Version 0.9.2 (7/6/11) =
 
 * Added `!important` to the `html` CSS attribute for background because of new CSS rule in WordPress 3.2.
@@ -277,6 +281,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 0.9.3 =
+WordPress 3.3 style registration compatible.
 
 = 0.8.10 =
 Important! Unescaping characters in the dashboard widget/
