@@ -56,6 +56,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.9.3 (9/8/11) =
+
+* Small bug in dashboard.
+* jQuery not loading in login head on some rare occasions.
+
 = Version 0.9.3 (7/30/11) =
 
 * Updated `wp_enqueue_style` to `wp_register_style` for the custom CSS that causes issues in WordPress 3.3
