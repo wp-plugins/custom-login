@@ -397,7 +397,7 @@ function custom_login_general_meta_box() { ?>
                 </span>
             </td>
    		</tr>
-        <?php } elseif !is_version( '3.3' ) { //If it's greater than version 3 ?>
+        <?php } elseif ( !is_version( '3.3' ) ) { //If it's greater than version 3 ?>
 		<tr>
             <th>
             	<label for="html_border_top_background"><?php _e( 'html border-top background:', 'custom-login' ); ?></label> 
