@@ -2,7 +2,7 @@
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error
-Requires at least: 2.9
+Requires at least: 3.2
 Tested up to: 3.3
 Stable tag: trunk
 
@@ -55,6 +55,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 0.9.6 (12/14/11) =
+
+* Updated minor CSS changes to WordPress 3.3.
+* Updated some spelling mistakes.
 
 = Version 0.9.5 (11/8/11) =
 
@@ -291,6 +296,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 0.9.6 =
+WordPress 3.3 style registration compatible. Some changes may effect your design, please update accordingly.
 
 = 0.9.3 =
 WordPress 3.3 style registration compatible.

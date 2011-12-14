@@ -123,10 +123,9 @@ function custom_login_settings() {
 			'login_form_box_shadow_1' => '5',
 			'login_form_box_shadow_2' => '5',
 			'login_form_box_shadow_3' => '18',
-
-
-
-			'login_form_box_shadow_4' => '#464646',		
+			'login_form_box_shadow_4' => '#464646',	
+		/* Form Padding */
+		'login_form_padding_top' => true,
 		/* Label color */
 		'label_color' => '#ffffff',
 	);
@@ -212,6 +211,7 @@ function custom_login_save_settings() {
 	$settings['login_form_box_shadow_2'] = esc_html( $_POST['login_form_box_shadow_2'] );
 	$settings['login_form_box_shadow_3'] = esc_html( $_POST['login_form_box_shadow_3'] );
 	$settings['login_form_box_shadow_4'] = esc_html( $_POST['login_form_box_shadow_4'] );
+	$settings['login_form_padding_top'] = ( ( isset( $_POST['login_form_padding_top'] ) ) ? true : false );
 	$settings['label_color'] = esc_html( $_POST['label_color'] );
 
 	/* Update the theme settings. */
@@ -397,7 +397,7 @@ function custom_login_general_meta_box() { ?>
                 </span>
             </td>
    		</tr>
-        <?php } else { //If it's greater than version 3 ?>
+        <?php } elseif !is_version( '3.3' ) { //If it's greater than version 3 ?>
 		<tr>
             <th>
             	<label for="html_border_top_background"><?php _e( 'html border-top background:', 'custom-login' ); ?></label> 
@@ -461,7 +461,7 @@ function custom_login_general_meta_box() { ?>
 				<input class="upload_image_button" type="button" value="Upload" />
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide"><?php _e( 'Upload an image and put the full path here.<br />
-                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave black if not in use. NOTE: Will go <strong>above</strong> the form and it&prime;s border.', 'custom-login' ); ?>
+                Suggested size: <code>310px X 70px</code>, which will replace WordPress logo. Be sure to leave blank if not in use. NOTE: Will go <strong>above</strong> the form and it&prime;s border.', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>        
@@ -543,7 +543,21 @@ function custom_login_general_meta_box() { ?>
                 </span>
             </td>
    		</tr>
+        
+        <tr>
+            <th>
+            	<label for="login_form_padding_top"><?php _e( 'login form padding fix:', 'custom-login' ); ?></label> 
+            </th>
+            <td>
+				<input id="login_form_padding_top" name="login_form_padding_top" type="checkbox" <?php checked( custom_login_get_setting( 'login_form_padding_top' ), true ); ?> value="true" />
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'Select the box if you would like the padding of the form to fit better.', 'custom-login' ); ?>
+                </span>
+            </td>
+   		</tr>
+        
         <!-- Break -->
+        
 		<tr style="border-top: 1px solid #eee;">
             <th>
             	<label for="label_color"><?php _e( 'label font color:', 'custom-login' ); ?></label> 
@@ -608,7 +622,7 @@ function custom_login_tabs_meta_box() { ?>
         <ul class="tabs">        
             <li class="t1 t"><a class="t1 tab">Austin Passy</a></li>
             <li class="t2 t"><a class="t2 tab">WordCamp<strong>LA</strong></a></li>
-            <li class="t3 t"><a class="t3 tab">TheFrosty (WP themes)</a></li> 
+            <li class="t3 t"><a class="t3 tab">&fnof;xThemes (WP themes)</a></li> 
             <li class="t4 t"><a class="t4 tab">wpWorkShop</a></li>  
             <li class="t5 t"><a class="t5 tab">Float-O-holics</a></li>  
             <li class="t6 t"><a class="t6 tab">Great Escape</a></li>   
@@ -620,7 +634,7 @@ function custom_login_tabs_meta_box() { ?>
 		if ( function_exists( 'thefrosty_network_feed' ) ) {
         	thefrosty_network_feed( 'http://feeds.feedburner.com/AustinPassy', '1' );
 			thefrosty_network_feed( 'http://feeds.feedburner.com/WordCampLA', '2' );
-        	thefrosty_network_feed( 'http://feeds.feedburner.com/TheFrosty', '3' ); 
+        	thefrosty_network_feed( 'http://feeds.feedburner.com/FXThemes', '3' ); 
        		thefrosty_network_feed( 'http://wpworkshop.la/feed', '4' );
         	thefrosty_network_feed( 'http://floatoholics.com/feed', '5' );
         	thefrosty_network_feed( 'http://greatescapecabofishing.com/feed', '6' ); 

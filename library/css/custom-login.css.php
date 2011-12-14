@@ -33,6 +33,12 @@ html {
 	background: <?php if ( custom_login_get_setting( 'html_background_color' ) != '' ) echo custom_login_get_setting( 'html_background_color' ); if ( custom_login_get_setting( 'html_background_url' ) != '' ) { ?> url( '<?php echo custom_login_get_setting( 'html_background_url' ); ?>' ) left top <?php echo custom_login_get_setting( 'html_background_repeat' ); } ?> !important;
 }
 
+<?php if ( custom_login_get_setting( 'html_background_url' ) != '' ) { ?>
+body.login {
+	background: transparent !important;
+    }
+<?php } ?>
+
 <?php if ( custom_login_get_setting( 'html_border_top_color' ) != '' && !is_version( '3.0' ) ) { ?>
 body.login {
 	border-top-color: <?php echo custom_login_get_setting( 'html_border_top_color' ); ?>;
@@ -41,7 +47,7 @@ body.login {
 
 <?php if ( custom_login_get_setting( 'html_border_top_background' ) != '' && !is_version( '3.0' ) ) { ?>
 body.login {
-	background: transparent url( '<?php echo custom_login_get_setting( 'html_border_top_background' ); ?>' ) left top repeat-x;
+	background: transparent url( '<?php echo custom_login_get_setting( 'html_border_top_background' ); ?>' ) left top repeat-x !important;
 }
 <?php } ?>
 
@@ -52,7 +58,11 @@ body.login {
 <?php } else { ?>
     background: transparent url( '<?php echo custom_login_get_setting( 'login_form_background' ); ?>' ) center top no-repeat;
 <?php } ?>
+<?php if ( custom_login_get_setting( 'login_form_padding_top' ) == true ) { ?>
+	padding-top:20px; }
+<?php } else { ?>
 	padding-top:100px; }
+<?php } ?>   
 
 /* Hides the default Wordpress Login content*/
 #login form {
@@ -75,7 +85,7 @@ body.login {
 	display: none;
 }
 <?php } if ( custom_login_get_setting( 'login_form_logo' ) != '' ) { ?>
-h1 a {
+.login h1 a {
 	background: url( '<?php echo custom_login_get_setting( 'login_form_logo' ); ?>' ) no-repeat scroll center top transparent;
 }
 <?php } ?>
