@@ -56,6 +56,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 0.9.7 (12/18/11) =
+
+* Updated save settings HTML.
+
 = Version 0.9.6.1 (12/14/11) =
 
 * forgot "()", sorry.

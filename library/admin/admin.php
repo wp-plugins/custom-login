@@ -652,9 +652,9 @@ function custom_login_tabs_meta_box() { ?>
  * @since 0.8
  */
 function custom_login_settings_update_message() { ?>
-	<p class="updated fade below-h2" style="padding: 5px 10px;">
-		<strong><?php _e( 'Don&prime;t you feel good. You just saved me.', 'custom-login' ); ?></strong>
-	</p><?php
+	<div class="updated fade">
+		<p><strong><?php _e( 'Don&prime;t you feel good. You just saved me.', 'custom-login' ); ?></strong></p>
+	</div><?php
 }
 
 /**
