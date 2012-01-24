@@ -40,7 +40,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Is there a PRO version? =
-Why yes there is, you can purchase the [http://thefrosty.com/shop/plugins/custom-login-pro](Pro) version here starting at just $10.
+Why yes there is, you can purchase the [Pro](http://thefrosty.com/shop/plugins/custom-login-pro) version here starting at just $10.
 
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://2010.wordcamp.la/wp-login.php?action=login).
