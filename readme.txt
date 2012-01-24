@@ -10,8 +10,7 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Visit the plugin page: [http://austinpassy.com/wordpress-plugins/custom-login](http://austinpassy.com/wordpress-plugins/custom-login)
-Visit my portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
+Join in on the [http://austinpassy.com/wordpress-plugins/custom-login](conversation) on my personal blog. I've also just released a [http://thefrosty.com/shop/plugins/custom-login-pro](PRO) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -21,6 +20,12 @@ Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 3. Read more about the [Custom Login Plugin](http://austinpassy.com/wordpress-plugins/custom-login/) & [most recent blog post](http://austinpassy.com/2010/09/custom-login-version-0-8/).
 
 **For those looking to showoff your login screen, check out the [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
+
+= Important links =
+
+* My portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
+* My Blog: [http:/austinpassy.com/](http://austinpassy.com/)
+* Twitter: [http:/twitter.com/TheFrosty](@TheFrosty)
 
 == Installation ==
 
@@ -33,6 +38,9 @@ Follow the steps below to install the plugin.
 
 
 == Frequently Asked Questions ==
+
+= Is there a PRO version? =
+Why yes there is, you can purchase the [http://thefrosty.com/shop/plugins/custom-login-pro](Pro) version here starting at just $10.
 
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://2010.wordcamp.la/wp-login.php?action=login).
