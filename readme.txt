@@ -10,7 +10,7 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [http://austinpassy.com/wordpress-plugins/custom-login](conversation) on my personal blog. I've also just released a [http://thefrosty.com/shop/plugins/custom-login-pro](PRO) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/shop/plugins/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -25,7 +25,7 @@ Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 
 * My portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
 * My Blog: [http:/austinpassy.com/](http://austinpassy.com/)
-* Twitter: [http:/twitter.com/TheFrosty](@TheFrosty)
+* Twitter: [@TheFrosty](http:/twitter.com/TheFrosty)
 
 == Installation ==
 
