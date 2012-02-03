@@ -67,7 +67,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 = Version 0.9.8 (02/02/12) =
 
-*
+* readme.txt update.
+* Description text update.
+* Admin bug fix.
 
 = Version 0.9.7 (12/18/11) =
 
