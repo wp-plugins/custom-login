@@ -336,6 +336,10 @@ function custom_login_support_meta_box() { ?>
 			<th><?php _e( 'Support:', 'custom-login' ); ?></th>
 			<td><?php _e( '<a href="http://wordpress.org/tags/custom-login">WordPress support forums</a>.', 'custom-login' ); ?></td>
 		</tr>
+		<tr>
+			<th><?php _e( 'Go PRO:', 'custom-login' ); ?></th>
+			<td><?php _e( '<a href="http://thefrosty.com/product/custom-login-pro">Custom Login PRO</a>.', 'custom-login' ); ?></td>
+		</tr>
 	</table><!-- .form-table --><?php
 }
 

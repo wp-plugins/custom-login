@@ -25,7 +25,7 @@ Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 
 * My portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
 * My Blog: [http:/austinpassy.com/](http://austinpassy.com/)
-* Twitter: [@TheFrosty](http:/twitter.com/TheFrosty)
+* Twitter: @[TheFrosty](https:/twitter.com/TheFrosty)
 
 == Installation ==
 
@@ -34,22 +34,23 @@ Follow the steps below to install the plugin.
 1. Upload the `custom-login` directory to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Settings/custom-login to edit your settings.
-4. **Be sure to *check* active** to remove the *default* login screen.
+4. **Be sure to *check* activate** on the settings page to remove the *default* login design.
+5. Design away.
 
 
 == Frequently Asked Questions ==
 
 = Is there a PRO version? =
-Why yes there is, you can purchase the [Pro](http://thefrosty.com/shop/plugins/custom-login-pro) version here starting at just $10.
+Why yes there is, you can purchase the [PRO](http://thefrosty.com/shop/plugins/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com) starting at just $10.
 
 = Why create this plugin? =
-I created this plugin to allow for custom login of any WordPress login screen. See working example at: [WordCamp.LA](http://2010.wordcamp.la/wp-login.php?action=login).
+I created this plugin to allow for custom login of any WordPress login screen. See working example at: [TheFrosty](http://thefrosty.com/wp-login.php?action=login).
 
 = Where can I upload and share my cool login screen? =
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
 
 = I don't like the default login =
-Well you should check the first box `Use your own CSS` and customize **your** login screen!
+Well you should check the first box "`Use your own CSS`" and customize **your** login screen!
 
 = I think i want to uninstall =
 Just de-active.
@@ -63,6 +64,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 0.9.8 (02/02/12) =
+
+*
 
 = Version 0.9.7 (12/18/11) =
 
