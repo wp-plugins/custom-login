@@ -10,7 +10,7 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/shop/plugins/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/product/wordpress-custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -41,7 +41,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Is there a PRO version? =
-Why yes there is, you can purchase the [PRO](http://thefrosty.com/shop/plugins/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com) starting at just $10.
+Why yes there is, you can purchase the [PRO](http://thefrosty.com/product/wordpress-custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com) starting at just $10.
 
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [TheFrosty](http://thefrosty.com/wp-login.php?action=login).
@@ -64,6 +64,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 0.9.8.1 (02/17/12) =
+
+* readme.txt links updated.
 
 = Version 0.9.8 (02/02/12) =
 
