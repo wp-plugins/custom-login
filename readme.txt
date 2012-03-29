@@ -1,16 +1,16 @@
 === Custom Login ===
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
-Tags: admin, branding, customization, custom login, login, logo, error, login error
+Tags: admin, branding, customization, custom login, login, logo, error, login error, custom login pro
 Requires at least: 3.2
-Tested up to: 3.3
+Tested up to: 3.4
 Stable tag: trunk
 
 Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/product/wordpress-custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types and new default designs!
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs.
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -21,7 +21,7 @@ Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 
 **For those looking to showoff your login screen, check out the [Flickr group](http://flickr.com/groups/custom-login/)! Share you designs with the community!**
 
-= Important links =
+= links =
 
 * My portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
 * My Blog: [http:/austinpassy.com/](http://austinpassy.com/)
@@ -41,7 +41,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Is there a PRO version? =
-Why yes there is, you can purchase the [PRO](http://thefrosty.com/product/wordpress-custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com) starting at just $10.
+Why yes there is, you can purchase the [PRO](http://thefrosty.com/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com).
 
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [TheFrosty](http://thefrosty.com/wp-login.php?action=login).
@@ -64,6 +64,18 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 1.0 (03/29/12) =
+
+* New default login page (if you've not *activated* the custom `CSS`).
+* Added update box to settings page. (If you've already purchased the [PRO](http://thefrosty.com/custom-login-pro) upgrade, login and retreive the download link)
+* Cleaned up the dashboard.
+* Escaping thefrosty_network_feed().
+* Updated Sprite.
+
+= Version 0.9.8.2 (03/04/12) =
+
+* Added Turkish translation.
 
 = Version 0.9.8.1 (02/17/12) =
 
@@ -323,6 +335,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 1.0 =
+Added download script for Custom Login Pro users.
 
 = 0.9.6 =
 WordPress 3.3 style registration compatible. Some changes may effect your design, please update accordingly.
