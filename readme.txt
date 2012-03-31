@@ -72,6 +72,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 * Cleaned up the dashboard.
 * Escaping thefrosty_network_feed().
 * Updated Sprite.
+* Added Spanish translation. (props Alejandro Arcos)
 
 = Version 0.9.8.2 (03/04/12) =
 
