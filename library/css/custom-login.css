@@ -125,7 +125,7 @@ body:after {
 	-o-transition: all .5s linear;
 	transition: all .5s linear;
 }
-#login form:hover {
+#login form:hover, #login form:active {
 	background: #111;
 	border: 1px solid #aaa;
 	-moz-box-shadow: 0 0 28px 15px #ddd;

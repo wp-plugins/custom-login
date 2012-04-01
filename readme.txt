@@ -65,7 +65,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
-= Version 1.0 (03/29/12) =
+= Version 1.0.1 (04/01/12) =
+
+* Fixed error saving settings in some cases.
+* Moved upgrade script to a new page.
+
+= Version 1.0.0 (03/29/12) =
 
 * New default login page (if you've not *activated* the custom `CSS`).
 * Added update box to settings page. (If you've already purchased the [PRO](http://thefrosty.com/custom-login-pro) upgrade, login and retreive the download link)
@@ -336,6 +341,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Fixed save settings and moved upgrade script to new page.
 
 = 1.0 =
 Added download script for Custom Login Pro users.
