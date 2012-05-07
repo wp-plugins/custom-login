@@ -65,6 +65,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 1.0.2 (04/01/12) =
+
+* Updated `pot` file.
+* Updated Turkish launguage file.
+* If cache folder isn't writable chmod `666`.
+
 = Version 1.0.1 (04/01/12) =
 
 * Fixed error saving settings in some cases.

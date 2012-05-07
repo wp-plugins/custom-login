@@ -1003,7 +1003,9 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 		$feed->set_feed_url( $attr );
 		$feed->enable_cache( true );
 		$feed->set_cache_duration(60*60*24*7);
-		$feed->set_cache_location( plugin_dir_path( __FILE__ ) . 'cache' );
+		$cache_folder = plugin_dir_path( __FILE__ ) . 'cache';
+		if ( !is_writable( $cache_folder ) ) chmod( $cache_folder, 0666 );
+		$feed->set_cache_location( $cache_folder );
 		
 		$feed->init();
 		$feed->handle_content_type();
