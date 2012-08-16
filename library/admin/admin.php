@@ -486,6 +486,10 @@ function custom_login_support_meta_box() { ?>
             <td><?php _e( '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X4JPT57AWMTYW">PayPal</a>.', 'custom-login' ); ?></td>
         </tr>
         <tr>
+            <th><?php _e( 'Flattr:', 'custom-login' ); ?></th>
+            <td><a href="http://flattr.com/thing/846561/Custom-Login" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="<?php _e( 'Flattr:', 'custom-login' ); ?>" title="<?php _e( 'Flattr:', 'custom-login' ); ?>" /></a></td>
+        </tr>
+        <tr>
             <th><?php _e( 'Rate:', 'custom-login' ); ?></th>
             <td><?php _e( '<a href="http://wordpress.org/extend/plugins/custom-login/">This plugin on WordPress.org</a>.', 'custom-login' ); ?></td>
         </tr>
