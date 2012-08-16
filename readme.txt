@@ -68,6 +68,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 = Version 1.0.3 (08/16/12) =
 
 * Updated the default CSS.
+* Updated admin feeds.
 
 = Version 1.0.2 (04/01/12) =
 
