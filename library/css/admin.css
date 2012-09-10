@@ -1,9 +1,9 @@
 /* Theme settings page. */
-.form-table th {
-	width: 20%;
+.form-table.side th {
+	width: 20% !important;
 	}
 	#custom-login-general-meta-box .form-table th {
-		width: 33%;
+		width: 33% !important;
 	}
 	
 .upload_image {

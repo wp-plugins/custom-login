@@ -65,6 +65,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 1.0.4 (09/10/12) =
+
+* Added presstrends.io
+
 = Version 1.0.3 (08/16/12) =
 
 * Updated the default CSS.

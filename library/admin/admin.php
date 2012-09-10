@@ -108,8 +108,9 @@ function custom_login_settings() {
 		'custom' => false,
 		/* Gravatar */
 		'gravatar' => false,
-		/* Dashboard */		
+		/* Core */		
 		'hide_dashboard' => false,
+		'disable_presstrends' => false,
 		/* Upgrade */		
 		'hide_upgrade' => false,
 		'upgrade_complete' => false, //if the upgrade is good, hide it all forever.
@@ -234,6 +235,8 @@ function custom_login_save_settings() {
 	$settings['custom'] = ( ( isset( $_POST['custom'] ) ) ? true : false );
 	$settings['gravatar'] = ( ( isset( $_POST['gravatar'] ) ) ? true : false );
 	$settings['hide_dashboard'] = ( ( isset( $_POST['hide_dashboard'] ) ) ? true : false );
+	$settings['disable_presstrends'] = ( ( isset( $_POST['disable_presstrends'] ) ) ? true : false );
+	$settings['hide_upgrade'] = ( ( isset( $_POST['hide_upgrade'] ) ) ? true : false );
 	$settings['custom_css'] = esc_html( $_POST['custom_css'] );
 	$settings['custom_html'] = esc_html( $_POST['custom_html'] );
 	$settings['html_border_top_color'] = ( ( isset( $_POST['html_border_top_color'] ) ) ? esc_html( $_POST['html_border_top_color'] ) : '' ); // > 3.0.x
@@ -276,7 +279,7 @@ function custom_login_create_settings_meta_boxes() {
 	
 	add_meta_box( 'custom-login-support-meta-box', __( 'Support Custom Login', 'custom-login' ), 'custom_login_support_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
-	add_meta_box( 'custom-login-dasboard-meta-box', __( 'Dashboard Widget', 'custom-login' ), 'custom_login_dashboard_meta_box', $custom_login->settings_page, 'advanced', 'high' );
+	add_meta_box( 'custom-login-dasboard-meta-box', __( 'Core Settings', 'custom-login' ), 'custom_login_dashboard_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
 	add_meta_box( 'custom-login-preview-meta-box', __( 'Preview your work, <em>Master</em>', 'custom-login' ), 'custom_login_preview_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
@@ -299,7 +302,7 @@ function custom_login_create_settings_meta_boxes() {
  */
 function custom_login_activate_meta_box() { ?>
 
-	<table class="form-table">
+	<table class="form-table side">
 		<tr>
 			<th>
             	<label for="custom"><?php _e( 'Activate:', 'custom-login' ); ?></label> 
@@ -342,7 +345,7 @@ function custom_login_announcement_meta_box() { ?>
 function custom_login_about_meta_box() {
 	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' ); ?>
 
-	<table class="form-table">
+	<table class="form-table side">
 		<tr>
 			<th><?php _e( 'Plugin:', 'custom-login' ); ?></th>
 			<td><?php echo $plugin_data['Title']; ?> <?php echo $plugin_data['Version']; ?></td>
@@ -480,7 +483,7 @@ function custom_login_upgrade_link_meta_box() {
  */
 function custom_login_support_meta_box() { ?>
 
-	<table class="form-table">
+	<table class="form-table side">
         <tr>
             <th><?php _e( 'Donate:', 'custom-login' ); ?></th>
             <td><?php _e( '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X4JPT57AWMTYW">PayPal</a>.', 'custom-login' ); ?></td>
@@ -515,14 +518,18 @@ function custom_login_support_meta_box() { ?>
  */
 function custom_login_dashboard_meta_box() { ?>
 
-    <table class="form-table">
+    <table class="form-table side">
         <tr>
-			<th>
-            	<label for="hide_dashboard"><?php _e( 'Dashboard:', 'custom-login' ); ?></label> 
-            </th>
             <td>
 				<input id="hide_dashboard" name="hide_dashboard" type="checkbox" <?php checked( custom_login_get_setting( 'hide_dashboard' ), true ); ?> value="true" />
                 <span class="hide"><?php _e( 'Hide the dashboard widget?', 'custom-login' ); ?></span>
+            </td>
+		</tr>
+        <tr>
+            <td>
+				<input id="disable_presstrends" name="disable_presstrends" type="checkbox" <?php checked( custom_login_get_setting( 'disable_presstrends' ), true ); ?> value="true" />
+                <span class="hide"><?php _e( 'Disable <a href="http://presstrends.io">presstrends.io</a>', 'custom-login' ); ?></span>
+                <?php echo CUSTOM_LOGIN_FILE; ?>
             </td>
 		</tr>
 	</table><!-- .form-table --><?php

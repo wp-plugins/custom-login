@@ -3,7 +3,7 @@
  * Plugin Name: Custom Login lite
  * Plugin URI: http://austinpassy.com/wordpress-plugins/custom-login
  * Description: A simple way to customize your WordPress login screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. So simple a neanderthal can do it! Now featuring a HTML &amp; CSS box for advanced users. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or upgrade to the <a href="http://thefrosty.com/custom-login-pro/">PRO</a> version!
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Austin Passy
  * Author URI: http://frostywebdesigns.com
  *
@@ -35,7 +35,8 @@ function custom_login_setup() {
 	define( 'CUSTOM_LOGIN', 'custom-login' );
 	define( 'CUSTOM_LOGIN_SETTINGS', 'custom_login_settings' );
 	define( 'CUSTOM_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'CUSTOM_LOGIN_ADMIN', CUSTOM_LOGIN_DIR . '/library/admin/' );
+	define( 'CUSTOM_LOGIN_ADMIN', CUSTOM_LOGIN_DIR . 'library/admin/' );
+	define( 'CUSTOM_LOGIN_FILE', __FILE__ );
 
 	/* Set constant path to the Cleaner Gallery plugin URL. */
 	define( 'CUSTOM_LOGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -47,6 +48,9 @@ function custom_login_setup() {
 		
 		if ( custom_login_get_setting( 'hide_dashboard' ) != true )
 			require_once( CUSTOM_LOGIN_ADMIN . 'dashboard.php' );
+		
+		if ( custom_login_get_setting( 'disable_presstrends' ) != true )
+			require_once( CUSTOM_LOGIN_ADMIN . 'presstrends.php' );
 	}
 	
 	/* Add a settings page to the plugin menu */
