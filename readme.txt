@@ -3,14 +3,14 @@ Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error, custom login pro
 Requires at least: 3.2
-Tested up to: 3.4
+Tested up to: 3.5
 Stable tag: trunk
 
 Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://thefrosty.com/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com). New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs.
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://extendd.com/plugin/custom-login-pro/) version on [Extendd.com](http://xtendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs.
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -41,7 +41,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = Is there a PRO version? =
-Why yes there is, you can purchase the [PRO](http://thefrosty.com/custom-login-pro) version on [http://thefrosty.com](http://thefrosty.com).
+Why yes there is, you can purchase the [PRO](http://extendd.com/plugin/custom-login-pro/) version on [http://extendd.com](http://extendd.com).
 
 = Why create this plugin? =
 I created this plugin to allow for custom login of any WordPress login screen. See working example at: [TheFrosty](http://thefrosty.com/wp-login.php?action=login).
@@ -64,6 +64,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 1.0.4.1 (12/3/12) =
+
+* Updated links.
+* Updated dashboard.
+
 
 = Version 1.0.4 (09/10/12) =
 
