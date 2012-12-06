@@ -65,6 +65,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 1.0.4.2 (12/6/12) =
+
+* Update fixes error in PHP versions > 5.3
+
 = Version 1.0.4.1 (12/3/12) =
 
 * Updated links.
@@ -362,6 +366,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= Version 1.0.4.2 =
+Fixed PHP > 5.3 error.
 
 = 1.0.1 =
 Fixed save settings and moved upgrade script to new page.

@@ -506,7 +506,7 @@ function custom_login_support_meta_box() { ?>
 		</tr>
 		<tr class="alt">
 			<th><?php _e( 'Go PRO:', 'custom-login' ); ?></th>
-			<td><?php _e( '<a href="http://thefrosty.com/custom-login-pro/?ref=custom-login&url='.get_home_url().'">Custom Login PRO</a>.', 'custom-login' ); ?></td>
+			<td><?php _e( '<a href="http://extendd.com/plugin/custom-login-pro/?ref=custom-login&url='.get_home_url().'">Custom Login PRO</a>.', 'custom-login' ); ?></td>
 		</tr>
 	</table><!-- .form-table --><?php
 }
