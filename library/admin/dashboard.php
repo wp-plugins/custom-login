@@ -124,11 +124,11 @@ class the_frosty_dashboard {
 				$class = str_replace( '~r', '', $class );
 				$class = str_replace( '~', ' ', $class );
 				$class = trim( $class );
-				list( $class, $therest ) = explode( ' ', $class );		
+				list( $class, $therest ) = explode( ' ', $class );
 				// Redundant, I know. Can you make a preg_replace for this?
 				
 				$url = preg_replace( '/#.*/', '', esc_url( $item->get_permalink(), null, 'display' ) );
-				$content .= '<div class="frosty-image"><span class="' . strtolower( trim( $class ) ) . '">&nbsp;</span></div>';
+				$content .= '<div class="frosty-image"><span class="' . strtolower( $class ) . '">&nbsp;</span></div>';
 				$content .= '<li>';
 				$content .= '<a class="rsswidget" href="' . $url . '">' . esc_html( $item->get_title() ) . '</a> ';
 				$content .= '<span style="font-size:10px; color:#aaa;">' . esc_attr( $item->get_date('F, jS Y') ) . '</span>';

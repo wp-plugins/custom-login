@@ -2,7 +2,7 @@
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error, custom login pro
-Requires at least: 3.2
+Requires at least: 3.4
 Tested up to: 3.5
 Stable tag: trunk
 
@@ -10,7 +10,7 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://extendd.com/plugin/custom-login-pro/) version on [Extendd.com](http://xtendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs.
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. I've also just released a [PRO](http://extendd.com/plugin/custom-login-pro/) version on [Extendd.com](http://extendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs.
 
 Activate this plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
 Now featureing a HTML &amp; CSS box for advanced users to up the customization!
@@ -26,6 +26,8 @@ Now featureing a HTML &amp; CSS box for advanced users to up the customization!
 * My portfolio: [http:/frostywebdesigns.com/](http://frostywebdesigns.com/)
 * My Blog: [http:/austinpassy.com/](http://austinpassy.com/)
 * Twitter: @[TheFrosty](https:/twitter.com/TheFrosty)
+* Twitter: @[Extendd](https:/twitter.com/WPExtendd)
+* **Contribute on [GitHub](https://github.com/thefrosty/custom-login)**
 
 == Installation ==
 
@@ -44,7 +46,7 @@ Follow the steps below to install the plugin.
 Why yes there is, you can purchase the [PRO](http://extendd.com/plugin/custom-login-pro/) version on [http://extendd.com](http://extendd.com).
 
 = Why create this plugin? =
-I created this plugin to allow for custom login of any WordPress login screen. See working example at: [TheFrosty](http://thefrosty.com/wp-login.php?action=login).
+I created this plugin to allow for custom login of any WordPress login screen. See working example on: [Extendd.com](http://extendd.com/wp-login.php?action=login).
 
 = Where can I upload and share my cool login screen? =
 Check out the newly created [Flickr group](http://flickr.com/groups/custom-login/)! Upload and add it to our pool!
@@ -65,9 +67,19 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
-= Version 1.0.4.2 (12/6/12) =
+= Version 1.1.0 (1/8/13) =
 
-* Update fixes error in PHP versions > 5.3
+* Minimun required WordPress version is now *3.4*!
+* Updated: `jscolor.js` to version `1.4.0`.
+* Updated: Added new textarea autosize script. See [https://github.com/jackmoore/autosize](https://github.com/jackmoore/autosize)
+* Changed: HTML background repeat is now a dropdown
+* Added: Background size option. [request](http://wordpress.org/support/topic/plugin-custom-login-resize-background-image?replies=2), [request](http://wordpress.org/support/topic/plugin-custom-login-love-the-plugin-and-a-small-wish-list?replies=1)
+* Removed registered CSS and added inline style to remove WordPress double loading. Should increase speed by 2X.
+* Change: Modify user role from `edit_plugins` to `manage_options` to allow `define('DISALLOW_FILE_EDIT', true);` as per [issue](http://wordpress.org/support/topic/plugin-custom-login-disallow_file_edit-breaks-plugin?replies=3#post-3702957)
+* Removed: CHMOD issue. See [issue](http://wordpress.org/support/topic/errors-15?replies=2#post-3702984). Replaces with `site_transient`.
+* Removed upgrade to [Pro](http://extendd.com/plugin/custom-login-pro/) script and pages.
+* Fixed: possbile PHP > 5.4 object warning [issue](http://wordpress.org/support/topic/custom-login-and-php-54?replies=3), [issue](http://wordpress.org/support/topic/plugin-custom-login-problem-after-installation?replies=2#post-3702975). Let me know if you still get errors.
+ 
 
 = Version 1.0.4.1 (12/3/12) =
 
@@ -366,9 +378,6 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
-
-= Version 1.0.4.2 =
-Fixed PHP > 5.3 error.
 
 = 1.0.1 =
 Fixed save settings and moved upgrade script to new page.

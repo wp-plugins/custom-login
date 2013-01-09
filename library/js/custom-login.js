@@ -41,11 +41,8 @@ jQuery(document).ready(
 			$(this).next().next().toggleClass('hide').toggleClass('show').toggle(380);
 		});
 		
-		$('textarea').autoResize({
-			// No animation:
-			animate: false,
-			// Extra space:
-			extraSpace: 25
+		$('textarea').autosize({
+			append	: "\n"
 		});
 		
 		// External links

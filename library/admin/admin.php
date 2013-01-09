@@ -32,11 +32,11 @@ function custom_login_admin_init() {
 function custom_login_scripts() {
 	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
 	
-	wp_register_script( 'autoresize', CUSTOM_LOGIN_JS . 'autoresize.min.js', array( 'jquery' ), '1.04', false );
+	wp_register_script( 'autosize', CUSTOM_LOGIN_JS . 'jquery.autosize.js', array( 'jquery' ), '1.15.3', false );
 	
 	wp_register_script( 'custom-login', CUSTOM_LOGIN_JS . 'custom-login.js', array( 'jquery' ), $plugin_data['Version'], false );
 	
-	wp_register_script( 'jscolor', CUSTOM_LOGIN_JS . 'jscolor.js', false, '1.3.1', false );
+	wp_register_script( 'jscolor', CUSTOM_LOGIN_JS . 'jscolor.js', false, '1.4.0', false );
 	
 	wp_register_script( 'gravatar', CUSTOM_LOGIN_JS . 'gravatar.js', array( 'jquery' ), '1.2', false );
 }
@@ -48,10 +48,6 @@ function custom_login_scripts() {
  */
 function custom_login_styles() {	
 	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' );
-	
-	wp_register_style( 'custom-login-defualt', CUSTOM_LOGIN_CSS . 'custom-login.css', false, $plugin_data['Version'], 'screen' );
-	
-	wp_register_style( 'custom-login', CUSTOM_LOGIN_CSS . 'custom-login.css.php', false, $plugin_data['Version'], 'screen' );
 	
 	wp_register_style( 'custom-login-tabs', CUSTOM_LOGIN_CSS . 'tabs.css', false, $plugin_data['Version'], 'screen' );
 	
@@ -66,32 +62,24 @@ function custom_login_styles() {
 function custom_login_settings_page_init() {
 	global $custom_login;
 	
-	$role = 'edit_plugins';
+	$role = 'manage_options';
 	$img  = '<div style="width: 16px; height: 16px; overflow: hidden; display: block; float: left;"><img src="' . plugin_dir_url( __FILE__ ) . 'Sprite.jpg" style="background-position: -31px 0 !important" /></div>';
 	$img  = '';
 	
 	/* Create the theme settings page. */
 	$custom_login->settings_page = add_options_page( __( 'Custom Login', 'custom-login' ), $img . __( 'Custom Login', 'custom-login' ), $role, 'custom-login', 'custom_login_settings_page' );
-	$custom_login->upgrade_page = add_submenu_page( 'options-general.php', __( 'Custom Login Upgrade', 'custom-login' ), $img . __( 'Upgrade', 'custom-login' ), $role, 'custom-login-upgrade-check', 'custom_login_upgrade_page' );
-	$custom_login->upgrade_page_link = remove_submenu_page( 'options-general.php', 'custom-login-upgrade-check' );
 
 	/* Register the default theme settings meta boxes. */
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_create_settings_meta_boxes' );
-	add_action( "load-{$custom_login->upgrade_page}", 'custom_login_create_settings_meta_boxes' );
 
 	/* Make sure the settings are saved. */
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_load_settings_page' );
-	//add_action( "load-{$custom_login->upgrade_page}", 'custom_login_load_upgrade_page' );
 
 	/* Load the JavaScript and stylehsheets needed for the theme settings. */
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_settings_page_enqueue_script' );
 	add_action( "load-{$custom_login->settings_page}", 'custom_login_settings_page_enqueue_style' );
 	
-	add_action( "load-{$custom_login->upgrade_page}", 'custom_login_settings_page_enqueue_script' );
-	add_action( "load-{$custom_login->upgrade_page}", 'custom_login_settings_page_enqueue_style' );
-	
 	add_action( "admin_head-{$custom_login->settings_page}", 'custom_login_settings_page_load_scripts' );
-	add_action( "admin_head-{$custom_login->upgrade_page}", 'custom_login_settings_page_load_scripts' );
 }
 
 /**
@@ -123,7 +111,8 @@ function custom_login_settings() {
 		'html_border_top_background' => '', //WP > 3.x
 		'html_background_color' => '',
 		'html_background_url' => '',
-		'html_background_repeat' => 'repeat-x',		
+		'html_background_repeat' => 'repeat-x',	
+		'html_background_size' => 'cover',	
 		/* Login form */
 		'login_form_logo' => '',
 		'login_form_border_top_color' => '',
@@ -192,33 +181,6 @@ function custom_login_load_settings_page() {
 	}
 }
 
-/**
- * Function run at load time of the settings page, which is useful for hooking save functions into.
- *
- * @since 1.0.1
- */
-function custom_login_load_upgrade_page() {
-	global $custom_login;
-
-	/* Get theme settings from the database. */
-	$settings = get_option( 'custom_login_settings' );
-
-	/* If the form has been submitted, check the referer and execute available actions. */
-	if ( isset( $_POST['custom-login-authorization-form'] ) ) {
-
-		/* Make sure the form is valid. */
-		check_admin_referer( 'custom-login-upgrade-page' );
-
-		/* Available hook for saving settings. */
-		$settings['hide_upgrade'] = ( ( isset( $_POST['hide_upgrade'] ) ) ? true : false );
-		$updated = update_option( 'custom_login_settings', $settings );
-
-		/* Redirect the page so that the new settings are reflected on the settings page. */
-		wp_redirect( admin_url( 'options-general.php?page=' . $custom_login->upgrade_page_link[2] ) );
-		exit;
-	}
-}
-
 
 /**
  * Validates the plugin settings.
@@ -237,13 +199,17 @@ function custom_login_save_settings() {
 	$settings['hide_dashboard'] = ( ( isset( $_POST['hide_dashboard'] ) ) ? true : false );
 	$settings['disable_presstrends'] = ( ( isset( $_POST['disable_presstrends'] ) ) ? true : false );
 	$settings['hide_upgrade'] = ( ( isset( $_POST['hide_upgrade'] ) ) ? true : false );
+	
 	$settings['custom_css'] = esc_html( $_POST['custom_css'] );
 	$settings['custom_html'] = esc_html( $_POST['custom_html'] );
+	
 	$settings['html_border_top_color'] = ( ( isset( $_POST['html_border_top_color'] ) ) ? esc_html( $_POST['html_border_top_color'] ) : '' ); // > 3.0.x
-	$settings['html_border_top_background'] = esc_html( $_POST['html_border_top_background'] );
+	$settings['html_border_top_background'] = isset( $_POST['html_border_top_background'] ) ? esc_html( $_POST['html_border_top_background'] ) : '';
 	$settings['html_background_color'] = esc_html( $_POST['html_background_color'] );
 	$settings['html_background_url'] = esc_html( $_POST['html_background_url'] );
-	$settings['html_background_repeat'] = esc_html( $_POST['html_background_repeat'] );
+	$settings['html_background_repeat'] = esc_attr( $_POST['html_background_repeat'] );
+	$settings['html_background_size'] = esc_attr( $_POST['html_background_size'] );
+	
 	$settings['login_form_logo'] = esc_html( $_POST['login_form_logo'] );
 	$settings['login_form_border_top_color'] = ( ( isset( $_POST['login_form_border_top_color'] ) ) ? esc_html( $_POST['login_form_border_top_color'] ) : '' );
 	$settings['login_form_background_color'] = esc_html( $_POST['login_form_background_color'] );
@@ -284,9 +250,7 @@ function custom_login_create_settings_meta_boxes() {
 	add_meta_box( 'custom-login-preview-meta-box', __( 'Preview your work, <em>Master</em>', 'custom-login' ), 'custom_login_preview_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 	
 	/* Remove the upgrade meta box when upgrade is good */
-	//if ( custom_login_get_setting( 'upgrade_complete' ) != true )
-		add_meta_box( 'custom-login-upgrade-link-meta-box', __( 'Upgrade Custom Login', 'custom-login' ), 'custom_login_upgrade_link_meta_box', $custom_login->settings_page, 'advanced', 'high' );
-		add_meta_box( 'custom-login-upgrade-meta-box', __( 'Upgrade Custom Login', 'custom-login' ), 'custom_login_upgrade_meta_box', $custom_login->upgrade_page, 'normal', 'high' );
+	add_meta_box( 'custom-login-upgrade-link-meta-box', __( 'Upgrade Custom Login', 'custom-login' ), 'custom_login_upgrade_link_meta_box', $custom_login->settings_page, 'advanced', 'high' );
 
 	add_meta_box( 'custom-login-general-meta-box', __( 'General Settings', 'custom-login' ), 'custom_login_general_meta_box', $custom_login->settings_page, 'normal', 'high' );
 	
@@ -362,118 +326,15 @@ function custom_login_about_meta_box() {
 }
 
 /**
- * Displays the upgrade meta box.
- *
- * @since 1.0
- */
-function custom_login_upgrade_meta_box() {
-	
-	if ( isset( $_POST['username'] ) && isset( $_POST['password'] ) && isset( $_POST['custom-login-authorization-form'] ) ) {
-
-		/* check against remote server */
-		require_once( ABSPATH . WPINC . '/class-IXR.php' );
-		$client = new IXR_Client( 'http://thefrosty.com/xmlrpc.php' ); //*/
-		
-		$client->debug = false;
-		$error	= false;
-		$url	= network_site_url();
-
-		$client_request_args = array(
-			'username'	=> $_POST['username'],
-			'password'	=> $_POST['password'],
-			'plugin'	=> 'custom-login-pro', //folder name
-			'url'		=> $url
-		);
-		
-		if ( !$client->query( 'thefrosty.can_user_download', $client_request_args ) ) {
-			$fault   = ( isset( $client->message->faultString ) ) ? $client->message->faultString : null;
-			$output  = '<div class="error fade"><p>' . esc_html( $client->getErrorCode().' : '.$client->getErrorMessage() ) . '</p></div>';
-			//$output .= '<div style="background-color: #FFEBE8; border: 1px solid #CC0000; margin: 5px 0 15px; padding: 0 0.6em;"><p style="margin: 0.5em 0; padding: 2px;">' . esc_html( $client->getErrorCode().' : '.$client->getErrorMessage() ) . '</p></div>';
-			$error = true;
-		}
-	
-		if ( !$error ) {
-			$message = __( 'Thanks for purchasing the plugin! Here is your download link: ', 'custom-login' );
-			$link    = make_clickable( $client->getResponse() );
-			$output  = '<div class="updated fade"><p>' . $message . $link . '</p></div>';
-			$output .= '<p>' . $message . $link . '</p>';
-			
-			$settings = get_option( 'custom_login_settings' );
-			$settings['hide_upgrade'] = true;
-			$settings['upgrade_complete'] = true;
-			update_option( 'custom_login_settings', $settings );
-			//return;
-		}
-		
-	} ?>
-	
-	<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		<?php if ( isset( $output ) && !$error ) { ?>
-			//$('#upgrade-wrapper form').fadeTo(250,0.5)
-			//$('#auth-button').prop("disabled","disabled")
-		<?php } ?>
-		$('#auth-button').click(function(e) {
-			$('#auth-button').prop("disabled","disabled").after('&nbsp;&nbsp;<img src="<?php echo network_site_url( '/wp-admin/images/wpspin_light.gif' ); ?>" alt="loading" style="vertical-align: middle;" /> Authorizing, please wait.');
-			$('#custom-login-authorization-form').submit();
-			//e.preventDefault();
-		});
-	});
-	</script>
-	
-	<table class="form-table">
-		<tr>
-			<th>
-				<input id="hide_upgrade" name="hide_upgrade" type="checkbox" <?php checked( custom_login_get_setting( 'hide_upgrade' ), true ); ?> value="true" />
-				<label for="hide_upgrade"><?php _e( 'Hide the upgrade form?', 'custom-login' ); ?></label>
-			</th>
-		</tr>
-	</table><!-- .form-table -->
-	
-	<?php if ( isset( $output ) ) echo trim( $output ); ?>
-	
-	<?php if ( custom_login_get_setting( 'hide_upgrade' ) != true ) { ?>
-		<div id="upgrade-wrapper">
-                <p><?php printf( __( 'Want to upgrade to Pro? If you\'ve purchase the plugin login below to get your download link. Need a login? Click %s to purchase the plugin.', CUSTOM_LOGIN ), '<a href="http://thefrosty.com/custom-login-pro/?no-api=' . site_url() . '" target="_blank">here</a>' ); ?></p>
-                <table class="form-table">
-                    <tr>
-                        <th scope="row">
-                            <label for="username">Username</label><br />
-                            <input type="text" name="username" value="" id="username" class="regular-text" />
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <label for="password">Password</label><br />
-                            <input type="password" name="password" value="" id="password" class="regular-text" />
-                        </th>
-                    </tr>
-                </table>
-        </div>
-	<?php
-	} // hide_upgrade
-}
-
-/**
  * link to upgrade page
  * http://codex.wordpress.org/Function_Reference/remove_submenu_page
  *
  * @since 1.0.1
  */
 function custom_login_upgrade_link_meta_box() {
-	global $custom_login;
-	
-	/* Upgrade Link */
-	if ( custom_login_get_setting( 'hide_upgrade' ) != true ) { ?>
+	global $custom_login; ?>
     
-        <div style="height: 25px; padding: 25px; text-align: center"><a href="<?php echo esc_url( admin_url( 'options-general.php?page=' . $custom_login->upgrade_page_link[2] ) ); ?>" class="button-primary"/><?php esc_attr_e('Upgrade to Custom Login PRO', 'custom-login'); ?></a></div>
-        
-    <?php } else { ?>
-    	
-        <p><?php esc_attr_e('You have already downloaded the plugin, download again?', 'custom-login'); ?></p>
-        <div style="height: 25px; padding: 25px; text-align: center"><a href="<?php echo esc_url( admin_url( 'options-general.php?page=' . $custom_login->upgrade_page_link[2] ) ); ?>" class="button-primary"/><?php esc_attr_e('Get download link', 'custom-login'); ?></a></div>
-    
-    <?php }
+        <div style="height: 25px; padding: 25px; text-align: center"><a href="http://extendd.com/plugin/custom-login-pro/" class="button-primary"/><?php esc_attr_e('Upgrade to Custom Login PRO', 'custom-login'); ?></a></div><?php
 }
 
 /**
@@ -504,6 +365,10 @@ function custom_login_support_meta_box() { ?>
 			<th><?php _e( 'Support:', 'custom-login' ); ?></th>
 			<td><?php _e( '<a href="http://wordpress.org/tags/custom-login">WordPress support forums</a>.', 'custom-login' ); ?></td>
 		</tr>
+		<tr>
+			<th><?php _e( 'Contribute:', 'custom-login' ); ?></th>
+			<td><?php _e( '<a href="https://github.com/thefrosty/custom-login">GitHub</a>.', 'custom-login' ); ?></td>
+		</tr>
 		<tr class="alt">
 			<th><?php _e( 'Go PRO:', 'custom-login' ); ?></th>
 			<td><?php _e( '<a href="http://extendd.com/plugin/custom-login-pro/?ref=custom-login&url='.get_home_url().'">Custom Login PRO</a>.', 'custom-login' ); ?></td>
@@ -529,10 +394,11 @@ function custom_login_dashboard_meta_box() { ?>
             <td>
 				<input id="disable_presstrends" name="disable_presstrends" type="checkbox" <?php checked( custom_login_get_setting( 'disable_presstrends' ), true ); ?> value="true" />
                 <span class="hide"><?php _e( 'Disable <a href="http://presstrends.io">presstrends.io</a>', 'custom-login' ); ?></span>
-                <?php echo CUSTOM_LOGIN_FILE; ?>
             </td>
 		</tr>
 	</table><!-- .form-table --><?php
+    
+	if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) echo '<code>' . print_r( CUSTOM_LOGIN_FILE, true ) . '</code>';
 }
 
 /**
@@ -543,7 +409,7 @@ function custom_login_dashboard_meta_box() { ?>
 function custom_login_preview_meta_box() { ?>
 
     <p style="font-weight: bold; text-align: center;"><a class="thickbox thickbox-preview" href="<?php echo wp_login_url(); ?>?TB_iframe=true" title=""><?php _e( 'Click here to see a live preview!', 'custom-login' ); ?></a></p>
-	<p style="text-align: center;"><small><?php _e( '(May not work as of WordPress 3.1.1)', 'custom-login' ); ?></small></p><?php
+	<p style="text-align: center;"><small><?php //_e( '(May not work as of WordPress 3.1.1)', 'custom-login' ); ?></small></p><?php
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,37 +424,7 @@ function custom_login_preview_meta_box() { ?>
  * @since 0.8
  */
 function custom_login_general_meta_box() { ?>
-	<table class="form-table">
-		<?php if ( !is_version( '3.0' ) ) { //If it's less than version 3 ?>
-		<tr>
-            <th>
-            	<label for="html_border_top_color"><?php _e( 'html border-top color:', 'custom-login' ); ?></label> 
-            </th>
-            <td>
-                <input class="color {hash:true,required:false,adjust:false}" id="html_border_top_color" name="html_border_top_color" value="<?php echo custom_login_get_setting( 'html_border_top_color' ); ?>" size="10" maxlength="21" />
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"><?php _e( 'Use HEX color <strong>with</strong> &ldquo;#&rdquo; <strong>or</strong> RGB/A format.<br />
-				<strong>This is the top 15px border color section</strong><br />
-				Example: &sup1;<code>#121212</code> &sup2;<code>rgba(255,255,255,0.4)</code>', 'custom-login' ); ?>
-                </span>
-            </td>
-   		</tr>
-        <?php } elseif ( !is_version( '3.3' ) ) { //If it's greater than version 3 ?>
-		<tr>
-            <th>
-            	<label for="html_border_top_background"><?php _e( 'html border-top background:', 'custom-login' ); ?></label> 
-            </th>
-            <td>
-                <input class="upload_image" id="html_border_top_background" name="html_border_top_background" value="<?php echo custom_login_get_setting( 'html_border_top_background' ); ?>" size="40" />
-				<input class="upload_image_button" type="button" value="Upload" />
-                <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"><?php _e( 'This can replace the new background image at the top of the login screen. Upload an image and put the full path here.<br />
-                Suggested size: <code>1px X 31px</code> (for a repeating background).', 'custom-login' ); ?>
-                </span>
-            </td>
-   		</tr>
-        <?php } ?>
-        
+	<table class="form-table">        
             <th>
             	<label for="html_background_color"><?php _e( 'html background color:', 'custom-login' ); ?></label> 
             </th>
@@ -621,9 +457,30 @@ function custom_login_general_meta_box() { ?>
             	<label for="html_background_repeat"><?php _e( 'html background repeat:', 'custom-login' ); ?></label> 
             </th>
             <td>
-                <input id="html_background_repeat" name="html_background_repeat" value="<?php echo custom_login_get_setting( 'html_background_repeat' ); ?>" size="40" />
+            	<?php $background_repeat = array( 'no-repeat', 'repeat', 'repeat-x', 'repeat-y' ); ?>
+                <select name="html_background_repeat" id="html_background_repeat" style="width:88px;">
+					<?php foreach ( $background_repeat as $option ) { ?>
+                        <option value="<?php echo $option; ?>" <?php selected( $option, custom_login_get_setting( 'html_background_repeat' ) ); ?>><?php echo $option; ?></option>
+                    <?php } ?>
+                </select>
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"><?php _e( 'Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat.</code>', 'custom-login' ); ?></span>
+                <span class="hide"><?php _e( 'Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat-y.</code>', 'custom-login' ); ?></span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="html_background_size"><?php _e( 'html background size:', 'custom-login' ); ?></label> 
+            </th>
+            <td>
+            	<?php $background_size = array( 'cover', 'contain', 'flex' ); ?>
+                <select name="html_background_size" id="html_background_size" style="width:88px;">
+					<?php foreach ( $background_size as $option ) { ?>
+                        <option value="<?php echo $option; ?>" <?php selected( $option, custom_login_get_setting( 'html_background_size' ) ); ?>><?php echo $option; ?></option>
+                    <?php } ?>
+                </select>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat-y.</code>', 'custom-login' ); ?></span>
             </td>
    		</tr>
         <!-- Break -->
@@ -764,6 +621,17 @@ function custom_login_advanced_meta_box() { ?>
                 <textarea id="custom_css" name="custom_css" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_css' ) ), 1, 0, 1 ); ?></textarea>
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide"><?php _e( 'Use this box to enter any custom CSS code that may not be shown below.<br />
+                <strong>Example code for resgister, forgot password, back to blog:</strong><br>
+				<code>.login #nav, .login #backtoblog { text-shadow: none;}</code><br />
+				<code>.login #nav a{color:#FFFFFF!important;}
+				.login #nav a:hover{color:#FFFFFF!important;}</code><br />
+				<code>.login #nav a{text-decoration:none!important;}
+				.login #nav a:hover{text-decoration:underline!important;}</code><br />
+				<code>.login #backtoblog a{text-decoration:none!important;}
+				.login #backtoblog a:hover{text-decoration:underline!important;}</code><br />
+				<code>.login #backtoblog  a{color:#FFFFFF!important;}
+				.login #backtoblog  a:hover{color:#FFFFFF!important;}</code><br />
+				<hr>
                 <strong>Example:</strong> <code>.login #backtoblog a { color:#990000; }</code><br />
                 &sect; <strong>Example:</strong> <code>#snow { display:block; position:absolute; } #snow img { height:auto; width:100%; }</code><br />
                 &sect; example CSS code for custom html code example..', 'custom-login' ); ?>
@@ -799,12 +667,12 @@ function custom_login_tabs_meta_box() { ?>
             <li class="t1 t"><a class="t1 tab">Austin Passy</a></li>
             <li class="t2 t"><a class="t2 tab">WordCamp<strong>LA</strong></a></li>
             <li class="t4 t"><a class="t3 tab">Extendd</a></li>  
-            <li class="t4 t"><a class="t3 tab">Premium WP Plugins</a></li>  
-            <li class="t4 t"><a class="t4 tab">Infield Box</a></li>  
-            <li class="t5 t"><a class="t5 tab">Float-O-holics</a></li>  
-            <li class="t6 t"><a class="t6 tab">Great Escape</a></li>   
-            <li class="t7 t"><a class="t7 tab">PDXbyPix</a></li>      
-            <li class="t8 t"><a class="t8 tab">Jeana Arter</a></li>             
+            <li class="t4 t"><a class="t4 tab">Premium WP Plugins</a></li>  
+            <li class="t4 t"><a class="t5 tab">Infield Box</a></li>  
+            <li class="t5 t"><a class="t6 tab">Float-O-holics</a></li>  
+            <li class="t6 t"><a class="t7 tab">Great Escape</a></li>   
+            <li class="t7 t"><a class="t8 tab">PDXbyPix</a></li>      
+            <li class="t8 t"><a class="t9 tab">Jeana Arter</a></li>             
         </ul>
         
 		<?php 
@@ -878,44 +746,6 @@ function custom_login_settings_page() {
 		</div><!-- #poststuff -->
 
 	</div><!-- .wrap --><?php
-}/**
- * Outputs the HTML and calls the meta boxes for the settings page.
- *
- * @since 0.8
- */
-function custom_login_upgrade_page() {
-	global $custom_login;
-
-	$plugin_data = get_plugin_data( CUSTOM_LOGIN_DIR . 'custom-login.php' ); ?>
-
-	<div class="wrap">
-		
-        <?php if ( function_exists( 'screen_icon' ) ) screen_icon(); ?>
-        
-		<h2><?php _e( 'Custom Login Pro Upgrade Check', 'custom-login' ); ?></h2>
-
-		<div id="poststuff">
- 
-			<form method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=' . $custom_login->upgrade_page_link[2] ) ); ?>" id="custom-login-authorization-form">
-
-				<?php wp_nonce_field( 'custom-login-upgrade-page' ); ?>
-				<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-				<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
-
-				<div class="metabox-holder">
-					<div class="post-box-container column-0 normal"><?php do_meta_boxes( $custom_login->upgrade_page, 'normal', $plugin_data ); ?></div>
-				</div>
-
-				<p class="submit" style="clear: both;">
-                    <input name="Upgrade" type="submit" value="<?php esc_attr_e('Get download link'); ?>" class="button-primary" id="auth-button" />
-                    <input type="hidden" name="custom-login-authorization-form" value="true" />
-				</p><!-- .submit -->
-
-			</form>
-
-		</div><!-- #poststuff -->
-
-	</div><!-- .wrap --><?php
 }
 
 /**
@@ -930,7 +760,7 @@ function custom_login_settings_page_enqueue_script() {
 	wp_enqueue_script( 'postbox' );
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script( 'theme-preview' );
-	wp_enqueue_script( 'autoresize' );
+	wp_enqueue_script( 'autosize' );
 	wp_enqueue_script( 'custom-login' );
 	wp_enqueue_script( 'jscolor' );
 }
@@ -972,7 +802,7 @@ function custom_login_plugin_actions( $links, $file ) {
  	if( $file == 'custom-login/custom-login.php' && function_exists( "admin_url" ) ) {
 		$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login' ) . '">' . __('Settings', 'custom-login' ) . '</a>';
 		array_unshift( $links, $settings_link ); // before other links
-		$links[] = '<a href="http://thefrosty.com/custom-login-pro/?ref=plugin-upgrade" target="_blank">' . __('Upgrade', 'custom-login' ) . '</a>';
+		$links[] = '<a href="http://extendd.com/plugin/custom-login-pro/?ref=plugin-upgrade&refer=' . urlencode( home_url() ) . '" target="_blank">' . __('Go Pro', 'custom-login' ) . '</a>';
 	}
 	return $links;
 }
@@ -1001,33 +831,21 @@ function custom_login_admin_warnings() {
 
 /**
  * RSS Feed
- * @since 0.3
- * @package Admin
+ * @since 		0.3
+ * @updated		1.1
+ * @package 	Admin
  */
 if ( !function_exists( 'thefrosty_network_feed' ) ) {
-	function thefrosty_network_feed( $attr, $count ) {		
-		global $wpdb;
+	function thefrosty_network_feed( $url, $count ) {
 		
-		include_once( ABSPATH . WPINC . '/class-simplepie.php' );
-		$feed = new SimplePie();
+		$items = custom_login_fetch_rss_items( 3, $url );
 		
-		$feed->set_feed_url( $attr );
-		$feed->enable_cache( true );
-		$feed->set_cache_duration(60*60*24*7);
-		$cache_folder = plugin_dir_path( __FILE__ ) . 'cache';
-		if ( !is_writable( $cache_folder ) ) chmod( $cache_folder, 0666 );
-		$feed->set_cache_location( $cache_folder );
-		
-		$feed->init();
-		$feed->handle_content_type();
-
-		$items = $feed->get_item();
 		echo '<div class="t' . esc_attr( $count ) . ' tab-content postbox open feed">';		
 		echo '<ul>';		
 		if ( empty( $items ) ) { 
-			echo '<li>No items</li>';		
+			echo '<li>' . __( 'Error fetching feed' ) . '</li>';
 		} else {
-			foreach( $feed->get_items( 0, 3 ) as $item ) : ?>		
+			foreach( $items as $item ) : ?>		
 				<li>		
 					<a href='<?php echo esc_url( $item->get_permalink() ); ?>' title='<?php esc_attr_e( $item->get_description() ); ?>'><?php esc_attr_e( $item->get_title() ); ?></a><br /> 		
 					<span style="font-size:10px; color:#aaa;"><?php esc_attr_e( $item->get_date('F, jS Y | g:i a') ); ?></span>		
@@ -1037,6 +855,35 @@ if ( !function_exists( 'thefrosty_network_feed' ) ) {
 		echo '</ul>';		
 		echo '</div>';
 	}
+}
+
+/**
+ * Fetch RSS items from the feed.
+ *
+ * @param 	int    $num  Number of items to fetch.
+ * @param 	string $feed The feed to fetch.
+ * @return 	array|bool False on error, array of RSS items on success.
+ */
+function custom_login_fetch_rss_items( $num, $feed ) {
+	include_once( ABSPATH . WPINC . '/feed.php' );
+	$rss = fetch_feed( $feed );
+
+	// Bail if feed doesn't work
+	if ( !$rss || is_wp_error( $rss ) )
+		return false;
+
+	$rss_items = $rss->get_items( 0, $rss->get_item_quantity( $num ) );
+
+	// If the feed was erroneous 
+	if ( !$rss_items ) {
+		$md5 = md5( $feed );
+		delete_transient( 'feed_' . $md5 );
+		delete_transient( 'feed_mod_' . $md5 );
+		$rss       = fetch_feed( $feed );
+		$rss_items = $rss->get_items( 0, $rss->get_item_quantity( $num ) );
+	}
+
+	return $rss_items;
 }
 
 ?>
