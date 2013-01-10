@@ -106,6 +106,8 @@ function custom_login_settings() {
 		'custom_css' => '',		
 		/* Custom html */	
 		'custom_html' => '',	
+		/* Custom jQUery */	
+		'custom_jquery' => '',	
 		/* html */
 		'html_border_top_color' => '', //WP < 3.x
 		'html_border_top_background' => '', //WP > 3.x
@@ -118,6 +120,7 @@ function custom_login_settings() {
 		'login_form_border_top_color' => '',
 		'login_form_background_color' => '',
 		'login_form_background' => '',
+		'login_form_background_size' => 'cover',	
 		'login_form_border_radius' => '11',
 		'login_form_border' => '1',
 		'login_form_border_color' => '',			
@@ -202,6 +205,7 @@ function custom_login_save_settings() {
 	
 	$settings['custom_css'] = esc_html( $_POST['custom_css'] );
 	$settings['custom_html'] = esc_html( $_POST['custom_html'] );
+	$settings['custom_jquery'] = esc_html( $_POST['custom_jquery'] );
 	
 	$settings['html_border_top_color'] = ( ( isset( $_POST['html_border_top_color'] ) ) ? esc_html( $_POST['html_border_top_color'] ) : '' ); // > 3.0.x
 	$settings['html_border_top_background'] = isset( $_POST['html_border_top_background'] ) ? esc_html( $_POST['html_border_top_background'] ) : '';
@@ -214,6 +218,7 @@ function custom_login_save_settings() {
 	$settings['login_form_border_top_color'] = ( ( isset( $_POST['login_form_border_top_color'] ) ) ? esc_html( $_POST['login_form_border_top_color'] ) : '' );
 	$settings['login_form_background_color'] = esc_html( $_POST['login_form_background_color'] );
 	$settings['login_form_background'] = esc_html( $_POST['login_form_background'] );
+	$settings['login_form_background_size'] = esc_attr( $_POST['login_form_background_size'] );
 	$settings['login_form_border_radius'] = esc_html( $_POST['login_form_border_radius'] );
 	$settings['login_form_border'] = esc_html( $_POST['login_form_border'] );
 	$settings['login_form_border_color'] = esc_html( $_POST['login_form_border_color'] );
@@ -480,7 +485,7 @@ function custom_login_general_meta_box() { ?>
                     <?php } ?>
                 </select>
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
-                <span class="hide"><?php _e( 'Use <code>no-repeat</code>, <code>repeat</code>, <code>repeat-x</code> or <code>repeat-y.</code>', 'custom-login' ); ?></span>
+                <span class="hide"><?php _e( 'See <a href="http://css-tricks.com/perfect-full-page-background-image/">CSS-Tricks</a> and <a href="http://davidwalsh.name/background-size">David Walsh</a> for examples.', 'custom-login' ); ?></span>
             </td>
    		</tr>
         <!-- Break -->
@@ -524,6 +529,22 @@ function custom_login_general_meta_box() { ?>
                 <span class="hide"><?php _e( 'Upload an image and put the full path here. Suggested size: <code>308px X 108px</code><br />
                 My suggestion: use a transparent .png or .gif. <a href="' . CUSTOM_LOGIN_URL . 'library/psd/custom-login.psd">Download included .psd file</a>.', 'custom-login' ); ?>
                 </span>
+            </td>
+   		</tr>
+        
+        <tr>
+            <th>
+            	<label for="login_form_background_size"><?php _e( 'form background size:', 'custom-login' ); ?></label> 
+            </th>
+            <td>
+            	<?php $background_size = array( 'cover', 'contain', 'flex' ); ?>
+                <select name="login_form_background_size" id="login_form_background_size" style="width:88px;">
+					<?php foreach ( $background_size as $option ) { ?>
+                        <option value="<?php echo $option; ?>" <?php selected( $option, custom_login_get_setting( 'login_form_background_size' ) ); ?>><?php echo $option; ?></option>
+                    <?php } ?>
+                </select>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'See <a href="http://css-tricks.com/perfect-full-page-background-image/">CSS-Tricks</a> and <a href="http://davidwalsh.name/background-size">David Walsh</a> for examples.', 'custom-login' ); ?></span>
             </td>
    		</tr>
         
@@ -648,6 +669,19 @@ function custom_login_advanced_meta_box() { ?>
                 <a class="question" title="Help &amp; Examples">[?]</a><br />
                 <span class="hide"><?php _e( 'Use this box to enter any custom HTML coded that you can add custom style to in the custom CSS box.<br />
                 <strong>Example:</strong> <code>&lt;div id="snow"&gt;&lt;img src="../image.jpg" alt="" /&gt;&lt;/div&gt;<br />&lt;div id="snow-bird"&gt; &lt;/div&gt;</code>', 'custom-login' ); ?>
+                </span>
+            </td>
+   		</tr>
+        
+		<tr>
+			<th>
+            	<label for="custom_jquery"><?php _e( 'Custom jQuery:', 'custom-login' ); ?></label> 
+            </th>
+            <td>             
+                <textarea id="custom_jquery" name="custom_jquery" cols="50" rows="3" class="large-text code"><?php echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_jquery' ) ), 1, 0, 1 ); ?></textarea>
+                <a class="question" title="Help &amp; Examples">[?]</a><br />
+                <span class="hide"><?php _e( 'Use this box to enter any custom jQuery.<br />
+                <strong>Example:</strong> <code>$(\'#login\').delay(300).fadeTo(800,1);</code>', 'custom-login' ); ?>
                 </span>
             </td>
    		</tr>
