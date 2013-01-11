@@ -25,6 +25,7 @@ error_reporting(0);
 				[login_form_border_top_color]
 				[login_form_background_color]
 				[login_form_background]
+				[login_form_background_size]
 				[login_form_border_radius]
 				[login_form_border]
 				[login_form_border_color]
@@ -49,11 +50,10 @@ echo "
  * Author URI	: http://austinpassy.com
  * Pro Version	: http://extendd.com/plugin/custom-login-pro
  *
- */";
+ */\n\n";
 
 /* Custom user input */
-if ( $custom_css ) echo wp_specialchars_decode( stripslashes( $custom_css ), 1, 0, 1 ) . "\n\n"; ?>
-
+if ( $custom_css ) echo wp_specialchars_decode( stripslashes( $custom_css ), 1, 0, 1 ) . "\n"; ?>
 
 html {
 	background-color: <?php
@@ -64,11 +64,12 @@ html {
 		echo trailingsemicolonit( "background-image: url('{$html_background_url}')" );
 		echo trailingsemicolonit( 'background-position: left top' );
 		echo trailingsemicolonit( "background-repeat: {$html_background_repeat}" );
-	}
 	
-	$background_size = ( 'flex' != $html_background_size ) ? $html_background_size : '100% auto';
-	
-    custom_login_prefix_it( 'background-size', $background_size ); ?>
+		if ( !empty( $html_background_size ) && 'none' != $html_background_size ) {
+			$html_background_size = ( 'flex' != $html_background_size ) ? $html_background_size : '100% auto';
+			custom_login_prefix_it( 'background-size', $html_background_size );
+		}
+	} ?>
 	
 }
 
@@ -85,15 +86,20 @@ body.login {
 		echo trailingsemicolonit( "background-image: url('{$login_form_background}')" );
 		echo trailingsemicolonit( 'background-position: center top' );
 		echo trailingsemicolonit( 'background-repeat: no-repeat' );
+	
+		if ( !empty( $form_background_size ) && 'none' != $form_background_size ) {
+			$form_background_size = ( 'flex' != $login_form_background_size ) ? $login_form_background_size : '100% auto';
+    		custom_login_prefix_it( 'background-size', $form_background_size );
+		}
 	}
 	
-	if ( true == $login_form_padding_top ) 			echo trailingsemicolonit( 'padding-top: 20px' ); else echo trailingsemicolonit( 'padding-top: 100px' ); ?>
+	if ( true == $login_form_padding_top ) 			echo trailingsemicolonit( 'padding-top: 20px' ); else echo trailingsemicolonit( 'padding-top: 100px' );
 	
-}
+	if ( !empty( $login_form_border ) ) {
+		$login_form_border = rtrim( $login_form_border, 'px' );
+		echo trailingsemicolonit( "border: {$login_form_border}px solid {$login_form_border_color}" );
+	}
 
-#login form {
-    border: <?php echo rtrim( $login_form_border, 'px' ); ?>px solid <?php echo $login_form_border_color; ?>;
-	<?php
 	if ( absint( $login_form_border_radius ) ) {
 		$login_form_border_radius = rtrim( $login_form_border_radius, 'px' ) . 'px';
 		custom_login_prefix_it( 'border-radius', $login_form_border_radius );
