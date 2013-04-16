@@ -12,19 +12,21 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-**Version 2.0** is now 140% faster in the admin and uses was less resources!
+**Version 2.0** is now 140% faster in the admin and uses a lot less resources!
 
 Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog.
 
 You can find Custom Login [PRO](http://extendd.com/plugin/custom-login-pro/)  on [Extendd.com](http://extendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs. **Custom Login Pro is a completly different plugin than Custom Login**.
 
+https://www.youtube.com/watch?v=XOZwaLwpjNo
+
 = Extensions =
 
 Custom Login 2.0 now has many extensions to make your login page better!
 
-**Coming Soon (developed)**
+**Available Now**
 
-* Stealth Login - obscure the login URL.
+* <a href="http://extendd.com/plugin/custom-login-stealth-login/" title="Custom Login Stealth Login">Stealth Login</a> - obscure your login URL.
 
 **In Development**
 
@@ -34,10 +36,12 @@ Custom Login 2.0 now has many extensions to make your login page better!
 * Custom Login page.
 * "Super User" only access for client sites.
 * WordPress Login CSS style remover (for sites that see a quick flash of the default login page).
+* Submit button styles!
+* Custom Login templates.
 
 = More info =
 
-Activate the plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. Theres no need to understand CSS at all!
+Activate the plugin and customize your WordPress login screen. Use the built-in and easy to use settings page to do the work for you. There's no need to understand CSS at all!
 Now featureing a HTML, CSS &amp; jQuery box for advanced users to up the customization!
 
 1. Works great for client site installs.
@@ -93,7 +97,7 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
-= Version 2.0.3 (4/16/13) =
+= Version 2.0.2 (4/16/13) =
 
 * Updated templates functions into a class.
 * Moved some files.
@@ -101,13 +105,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 * Removed post_type and install script.
 * Hide WP_LOCAL_DEV queries.
 
-= Version 2.0.2 (4/16/13) =
+= Version 2.0.1 (4/16/13) =
 
 * Wrap any function that can be replicated in if exists to avoid possible issues.
 * Prefix any other function with `ap_` as to make sure nothing is replicated in other plugins.
-
-= Version 2.0.1 (4/16/13) =
-
 * Fixed broken logo CSS.
 * Add hide WordPress logo to settings.
 
