@@ -50,7 +50,7 @@ class Custom_Login_Welcome {
 	 * @return void
 	 */
 	public function admin_menus() {
-		$login = CUSTOMLOGIN();
+		$login = AP_CUSTOMLOGIN();
 		// About Page
 		add_dashboard_page(
 			__( 'Welcome to Custom Login', $login->domain ),
@@ -105,7 +105,7 @@ class Custom_Login_Welcome {
 	 */
 	public function about_screen() {
 		list( $display_version ) = explode( '-', CUSTOM_LOGIN_VERSION );
-		$login = CUSTOMLOGIN();
+		$login = AP_CUSTOMLOGIN();
 		?>
 		<div class="wrap about-wrap">
 			<h1><?php printf( __( 'Welcome to Custom Login %s', $login->domain ), $display_version ); ?></h1>

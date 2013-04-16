@@ -1,7 +1,7 @@
 <?php
 
 /* Setup the plugin */
-$login = CUSTOMLOGIN();
+$login = AP_CUSTOMLOGIN();
 
 if ( !$login->is_active() )
 	return;

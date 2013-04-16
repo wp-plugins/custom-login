@@ -87,7 +87,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
-= Version 2.01 (4/16/13) =
+= Version 2.0.2 (4/16/13) =
+
+* Wrap any function that can be replicated in if exists to avoid possible issues.
+* Prefix any other function with `ap_` as to make sure nothing is replicated in other plugins.
+
+= Version 2.0.1 (4/16/13) =
 
 * Fixed broken logo CSS.
 * Add hide WordPress logo to settings.

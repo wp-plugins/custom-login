@@ -3,8 +3,8 @@
 /**
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login-pro
- * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use native and easy to use <a href="./edit.php?post_type=custom_login_pro">custom post types</a> to create multiple designs you can activate on any given day.
- * Version: 2.0.1
+ * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
+ * Version: 2.0.2
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login-pro
@@ -30,7 +30,7 @@ class custom_login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.1';
+	var $version = '2.0.2';
 	
 	/**
 	 * Plugin vars
@@ -238,7 +238,7 @@ class custom_login {
 				$cl_css_atts = wp_parse_args( get_option( $this->id, array() ), $cl_css_atts );
 				
 				ob_start();
-					custom_login_get_template_part( 'wp-login', 'style' );
+					ap_custom_login_get_template_part( 'wp-login', 'style' );
 					
 				header( "Content-type: text/css" );
 				//define( 'DONOTCACHEPAGE', 1 );
@@ -262,7 +262,7 @@ class custom_login {
 				}
 				
 				ob_start();
-					custom_login_get_template_part( 'wp-login', 'script' );
+					ap_custom_login_get_template_part( 'wp-login', 'script' );
 					
 				header( "Content-type: application/x-javascript" );
 				//define( 'DONOTCACHEPAGE', 1 );
@@ -754,13 +754,15 @@ endif;
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $custom_login = CUSTOMLOGIN(); ?>
+ * Example: <?php $custom_login = AP_CUSTOMLOGIN(); ?>
  *
  * @return The one true Instance
  */
-function CUSTOMLOGIN() {
-	return custom_login::instance();
+if ( !function_exists( 'AP_CUSTOMLOGIN' ) ) {
+	function AP_CUSTOMLOGIN() {
+		return custom_login::instance();
+	}
 }
 
 // Out of the frying pan, and into the fire.
-CUSTOMLOGIN();
+AP_CUSTOMLOGIN();

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       2.0
  * @return      void
  */
-function custom_login_post_types() {
+function ap_custom_login_post_types() {
 	/** Payment Post Type */
 	$labels = array(
 		'name' 				=> _x('Logins', 'post type general name', 'custom-login' ),
@@ -49,4 +49,4 @@ function custom_login_post_types() {
 	);
 	register_post_type( 'custom_login', $args );
 }
-add_action( 'init', 'custom_login_post_types', 75 );
+add_action( 'init', 'ap_custom_login_post_types', 75 );

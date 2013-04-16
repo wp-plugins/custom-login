@@ -18,11 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       2.0
  * @return      void
 */
-function custom_login_show_upgrade_notices() {
+function ap_custom_login_show_upgrade_notices() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'custom-login-upgrades' )
 		return; // Don't show notices on the upgrades page
 	
-	$login = CUSTOMLOGIN();
+	$login = AP_CUSTOMLOGIN();
 	
 	$old_settings = get_option( 'custom_login_settings' );
 	
@@ -44,7 +44,7 @@ function custom_login_show_upgrade_notices() {
 		);
 	}
 }
-add_action( 'admin_notices', 'custom_login_show_upgrade_notices' );
+add_action( 'admin_notices', 'ap_custom_login_show_upgrade_notices' );
 
 /**
  * Triggers all upgrade functions
@@ -54,8 +54,8 @@ add_action( 'admin_notices', 'custom_login_show_upgrade_notices' );
  * @access      private
  * @since       2.0
 */
-function custom_login_trigger_upgrades() {
-	$login = CUSTOMLOGIN();
+function ap_custom_login_trigger_upgrades() {
+	$login = AP_CUSTOMLOGIN();
 	
 	$old_settings = get_option( 'custom_login_settings' );
 	
@@ -65,13 +65,13 @@ function custom_login_trigger_upgrades() {
 		$cl_version = $login->version;
 
 	if ( version_compare( $cl_version, '2.0', '<' ) ) {
-		custom_login_v2_0_0_upgrades();
+		ap_custom_login_v2_0_0_upgrades();
 	}
 
 	if ( DOING_AJAX )
 		die( 'complete' ); // Let ajax know we are done
 }
-add_action( 'wp_ajax_custom_login_trigger_upgrades', 'custom_login_trigger_upgrades' );
+add_action( 'wp_ajax_custom_login_trigger_upgrades', 'ap_custom_login_trigger_upgrades' );
 
 /**
  * Upgrade routine for v2.0.0
@@ -80,8 +80,8 @@ add_action( 'wp_ajax_custom_login_trigger_upgrades', 'custom_login_trigger_upgra
  * @since       2.0
  * @return      void
  */
-function custom_login_v2_0_0_upgrades() {
-	$login = CUSTOMLOGIN();
+function ap_custom_login_v2_0_0_upgrades() {
+	$login = AP_CUSTOMLOGIN();
 	$old_settings = get_option( 'custom_login_settings' );
 	$new_settings = get_option( $login->id, array() );
 		

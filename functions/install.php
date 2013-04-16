@@ -21,10 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       1.0
  * @return      void
  */
-function custom_login_install() {
+function ap_custom_login_install() {
 
 	// Setup the Custom Post Type
-	custom_login_post_types();
+	ap_custom_login_post_types();
 
 	// Clear the permalinks
 	flush_rewrite_rules();
@@ -57,4 +57,4 @@ function custom_login_install() {
 	// Add the transient to redirect
     set_transient( '_custom_login_activation_redirect', true, 30 );
 }
-register_activation_hook( CUSTOM_LOGIN_FILE, 'custom_login_install' );
+register_activation_hook( CUSTOM_LOGIN_FILE, 'ap_custom_login_install' );

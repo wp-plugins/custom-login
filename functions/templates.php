@@ -7,7 +7,7 @@
  * @since       2.0
  * @return      string
  */
-function custom_login_get_templates_dir() {
+function ap_custom_login_get_templates_dir() {
 	return CUSTOM_LOGIN_DIR . 'templates';
 }
 
@@ -18,7 +18,7 @@ function custom_login_get_templates_dir() {
  * @since       2.0
  * @return      string
  */
-function custom_login_get_templates_url() {
+function ap_custom_login_get_templates_url() {
 	return CUSTOM_LOGIN_URL . 'templates';
 }
 
@@ -34,7 +34,7 @@ function custom_login_get_templates_url() {
  * @uses  	load_template()
  * @uses  	get_template_part()
  */
-function custom_login_get_template_part( $slug, $name = null, $load = true ) {
+function ap_custom_login_get_template_part( $slug, $name = null, $load = true ) {
 	// Execute code for this part
 	do_action( 'get_template_part_' . $slug, $slug, $name );
 
@@ -48,7 +48,7 @@ function custom_login_get_template_part( $slug, $name = null, $load = true ) {
 	$templates = apply_filters( 'custom_login_get_template_part', $templates, $slug, $name );
 
 	// Return the part that is found
-	return custom_login_locate_template( $templates, $load, false );
+	return ap_custom_login_locate_template( $templates, $load, false );
 }
 
 /**
@@ -66,7 +66,7 @@ function custom_login_get_template_part( $slug, $name = null, $load = true ) {
  *                            Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
-function custom_login_locate_template( $template_names, $load = false, $require_once = true ) {
+function ap_custom_login_locate_template( $template_names, $load = false, $require_once = true ) {
 	// No file found yet
 	$located = false;
 
@@ -91,8 +91,8 @@ function custom_login_locate_template( $template_names, $load = false, $require_
 			break;
 
 		// Check plugin compatibility last
-		} elseif ( file_exists( trailingslashit( custom_login_get_templates_dir() ) . $template_name ) ) {
-			$located = trailingslashit( custom_login_get_templates_dir() ) . $template_name;
+		} elseif ( file_exists( trailingslashit( ap_custom_login_get_templates_dir() ) . $template_name ) ) {
+			$located = trailingslashit( ap_custom_login_get_templates_dir() ) . $template_name;
 			break;
 		}
 	}
