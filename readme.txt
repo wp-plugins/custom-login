@@ -63,7 +63,7 @@ Follow the steps below to install the plugin.
 == Frequently Asked Questions ==
 
 = What are extensions? =
-They are additional plugins that add functionality to the Custom Login plugin. Depending of what the extension does. You can find all Custom Login extensions on [extendd.com](http://extendd.com/plugins/tag/custom-login-extension/).
+They are additional plugins that add functionality to the Custom Login plugin. Depending of what the extension does. You can find all Custom Login extensions on [extendd.com](http://extendd.com).
 
 = Is there a PRO version? =
 Why yes there is, you can purchase the [PRO](http://extendd.com/plugin/custom-login-pro/) version on [http://extendd.com](http://extendd.com). Note that since Custom Login 2.0, Custom Login PRO is a completely different plugin.
@@ -81,11 +81,16 @@ Just de-active.
 
 Screenshots of working example in our [Flickr group](http://flickr.com/groups/custom-login/)
 
-1. Custom Login Settings page (as of v 2.0.0).
+1. Custom Login Settings page (as of v 0.8).
 
-2. Example of a custom login page w/ nyan.cat, [see more](http://flickr.com/groups/custom-login/).
+2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 2.01 (4/16/13) =
+
+* Fixed broken logo CSS.
+* Add hide WordPress logo to settings.
 
 = Version 2.0.0 (4/15/13) =
 
@@ -96,6 +101,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Fix logo CSS and add remove WordPress logo option.
 
 = 2.0.0 =
 Complete rewrite of plugin. You will have to run the update script upon activation.

@@ -151,7 +151,7 @@ if ( false === $css ) :
 	 *
 	 * @rule	#login h1
 	 */
-	if ( !empty( $logo_background_url ) ) {
+	if ( ( !empty( $hide_wp_logo ) && 'on' === $hide_wp_logo ) && empty( $logo_background_url ) ) {
 		
 		$css .= cssrule( '#login h1' );
 		$css .= trailingsemicolonit( 'display: none' );

@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login-pro
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use native and easy to use <a href="./edit.php?post_type=custom_login_pro">custom post types</a> to create multiple designs you can activate on any given day.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login-pro
@@ -30,7 +30,7 @@ class custom_login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.0';
+	var $version = '2.0.1';
 	
 	/**
 	 * Plugin vars
@@ -397,6 +397,12 @@ class custom_login {
                 ),
 				/** BREAK **/
                 array(
+                    'name'		=> 'hide_wp_logo',
+                    'label'		=> __( 'Hide the WP logo', $this->domain ),
+                    'desc'		=> __( 'Works when there is no logo present, otherwise the WP logo is replaced by your logo.', $this->domain ),
+                    'type'		=> 'checkbox'
+                ),
+                array(
                     'name' 		=> 'logo_background_url',
                     'label' 	=> __( 'Logo', $this->domain ),
                     'desc' 		=> __( 'Replace the WordPress logo (optional).', $this->domain ),
@@ -591,20 +597,20 @@ class custom_login {
 				array(
 					'name' 		=> 'custom_css',
 					'label' 	=> __( 'Custom CSS', $this->domain ),
-					'desc' 		=> __( '', $this->domain ),
+					'desc' 		=> '',
 					'type' 		=> 'textarea',
 				),
 				array(
 					'name' 		=> 'custom_html',
 					'label' 	=> __( 'Custom HTML', $this->domain ),
-					'desc' 		=> __( '', $this->domain ),
+					'desc' 		=> '',
 					'type' 		=> 'textarea',
 					'sanitize_callback' => 'stripslashes_deep', //Allow HTML
 				),
 				array(
 					'name' 		=> 'custom_jquery',
 					'label' 	=> __( 'Custom jQuery', $this->domain ),
-					'desc' 		=> __( '', $this->domain ),
+					'desc' 		=> '',
 					'type' 		=> 'textarea',
 				),
 			),
