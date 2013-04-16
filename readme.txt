@@ -12,16 +12,22 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog. You can find Custom Login [PRO](http://extendd.com/plugin/custom-login-pro/)  on [Extendd.com](http://extendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs. **Custom Login Pro is a completly different plugin than Custom Login**.
+**Version 2.0** is now 140% faster in the admin and uses was less resources!
+
+Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog.
+
+You can find Custom Login [PRO](http://extendd.com/plugin/custom-login-pro/)  on [Extendd.com](http://extendd.com): A plugin marketplace. New features include faster login loading (no database access), Custom Post Types (for multiple designs) and four default CSS designs. **Custom Login Pro is a completly different plugin than Custom Login**.
 
 = Extensions =
 
 Custom Login 2.0 now has many extensions to make your login page better!
 
 **Coming Soon (developed)**
+
 * Stealth Login - obscure the login URL.
 
 **In Development**
+
 * User Hash Key logins (think generated guest logins with-out having to use the login form).
 * Email Logins for usernames.
 * 2-step Authentication.
@@ -81,9 +87,9 @@ Just de-active.
 
 Screenshots of working example in our [Flickr group](http://flickr.com/groups/custom-login/)
 
-1. Custom Login Settings page (as of v 0.8).
+1. Custom Login Settings page (as of v 2.0).
 
-2. Example of a custom login page, [see more](http://flickr.com/groups/custom-login/).
+2. Example of a custom login page using the nyan.cat as a animated background! [see user generated designs](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
 
