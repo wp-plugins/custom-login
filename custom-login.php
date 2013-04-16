@@ -21,8 +21,8 @@
  * @class custom_login_pro
  */
  
-if ( !class_exists( 'custom_login' ) ) :
-class custom_login {
+if ( !class_exists( 'Custom_Login' ) ) :
+class Custom_Login {
 	
 	/** Singleton *************************************************************/
 	private static $instance;
@@ -126,7 +126,7 @@ class custom_login {
 			
 		// Plugin settings
 		if ( ! defined( 'CUSTOM_LOGIN_SETTINGS' ) )
-			define( 'CUSTOM_LOGIN_SETTINGS', $this->id . '_settings' );
+			define( 'CUSTOM_LOGIN_SETTINGS', $this->id );
 
 		// Plugin Folder URL
 		if ( ! defined( 'CUSTOM_LOGIN_URL' ) )
@@ -189,8 +189,8 @@ class custom_login {
 			$this->settings_api->set_prefix( $this->id );
 			$this->settings_api->set_version( $this->version );
 		}
-		else {
-		}
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/templates.php' );
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/welcome.php' );
 	}
 	
 	/**
@@ -200,11 +200,9 @@ class custom_login {
 	function required_functions() {
 		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/upgrades/upgrade-functions.php' );
 		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/upgrades/upgrades.php' );
-		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/install.php' );
-		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/post-types.php' );
+		//require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/install.php' ); // Deprecated as of 2.0.3
+		//require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/post-types.php' ); // Deprecated as of 2.0.3
 		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/scripts-styles.php' );
-		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/templates.php' );
-		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/welcome.php' );
 	}
 	
 	/**
@@ -238,7 +236,7 @@ class custom_login {
 				$cl_css_atts = wp_parse_args( get_option( $this->id, array() ), $cl_css_atts );
 				
 				ob_start();
-					ap_custom_login_get_template_part( 'wp-login', 'style' );
+					Custom_Login_Templates::get_template_part( 'wp-login', 'style' );
 					
 				header( "Content-type: text/css" );
 				//define( 'DONOTCACHEPAGE', 1 );
@@ -262,7 +260,7 @@ class custom_login {
 				}
 				
 				ob_start();
-					ap_custom_login_get_template_part( 'wp-login', 'script' );
+					Custom_Login_Templates::get_template_part( 'wp-login', 'script' );
 					
 				header( "Content-type: application/x-javascript" );
 				//define( 'DONOTCACHEPAGE', 1 );
@@ -680,10 +678,11 @@ class custom_login {
 		$content .= '<li class="share genericon-share"><a href="http://www.flickr.com/groups/custom-login/">' . __( 'Share your designs on <strong style="color:#0066DC;">Flick</strong><strong style="color:#ff0084;">r</strong>', $this->domain ) . '</a></li>';
 		$content .= '<li class="support genericon-wordpress"><a href="http://wordpress.org/support/plugin/custom-login">' . __( 'Get support on WordPress.org', $this->domain ) . '</a></li>';
 		$content .= '<li class="contribute genericon-github"><a href="https://github.com/thefrosty/custom-login">' . __( 'Contribute development on GitHub', $this->domain ) . '</a></li>';
-		$content .= '<li class="addons genericon-link"><a href="http://codecanyon.net/?ref=austyfrosty">' . __( 'Get Custom Login Add-ons', $this->domain ) . '</a></li>';
+		$content .= '<li class="addons genericon-link"><a href="http://extendd.com/plugins/tag/custom-login-extension/">' . __( 'Get Custom Login Add-ons', $this->domain ) . '</a></li>';
 		
-		$display  = ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) ? true : false;
-		$content .= '<li class="queries genericon-warning">' . $this->get_queries( $display ) . '</li>';
+		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
+			$content .= '<li class="queries genericon-warning">' . $this->get_queries( true ) . '</li>';
+		}
 
 		$content .= '</ul>';
 		$this->settings_api->postbox( $this->id . '_sidebar', sprintf( __( '<a href="%s">%s</a> | <code>version %s</code>', $this->domain ), 'http://extendd.com/plugin/custom-login', ucwords( str_replace( '-', ' ', $this->domain ) ), $this->version ), $content, true );
@@ -754,15 +753,15 @@ endif;
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $custom_login = AP_CUSTOMLOGIN(); ?>
+ * Example: <?php $custom_login = CUSTOMLOGIN(); ?>
  *
  * @return The one true Instance
  */
-if ( !function_exists( 'AP_CUSTOMLOGIN' ) ) {
-	function AP_CUSTOMLOGIN() {
-		return custom_login::instance();
+if ( !function_exists( 'CUSTOMLOGIN' ) ) {
+	function CUSTOMLOGIN() {
+		return Custom_Login::instance();
 	}
 }
 
 // Out of the frying pan, and into the fire.
-AP_CUSTOMLOGIN();
+CUSTOMLOGIN();

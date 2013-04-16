@@ -22,7 +22,7 @@ function ap_custom_login_show_upgrade_notices() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'custom-login-upgrades' )
 		return; // Don't show notices on the upgrades page
 	
-	$login = AP_CUSTOMLOGIN();
+	$login = CUSTOMLOGIN();
 	
 	$old_settings = get_option( 'custom_login_settings' );
 	
@@ -55,7 +55,7 @@ add_action( 'admin_notices', 'ap_custom_login_show_upgrade_notices' );
  * @since       2.0
 */
 function ap_custom_login_trigger_upgrades() {
-	$login = AP_CUSTOMLOGIN();
+	$login = CUSTOMLOGIN();
 	
 	$old_settings = get_option( 'custom_login_settings' );
 	
@@ -81,7 +81,7 @@ add_action( 'wp_ajax_custom_login_trigger_upgrades', 'ap_custom_login_trigger_up
  * @return      void
  */
 function ap_custom_login_v2_0_0_upgrades() {
-	$login = AP_CUSTOMLOGIN();
+	$login = CUSTOMLOGIN();
 	$old_settings = get_option( 'custom_login_settings' );
 	$new_settings = get_option( $login->id, array() );
 		

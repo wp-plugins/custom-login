@@ -20,7 +20,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @return      void
 */
 function ap_custom_login_upgrades_screen() {		
-	$login = AP_CUSTOMLOGIN(); ?>
+	$login = CUSTOMLOGIN(); ?>
 	<div class="wrap">
 		<h2><?php _e( 'Custom Login - Upgrades', $login->domain ); ?></h2>
 		<div id="custom-login-upgrade-status">
@@ -55,7 +55,7 @@ function ap_custom_login_upgrades_screen() {
  * @return      void
  */
 function ap_custom_login_upgrades_page() {		
-	$login = AP_CUSTOMLOGIN();
+	$login = CUSTOMLOGIN();
 	add_submenu_page( null, __( 'Custom Login Upgrades', $login->domain ), __( 'Custom Login Upgrades', $login->domain ), 'update_plugins', 'custom-login-upgrades', 'ap_custom_login_upgrades_screen' );
 }
 add_action( 'admin_menu', 'ap_custom_login_upgrades_page', 10 );

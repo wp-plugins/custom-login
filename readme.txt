@@ -93,6 +93,14 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.0.3 (4/16/13) =
+
+* Updated templates functions into a class.
+* Moved some files.
+* Fixed known activation hook not fireing on upgrade.
+* Removed post_type and install script.
+* Hide WP_LOCAL_DEV queries.
+
 = Version 2.0.2 (4/16/13) =
 
 * Wrap any function that can be replicated in if exists to avoid possible issues.
