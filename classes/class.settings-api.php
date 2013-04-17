@@ -1,5 +1,8 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Extendd Plugin Settings API wrapper class
  *
@@ -106,7 +109,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      */
     function admin_enqueue_scripts() {
 		/* Core */
-        wp_enqueue_media();
+		if ( function_exists( 'wp_enqueue_media' ) ) wp_enqueue_media();
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_style( 'wp-color-picker' );
 		
@@ -726,6 +729,10 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		//delete_transient( $this->prefix . '_announcement' );
 		//delete_option( $this->prefix . '_announcement_message' );
+		
+		/* Current user can */
+		if ( !current_user_can( 'manage_options' ) )
+			return;
 		
 		if ( false === ( $announcement = get_transient( $this->prefix . '_announcements' ) ) ) {
 			$site = wp_remote_get( 'http://extendd.com/?notice-' . $this->prefix . '=true', array( 'timeout' => 15, 'sslverify' => false ) );

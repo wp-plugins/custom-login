@@ -2,7 +2,7 @@
 Contributors: austyfrosty
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error, custom login pro
-Requires at least: 3.4
+Requires at least: 3.5
 Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -12,7 +12,7 @@ Use this plugin to customize your login screen, great for client sites!
 
 == Description ==
 
-**Version 2.0** is now 140% faster in the admin and uses a lot less resources!
+**Version 2.0** is now 140% faster in the admin and uses a lot less resources! Minimum WordPress version 3.5.
 
 Join in on the [conversation](http://austinpassy.com/wordpress-plugins/custom-login) on my personal blog.
 
@@ -97,6 +97,15 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.0.3 (4/17/13) =
+
+* Deactivate if minimum WordPress version isn't met.
+* Min WordPress version **3.5**
+* Version bump to match readme.txt.
+* Turkish translations re-added.
+* Added `rgba2hex` function to fix updates where rgba was set.
+* Make sure function_exists 'wp_enqueue_media'.
+
 = Version 2.0.2 (4/16/13) =
 
 * Updated templates functions into a class.
@@ -122,8 +131,5 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
-= 2.0.1 =
-Fix logo CSS and add remove WordPress logo option.
-
-= 2.0.0 =
-Complete rewrite of plugin. You will have to run the update script upon activation.
+= 2.0.3 =
+Notification of **MINIMUM** WordPress version is 3.5!

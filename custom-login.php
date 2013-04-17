@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login-pro
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login-pro
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.2';
+	var $version = '2.0.3';
 	
 	/**
 	 * Plugin vars
@@ -75,6 +75,9 @@ class Custom_Login {
 		$this->domain	= 'custom-login';
 		
 		/* Constants */
+		add_action( 'admin_init',							array( $this, 'check_version' ), 1 );
+		
+		/* Constants */
 		add_action( 'init',									array( $this, 'setup_constants' ) );
 		
 		/* Localization */
@@ -108,6 +111,34 @@ class Custom_Login {
 		
 		/* Custom HTML */
 		add_action( 'login_footer',							array( $this, 'login_footer' ) );
+	}
+	
+	/**
+	 * WordPress version check
+	 *
+	 * @since 2.0.3
+	 */
+	function check_version() {
+		global $wp_version;
+		
+		if ( version_compare( $wp_version, '3.5', '<' ) ) {
+			add_action( 'admin_notices', array( $this, 'version_notification' ) );
+			if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) deactivate_plugins( plugin_basename( __FILE__ ) );
+		}
+	}
+	
+	/**
+	 * Deactivation notice
+	 *
+	 */
+	function version_notification() {
+		global $wp_version;
+		
+		$html  = '<div class="error"><p>'; 
+		$html .= sprintf( __( 'Custom Login has been deactivated because it requires a WordPress version greater than 3.5. You are running <code>%s</code>', $this->domain ), $wp_version );
+		$html .= '</p></div>';
+		
+		echo $html;
 	}
 	
 	/**
@@ -661,8 +692,16 @@ class Custom_Login {
 		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
 			foreach( apply_filters( $this->id . '_add_settings_sections', $this->sections ) as $section )
 				echo '<pre data-id="'.$section['id'].'">' . print_r( get_option( $section['id'] ), true ) . '</pre>';
-			echo '<pre>' . print_r( get_option( 'custom_login_settings' ), true ) . '</pre>';
+			echo '<pre data-id="custom_login_settings">' . print_r( get_option( 'custom_login_settings' ), true ) . '</pre>';
+			$array = get_option( 'custom_login_settings' );
+			$array['custom_html'] = esc_html( '<div id="logo"><a href="http://hello.com"></a></div>' );
+			$array['custom_css'] = '#logo { 
+			background: #444;
+			width: 100px;
+			}';
+			update_option( 'custom_login_settings', $array );
 		}
+		
     }
 
 	/**
