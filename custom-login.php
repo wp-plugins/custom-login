@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.3';
+	var $version = '2.0.4';
 	
 	/**
 	 * Plugin vars
@@ -689,17 +689,10 @@ class Custom_Login {
 
         echo '</div>';
 		
-		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
+		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV && WP_DEBUG ) {
 			foreach( apply_filters( $this->id . '_add_settings_sections', $this->sections ) as $section )
 				echo '<pre data-id="'.$section['id'].'">' . print_r( get_option( $section['id'] ), true ) . '</pre>';
 			echo '<pre data-id="custom_login_settings">' . print_r( get_option( 'custom_login_settings' ), true ) . '</pre>';
-			$array = get_option( 'custom_login_settings' );
-			$array['custom_html'] = esc_html( '<div id="logo"><a href="http://hello.com"></a></div>' );
-			$array['custom_css'] = '#logo { 
-			background: #444;
-			width: 100px;
-			}';
-			update_option( 'custom_login_settings', $array );
 		}
 		
     }

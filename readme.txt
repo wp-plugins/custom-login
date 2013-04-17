@@ -97,6 +97,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.0.4 (4/17/13) =
+
+* Updated JSON file to extenal GitHub.
+
 = Version 2.0.3 (4/17/13) =
 
 * Deactivate if minimum WordPress version isn't met.
@@ -131,5 +135,5 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Upgrade Notice ==
 
-= 2.0.3 =
-Notification of **MINIMUM** WordPress version is 3.5!
+= 2.0.4 =
+Important update to fix transient errors, and possible admin crashes.

@@ -735,18 +735,18 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			return;
 		
 		if ( false === ( $announcement = get_transient( $this->prefix . '_announcements' ) ) ) {
-			$site = wp_remote_get( 'http://extendd.com/?notice-' . $this->prefix . '=true', array( 'timeout' => 15, 'sslverify' => false ) );
+			$site = wp_remote_get( 'https://raw.github.com/thefrosty/custom-login/master/extensions.json', array( 'timeout' => 15, 'sslverify' => false ) );
 			if ( !is_wp_error( $site ) ) {
 				if ( isset( $site['body'] ) && strlen( $site['body'] ) > 0 ) {
 					$announcements = json_decode( wp_remote_retrieve_body( $site ) );
-					set_transient( $this->prefix . '_announcement', $announcement, WEEK_IN_SECONDS ); // Cache for a week
+					set_transient( $this->prefix . '_announcement', $announcement, WEEK_IN_SECONDS * 2 ); // Cache for a week
 					update_option( $this->prefix . '_announcement_message', $announcement->message ); // Update the message
 				}
 			}
 		}
 		
 		if ( $message !== $announcement->message )
-			 delete_user_meta( $user_id, $this->prefix . '_notice' );
+			 delete_user_meta( $user_id, $ignore_announce );
 		
 		$html  = '<div class="updated"><p>'; 
 		$html .= sprintf( __( '%1$s | <a href="%2$s">Dismiss notice</a>', 'custom-login' ), $announcement->message, esc_url( add_query_arg( $ignore_announce, wp_create_nonce( $ignore_announce ), admin_url() ) ) );
