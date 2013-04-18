@@ -75,6 +75,9 @@ Follow the steps below to install the plugin.
 = What are extensions? =
 They are additional plugins that add functionality to the Custom Login plugin. Depending of what the extension does. You can find all Custom Login extensions on [extendd.com](http://extendd.com).
 
+= My new settings aren't showing up =
+This plugin caches all settings in a transient, try clicking the new 'Update stylesheet' button to delete and refresh the cache.
+
 = Is there a PRO version? =
 Why yes there is, you can purchase the [PRO](http://extendd.com/plugin/custom-login-pro/) version on [http://extendd.com](http://extendd.com). Note that since Custom Login 2.0, Custom Login PRO is a completely different plugin.
 
@@ -96,6 +99,13 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 2. Example of a custom login page using the nyan.cat as a animated background! [see user generated designs](http://flickr.com/groups/custom-login/).
 
 == Changelog ==
+
+= Version 2.0.5 (4/17/13) =
+
+* Fix double escaped custom HTML on first import with `wp_specialchars_decode`.
+* Add `SHORTINIT` to the PHP stylesheet and script to limit WordPress loading.
+* Change wp_cache to transients on PHP scripts and styles, a lot faster!
+* Added a delete transient cache button atop the 'Save Changes' button.
 
 = Version 2.0.4 (4/17/13) =
 

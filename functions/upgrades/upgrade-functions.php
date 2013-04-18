@@ -130,7 +130,7 @@ function ap_custom_login_v2_0_0_upgrades() {
     $new_settings['nav_text_shadow_hover_color_checkbox'] = 'off';
     $new_settings['nav_text_shadow_hover_color_opacity'] = '';
     $new_settings['custom_css'] = esc_attr( $old_settings['custom_css'] );
-    $new_settings['custom_html'] = esc_html( $old_settings['custom_html'] );
+    $new_settings['custom_html'] = wp_specialchars_decode( stripslashes( $old_settings['custom_html'] ), 1, 0, 1 );
     $new_settings['custom_jquery'] = esc_html( $old_settings['custom_jquery'] );
 	
 	update_option( $login->id, $new_settings );

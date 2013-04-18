@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.4';
+	var $version = '2.0.5';
 	
 	/**
 	 * Plugin vars
@@ -99,6 +99,14 @@ class Custom_Login {
 		/* Settings */
 		add_action( 'admin_init',							array( $this, 'admin_init' ), 9 );
 		add_action( 'admin_menu',							array( $this, 'admin_menu' ), 9 );
+		
+		/* Update button */
+		add_action( $this->id .
+			'_form_bottom_' . $this->id,					array( $this, 'delete_transient_button' ) );
+			
+		/* Delete transient action */
+        add_action( 'admin_action_' . 
+			$this->id . '-delete_transient',				array( $this, 'delete_script_style_transient' ) );
 		
 		/* Add a settings page to the plugin menu */
 		add_filter( 'plugin_action_links',					array( $this, 'plugin_action_links' ), 10, 2 );
@@ -270,7 +278,6 @@ class Custom_Login {
 					Custom_Login_Templates::get_template_part( 'wp-login', 'style' );
 					
 				header( "Content-type: text/css" );
-				//define( 'DONOTCACHEPAGE', 1 );
 				echo ob_get_clean();
 				
 				exit;
@@ -294,7 +301,6 @@ class Custom_Login {
 					Custom_Login_Templates::get_template_part( 'wp-login', 'script' );
 					
 				header( "Content-type: application/x-javascript" );
-				//define( 'DONOTCACHEPAGE', 1 );
 				echo ob_get_clean();
 				
 				exit;
@@ -345,8 +351,6 @@ class Custom_Login {
  	 */
     function admin_init() {
 		
-		$cl_settings_page = get_page_by_title( __( 'Custom Login Settings', 'custom-login' ), '', 'custom_login' );
-		
         $this->sections = array(
             array(
                 'id'	=> $this->id,
@@ -383,7 +387,7 @@ class Custom_Login {
                     'desc' 		=> __( 'Upload an image or a repeating pattern (optional).', $this->domain ),
                     'type' 		=> 'file',
                     'default' 	=> '',
-					'page_id'	=> $cl_settings_page->ID,
+					'page_id'	=> '0',
                 ),
                 array(
                     'name' 		=> 'html_background_position',
@@ -437,7 +441,7 @@ class Custom_Login {
                     'desc' 		=> __( 'Replace the WordPress logo (optional).', $this->domain ),
                     'type' 		=> 'file',
                     'default' 	=> '',
-					'page_id'	=> $cl_settings_page->ID,
+					'page_id'	=> '0',
                 ),
                 array(
                     'name' 		=> 'logo_background_position',
@@ -492,7 +496,7 @@ class Custom_Login {
                     'desc' 		=> __( 'Add an image to the form (optional).', $this->domain ),
                     'type' 		=> 'file',
                     'default' 	=> '',
-					'page_id'	=> $cl_settings_page->ID,
+					'page_id'	=> '0',
                 ),
                 array(
                     'name' 		=> 'login_form_background_position',
@@ -666,6 +670,44 @@ class Custom_Login {
 		
 		add_action( 'admin_footer-' . $this->options_page, array( $this->settings_api, 'inline_jquery' ) );
     }
+	
+	/**
+	 * Delete the transient
+	 *
+	 */
+	function delete_transient_button() {
+		$button  = '<div style="padding-left: 10px">';
+		$button .= wpautop( sprintf( '<a href="%s" title="%s" class="button secondary">%s</a>', 
+				esc_url( wp_nonce_url( add_query_arg( array( 'action' => $this->id . '-delete_transient' ), admin_url() ), $this->id . '-delete_transient' ) ),
+				esc_attr__( 'Update the scripts and styles', $this->domain ),
+				__( 'Update stylesheet', $this->domain )
+		) );
+		$button .= '<span class="description">' . __( 'If your stylesheet isn\'t updating click update above to delete the transient cache.', $this->domain ) . '</span>';
+		$button .= '</div>';
+		
+		echo $button;
+	}
+	
+	/**
+	 * Check for post activation on edit.php, when proper action
+	 * is called set the post ID and write the content (CSS) to file.
+	 * 
+	 * @return array()
+	 */
+	function delete_script_style_transient() {
+		
+		if ( !( isset( $_GET[$this->id . '-delete_transient'] ) || ( isset( $_REQUEST['action'] ) && $this->id . '-delete_transient' == $_REQUEST['action'] ) ) )
+			return;
+			
+		check_admin_referer( $this->id . '-delete_transient' );
+		
+		delete_transient( $this->id . '_style' );
+		delete_transient( $this->id . '_script' );
+		
+		/* Redirect */
+		wp_redirect( admin_url( sprintf( 'options-general.php?page=%s&message=1', $this->domain ) ) );
+		exit;
+	}
 	
 	/**
 	 * Plugin Action

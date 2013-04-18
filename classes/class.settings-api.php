@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.0';
+	var $api_version = '1.0.1';
 
     /**
      * settings sections array
@@ -739,9 +739,12 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			if ( !is_wp_error( $site ) ) {
 				if ( isset( $site['body'] ) && strlen( $site['body'] ) > 0 ) {
 					$announcements = json_decode( wp_remote_retrieve_body( $site ) );
-					set_transient( $this->prefix . '_announcement', $announcement, WEEK_IN_SECONDS * 2 ); // Cache for a week
+					set_transient( $this->prefix . '_announcement', $announcement, WEEK_IN_SECONDS * 2 ); // Cache for two weeks
 					update_option( $this->prefix . '_announcement_message', $announcement->message ); // Update the message
 				}
+			} else {
+				// Error, lets return!
+				return;
 			}
 		}
 		
