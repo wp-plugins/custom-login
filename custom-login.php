@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
- * Version: 2.0.6
+ * Version: 2.1.0
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.0.6';
+	var $version = '2.1.0';
 	
 	/**
 	 * Plugin vars
@@ -86,12 +86,12 @@ class Custom_Login {
 		/* Scripts */
 		add_action( 'login_enqueue_scripts',				array( $this, 'enqueue_scripts' ) );
 		
+		/* Custom jQuery templates */
+		add_action( 'login_footer',							array( $this, 'login_footer_jquery' ) );
+		
 		/* Includes */
 		add_action( 'init',									array( $this, 'required_classes' ) );
 		add_action( 'init',									array( $this, 'required_functions' ) );
-		
-		/* Custom stylesheet and javascript templates */
-		add_action( 'init',									array( $this, 'scripts_and_styles' ) );
 		
 		/* Shortcodes */
 		add_action( 'init',									array( $this, 'add_shortcodes' ) );
@@ -118,7 +118,7 @@ class Custom_Login {
 		add_filter( 'login_headertitle',					array( $this, 'login_title' ) );			
 		
 		/* Custom HTML */
-		add_action( 'login_footer',							array( $this, 'login_footer' ) );
+		add_action( 'login_footer',							array( $this, 'login_footer_html' ) );
 	}
 	
 	/**
@@ -192,29 +192,61 @@ class Custom_Login {
 	 * Enqueue additional scripts.
 	 *
 	 * @since	2.0
+	 * @updated	2.1
 	 */
 	function enqueue_scripts() {
 		if ( !$this->is_active() )
-			return;
+			return;	
 		
-		/**
-		 * Core jQuery
-		 * 		- Not currently used for anything yet...
-		wp_enqueue_script( $this->domain, plugins_url( 'assets/js/functions.js', __FILE__ ), array( 'jquery' ), $this->version, true );
-		wp_localize_script( $this->domain, $this->id, array(
-			'ajaxurl'	=> esc_url( admin_url( 'admin-ajax.php' ) ),
-			'spinner'	=> esc_url( admin_url( 'images/loading.gif' ) ),
-			'nonce'		=> wp_create_nonce( $this->domain . '-nonce' ),
-		) );
-		 // */
+		global $cl_css_atts;
+
+		$cl_css_atts = array(
+			'version'	=> CUSTOM_LOGIN_VERSION,
+		);
+		$cl_css_atts = wp_parse_args( get_option( $this->id, array() ), $cl_css_atts );
 		
-		/* Custom CSS */
-		wp_enqueue_style( $this->domain, add_query_arg( array( $this->domain => true, 'type' => 'css', '_wpnonce' => wp_create_nonce( 'nonce' ) ), trailingslashit( home_url() ) ), null, null, 'screen' );
+		ob_start();
+			echo "<style type=\"text/css\">\n";
+				Custom_Login_Templates::get_template_part( 'wp-login', 'style' );
+			echo "\n</style>";
+		echo ob_get_clean();
 		
 		/* Custom jQuery */
 		$jquery = $this->get_option( 'custom_jquery', $this->id );
-		if ( !empty( $jquery ) )
-			wp_enqueue_script( $this->domain . '-custom', add_query_arg( array( $this->domain => true, 'type' => 'js', '_wpnonce' => wp_create_nonce( 'nonce' ) ), trailingslashit( home_url() ) ), array( 'jquery' ), null, true );
+		if ( !empty( $jquery ) ) {
+			wp_enqueue_script( array( 'jquery' ) );
+		}
+	}
+	
+	/**
+	 * Database access to the scripts and styles.
+	 *
+	 * @since	2.1
+	 * @return string|void
+	 */
+	function login_footer_jquery() {		
+		$jquery = $this->get_option( 'custom_jquery', $this->id );
+		if ( !empty( $jquery ) ) :
+					
+			global $cl_js_atts;
+		
+			$cl_js_atts = array(
+				'version'	=> CUSTOM_LOGIN_VERSION,
+			);
+			$cl_js_atts = wp_parse_args( get_option( $this->id, array() ), $cl_js_atts );
+			
+			foreach( $cl_js_atts as $atts => $value ) {
+				if ( 'custom_jquery' !== $atts && 'version' !== $atts )
+					unset( $cl_js_atts[$atts] );
+			}
+			
+			ob_start();
+				echo "<script type=\"text/javascript\">\n";
+					Custom_Login_Templates::get_template_part( 'wp-login', 'script' );
+				echo "\n</script>";				
+			echo ob_get_clean();
+			
+		endif; // jQUery
 	}
 	
 	/**
@@ -254,59 +286,6 @@ class Custom_Login {
 			
 			if ( file_exists( $dir_path ) )	require_once( $dir_path );
 		}
-	}
-	
-	/**
-	 * Database access to the scripts and styles.
-	 *
-	 * @return string|void
-	 */
-	function scripts_and_styles() {
-		
-		if ( isset( $_GET[$this->domain] ) && 1 === absint( $_GET[$this->domain] ) ) :
-		
-			if ( isset( $_GET['type'] ) && ( 'css' === $_GET['type'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'nonce' ) ) {
-				
-				global $cl_css_atts;
-		
-				$cl_css_atts = array(
-					'version'	=> CUSTOM_LOGIN_VERSION,
-				);
-				$cl_css_atts = wp_parse_args( get_option( $this->id, array() ), $cl_css_atts );
-				
-				ob_start();
-					Custom_Login_Templates::get_template_part( 'wp-login', 'style' );
-					
-				header( "Content-type: text/css" );
-				echo ob_get_clean();
-				
-				exit;
-			}
-			
-			if ( isset( $_GET['type'] ) && ( 'js' === $_GET['type'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'nonce' ) ) {
-				
-				global $cl_js_atts;
-		
-				$cl_js_atts = array(
-					'version'	=> CUSTOM_LOGIN_VERSION,
-				);
-				$cl_js_atts = wp_parse_args( get_option( $this->id, array() ), $cl_js_atts );
-				
-				foreach( $cl_js_atts as $atts => $value ) {
-					if ( 'custom_jquery' !== $atts && 'version' !== $atts )
-						unset( $cl_js_atts[$atts] );
-				}
-				
-				ob_start();
-					Custom_Login_Templates::get_template_part( 'wp-login', 'script' );
-					
-				header( "Content-type: application/x-javascript" );
-				echo ob_get_clean();
-				
-				exit;
-			}
-			
-		endif;
 	}
 	
 	/**
@@ -350,7 +329,7 @@ class Custom_Login {
 	 * Registers settings section and fields
  	 */
     function admin_init() {
-		
+				
         $this->sections = array(
             array(
                 'id'	=> $this->id,
@@ -388,6 +367,7 @@ class Custom_Login {
                     'type' 		=> 'file',
                     'default' 	=> '',
 					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
                 ),
                 array(
                     'name' 		=> 'html_background_position',
@@ -442,6 +422,7 @@ class Custom_Login {
                     'type' 		=> 'file',
                     'default' 	=> '',
 					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
                 ),
                 array(
                     'name' 		=> 'logo_background_position',
@@ -497,6 +478,7 @@ class Custom_Login {
                     'type' 		=> 'file',
                     'default' 	=> '',
 					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
                 ),
                 array(
                     'name' 		=> 'login_form_background_position',
@@ -536,7 +518,8 @@ class Custom_Login {
                     'desc' 		=> '',
                     'type' 		=> 'text',
 					'size'		=> 'small',
-                    'default' 	=> ''
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
                 ),
                 array(
                     'name' 		=> 'login_form_border_size',
@@ -544,7 +527,8 @@ class Custom_Login {
                     'desc' 		=> '',
                     'type' 		=> 'text',
 					'size'		=> 'small',
-                    'default' 	=> ''
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
                 ),
                 array(
                     'name' 		=> 'login_form_border_color',
@@ -632,6 +616,7 @@ class Custom_Login {
 					'label' 	=> __( 'Custom CSS', $this->domain ),
 					'desc' 		=> '',
 					'type' 		=> 'textarea',
+					'sanitize_callback' => 'esc_attr',
 				),
 				array(
 					'name' 		=> 'custom_html',
@@ -645,6 +630,7 @@ class Custom_Login {
 					'label' 	=> __( 'Custom jQuery', $this->domain ),
 					'desc' 		=> '',
 					'type' 		=> 'textarea',
+					'sanitize_callback' => 'wp_specialchars_decode',
 				),
 			),
         );
@@ -680,7 +666,7 @@ class Custom_Login {
 		$button .= wpautop( sprintf( '<a href="%s" title="%s" class="button secondary">%s</a>', 
 				esc_url( wp_nonce_url( add_query_arg( array( 'action' => $this->id . '-delete_transient' ), admin_url() ), $this->id . '-delete_transient' ) ),
 				esc_attr__( 'Update the scripts and styles', $this->domain ),
-				__( 'Update stylesheet', $this->domain )
+				__( 'Clear stylesheet cache', $this->domain )
 		) );
 		$button .= '<span class="description">' . __( 'If your stylesheet isn\'t updating click update above to delete the transient cache.', $this->domain ) . '</span>';
 		$button .= '</div>';
@@ -732,9 +718,14 @@ class Custom_Login {
         echo '</div>';
 		
 		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV && WP_DEBUG ) {
+			/**
 			foreach( apply_filters( $this->id . '_add_settings_sections', $this->sections ) as $section )
 				echo '<pre data-id="'.$section['id'].'">' . print_r( get_option( $section['id'] ), true ) . '</pre>';
 			echo '<pre data-id="custom_login_settings">' . print_r( get_option( 'custom_login_settings' ), true ) . '</pre>';
+			
+			echo '<pre data-id="' . $this->id . '_ignore_announcement">' . print_r( get_user_meta( get_current_user_id(), $this->id . '_ignore_announcement', true ), true ) . '</pre>';
+			echo '<pre data-id="' . $this->id . '_announcement_message">' . print_r( get_option( $this->id . '_announcement_message' ), true ) . '</pre>';
+			// */
 		}
 		
     }
@@ -796,7 +787,7 @@ class Custom_Login {
 	 * `login_footer` hook in wp-login.php.
 	 *
 	 */
-	function login_footer() {
+	function login_footer_html() {
 		$custom_html = $this->get_option( 'custom_html', $this->id );
 		$html  = '';
 		

@@ -100,6 +100,14 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.0 (4/18/13) =
+
+* Updated notice URL.
+* For reals fixed the "remove notice" button. :D
+* Moved the CSS back into the login head instead of external CSS (fixes WordPress CSS flash).
+* Changed custom textarea to sanitize on save and output so line breaks are kept in tact.
+* More data sanitization on settings.
+
 = Version 2.0.6 (4/18/13) =
 
 * Fix notice not going away on dismiss.

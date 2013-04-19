@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Custom Login 2.0\n"
-"POT-Creation-Date: 2013-04-18 08:26-0800\n"
-"PO-Revision-Date: 2013-04-18 08:26-0800\n"
+"POT-Creation-Date: 2013-04-18 17:53-0800\n"
+"PO-Revision-Date: 2013-04-18 17:53-0800\n"
 "Last-Translator: Austin Passy <austin@thefrosty.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,267 +21,267 @@ msgid ""
 "greater than 3.5. You are running <code>%s</code>"
 msgstr ""
 
-#: ../custom-login.php:357
+#: ../custom-login.php:336
 msgid "General Settings"
 msgstr ""
 
-#: ../custom-login.php:365
+#: ../custom-login.php:344
 msgid "Activate"
 msgstr ""
 
-#: ../custom-login.php:366
+#: ../custom-login.php:345
 msgid "Toggle this plugin on &amp; off."
 msgstr ""
 
-#: ../custom-login.php:372
+#: ../custom-login.php:351
 msgid "<h4><abbr title=\"Hyper Text Markup Language\">HTML</abbr></h4>"
 msgstr ""
 
-#: ../custom-login.php:379
+#: ../custom-login.php:358
 msgid "HTML Background Color"
 msgstr ""
 
-#: ../custom-login.php:386
+#: ../custom-login.php:365
 msgid "HTML Background Image"
 msgstr ""
 
-#: ../custom-login.php:387
+#: ../custom-login.php:366
 msgid "Upload an image or a repeating pattern (optional)."
 msgstr ""
 
-#: ../custom-login.php:394
+#: ../custom-login.php:374
 msgid "HTML Background Position"
 msgstr ""
 
-#: ../custom-login.php:395 ../custom-login.php:449 ../custom-login.php:504
+#: ../custom-login.php:375 ../custom-login.php:430 ../custom-login.php:486
 msgid ""
 "Allowed strings <code>left, top, center, right, bottom</code>. No more than "
 "two combined! Space delimiter."
 msgstr ""
 
-#: ../custom-login.php:402
+#: ../custom-login.php:382
 msgid "HTML Background repeat"
 msgstr ""
 
-#: ../custom-login.php:414
+#: ../custom-login.php:394
 msgid "HTML Background size"
 msgstr ""
 
-#: ../custom-login.php:427
+#: ../custom-login.php:407
 msgid "<h4>Logo</h4>"
 msgstr ""
 
-#: ../custom-login.php:434
+#: ../custom-login.php:414
 msgid "Hide the WP logo"
 msgstr ""
 
-#: ../custom-login.php:435
+#: ../custom-login.php:415
 msgid ""
 "Works when there is no logo present, otherwise the WP logo is replaced by "
 "your logo."
 msgstr ""
 
-#: ../custom-login.php:440
+#: ../custom-login.php:420
 msgid "Logo"
 msgstr ""
 
-#: ../custom-login.php:441
+#: ../custom-login.php:421
 msgid "Replace the WordPress logo (optional)."
 msgstr ""
 
-#: ../custom-login.php:448
+#: ../custom-login.php:429
 msgid "Logo Background Position"
 msgstr ""
 
-#: ../custom-login.php:456
+#: ../custom-login.php:437
 msgid "Logo Background repeat"
 msgstr ""
 
-#: ../custom-login.php:468
+#: ../custom-login.php:449
 msgid "Logo Background size"
 msgstr ""
 
-#: ../custom-login.php:481
+#: ../custom-login.php:462
 msgid "<h4>Login form</h4>"
 msgstr ""
 
-#: ../custom-login.php:488
+#: ../custom-login.php:469
 msgid "Login Form Background Color"
 msgstr ""
 
-#: ../custom-login.php:495
+#: ../custom-login.php:476
 msgid "Login Form Background URL"
 msgstr ""
 
-#: ../custom-login.php:496
+#: ../custom-login.php:477
 msgid "Add an image to the form (optional)."
 msgstr ""
 
-#: ../custom-login.php:503
+#: ../custom-login.php:485
 msgid "Login Form Background Position"
 msgstr ""
 
-#: ../custom-login.php:511
+#: ../custom-login.php:493
 msgid "Login Form Background repeat"
 msgstr ""
 
-#: ../custom-login.php:523
+#: ../custom-login.php:505
 msgid "Login Form Background size"
 msgstr ""
 
-#: ../custom-login.php:535
+#: ../custom-login.php:517
 msgid "Login Form Border Radius"
 msgstr ""
 
-#: ../custom-login.php:543
+#: ../custom-login.php:526
 msgid "Login Form Border Size"
 msgstr ""
 
-#: ../custom-login.php:551
+#: ../custom-login.php:535
 msgid "Login Form Border Color"
 msgstr ""
 
-#: ../custom-login.php:558
+#: ../custom-login.php:542
 msgid "Login Form Box Shadow"
 msgstr ""
 
-#: ../custom-login.php:559
+#: ../custom-login.php:543
 #, php-format
 msgid "Use <a href=\"%s\">box shadow</a> syntax w/ out color. <code>%s</code>"
 msgstr ""
 
-#: ../custom-login.php:566
+#: ../custom-login.php:550
 msgid "Login Form Box Shadow Color"
 msgstr ""
 
-#: ../custom-login.php:574
+#: ../custom-login.php:558
 msgid "<h4>Misc.</h4>"
 msgstr ""
 
-#: ../custom-login.php:581
+#: ../custom-login.php:565
 msgid "Login Form Label Color"
 msgstr ""
 
-#: ../custom-login.php:589
+#: ../custom-login.php:573
 msgid "<h4>Below form anchor</h4>"
 msgstr ""
 
-#: ../custom-login.php:596
+#: ../custom-login.php:580
 msgid "Below form nav color"
 msgstr ""
 
-#: ../custom-login.php:603
+#: ../custom-login.php:587
 msgid "Below form nav text-shadow color"
 msgstr ""
 
-#: ../custom-login.php:610
+#: ../custom-login.php:594
 msgid "Below form nav color hover"
 msgstr ""
 
-#: ../custom-login.php:617
+#: ../custom-login.php:601
 msgid "Below form nav text-shadow hover"
 msgstr ""
 
-#: ../custom-login.php:625
+#: ../custom-login.php:609
 msgid "<h4>Custom HTML/CSS &amp; jQuery</h4>"
 msgstr ""
 
-#: ../custom-login.php:632
+#: ../custom-login.php:616
 msgid "Custom CSS"
 msgstr ""
 
-#: ../custom-login.php:638
+#: ../custom-login.php:623
 msgid "Custom HTML"
 msgstr ""
 
-#: ../custom-login.php:645
+#: ../custom-login.php:630
 msgid "Custom jQuery"
 msgstr ""
 
-#: ../custom-login.php:669 ../functions/install.php:32
+#: ../custom-login.php:655 ../functions/install.php:32
 #: ../functions/install.php:40
 msgid "Custom Login Settings"
 msgstr ""
 
-#: ../custom-login.php:669 ../functions/post-types.php:37
+#: ../custom-login.php:655 ../functions/post-types.php:37
 msgid "Custom Login"
 msgstr ""
 
-#: ../custom-login.php:683
-msgid "Update stylesheet"
+#: ../custom-login.php:669
+msgid "Clear stylesheet cache"
 msgstr ""
 
-#: ../custom-login.php:685
+#: ../custom-login.php:671
 msgid ""
 "If your stylesheet isn't updating click update above to delete the transient "
 "cache."
 msgstr ""
 
-#: ../custom-login.php:717
+#: ../custom-login.php:703
 msgid "Settings"
 msgstr ""
 
-#: ../custom-login.php:750
+#: ../custom-login.php:741
 msgid "Support this plugin and buy me a beer"
 msgstr ""
 
-#: ../custom-login.php:751
+#: ../custom-login.php:742
 msgid "Rate this plugin on WordPress.org"
 msgstr ""
 
-#: ../custom-login.php:752
+#: ../custom-login.php:743
 msgid ""
 "Share your designs on <strong style=\"color:#0066DC;\">Flick</strong><strong "
 "style=\"color:#ff0084;\">r</strong>"
 msgstr ""
 
-#: ../custom-login.php:753
+#: ../custom-login.php:744
 msgid "Get support on WordPress.org"
 msgstr ""
 
-#: ../custom-login.php:754
+#: ../custom-login.php:745
 msgid "Contribute development on GitHub"
 msgstr ""
 
-#: ../custom-login.php:755
+#: ../custom-login.php:746
 msgid "Get Custom Login Add-ons"
 msgstr ""
 
-#: ../custom-login.php:762
+#: ../custom-login.php:753
 #, php-format
 msgid "<a href=\"%s\">%s</a> | <code>version %s</code>"
 msgstr ""
 
-#: ../classes/class.settings-api.php:754
+#: ../classes/class.settings-api.php:760
 #, php-format
 msgid "%1$s | <a href=\"%2$s\">Dismiss notice</a>"
 msgstr ""
 
-#: ../classes/class.settings-api.php:939
+#: ../classes/class.settings-api.php:945
 msgid "Error fetching feed"
 msgstr ""
 
-#: ../classes/class.settings-api.php:950
+#: ../classes/class.settings-api.php:956
 msgid "Like Extendd on Facebook"
 msgstr ""
 
-#: ../classes/class.settings-api.php:951
+#: ../classes/class.settings-api.php:957
 msgid "Follow Extendd on Twitter"
 msgstr ""
 
-#: ../classes/class.settings-api.php:952
+#: ../classes/class.settings-api.php:958
 msgid "Follow Austin on Twitter"
 msgstr ""
 
-#: ../classes/class.settings-api.php:953
+#: ../classes/class.settings-api.php:959
 msgid "Circle Extendd on Google+"
 msgstr ""
 
-#: ../classes/class.settings-api.php:954
+#: ../classes/class.settings-api.php:960
 msgid "Subscribe via email"
 msgstr ""
 
-#: ../classes/class.settings-api.php:957
+#: ../classes/class.settings-api.php:963
 msgid "Latest plugins from Extendd.com"
 msgstr ""
 

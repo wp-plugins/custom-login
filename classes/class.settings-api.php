@@ -480,6 +480,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
     function callback_textarea( $args ) {
 
         $value = esc_textarea( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+		//$value = wp_specialchars_decode( stripslashes( $this->get_option( $args['id'], $args['section'], $args['std'] ) ), 1, 0, 1 );
         $size = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
 
         $html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]">%4$s</textarea>', $size, $args['section'], $args['id'], $value );
@@ -724,7 +725,8 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
     function show_notifications() {
 		$transient		= $this->prefix . '_announcement';	
 		$ignore			= $this->prefix . '_ignore_announcement';		
-		$message		= get_option( $this->prefix . '_announcement_message' );
+		$old_message	= get_option( $this->prefix . '_announcement_message' );
+		$user_meta		= get_user_meta( get_current_user_id(), $ignore, true );
 		
 		//delete_transient( $transient );
 		//delete_option( $this->prefix . '_announcement_message' );
@@ -746,15 +748,19 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 				return;
 			}
 		}
+			
+		if ( $old_message !== $announcement->message ) {
+			delete_user_meta( get_current_user_id(), $ignore, 1 );
+			delete_transient( $transient );
+			delete_option( $message );			
+			echo 'test';
+		}
 		
-		if ( $message !== $announcement->message )
-			 delete_user_meta( get_current_user_id(), $ignore );
-		
-		$html  = '<div class="updated" data-message="' . esc_attr( $message ) . '" data-announce="' . esc_attr( $announcement->message ) . '"><p>'; 
-		$html .= sprintf( __( '%1$s | <a href="%2$s">Dismiss notice</a>', 'custom-login' ), $announcement->message, esc_url( add_query_arg( $ignore, wp_create_nonce( $ignore ), admin_url() ) ) );
+		$html  = '<div class="updated" data-old-message="' . esc_attr( $old_message ) . '" data-announcement="' . esc_attr( $announcement->message ) . '"><p>'; 
+		$html .= sprintf( __( '%1$s | <a href="%2$s">Dismiss notice</a>', 'custom-login' ), $announcement->message, esc_url( add_query_arg( $ignore, wp_create_nonce( $ignore ), admin_url( 'options-general.php?page=custom-login' ) ) ) );
 		$html .= '</p></div>';
 		
-		if ( !get_user_meta( get_current_user_id(), $ignore ) )
+		if ( !$user_meta && 1 !== $user_meta )
 			echo $html;
 	}
 	
