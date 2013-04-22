@@ -100,6 +100,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.2 (4/22/13) =
+
+* Changed wrong $hook prefix for scripts.
+
 = Version 2.1.1 (4/22/13) =
 
 * Fix untranslatable items in the settings page.

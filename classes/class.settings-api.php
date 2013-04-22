@@ -125,7 +125,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      * Enqueue scripts and styles
      */
     function admin_enqueue_scripts( $hook ) {
-		if ( 'options-general.php' !== $hook )
+		if ( 'settings_page_' . $this->domain !== $hook )
 			return;
 			
 		/* Core */
