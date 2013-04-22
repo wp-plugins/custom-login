@@ -3,8 +3,8 @@
 /**
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login
- * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions on <a href="http://extendd.com/plugins/tag/custom-login-extension">extendd.com</a>.
- * Version: 2.1.0
+ * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions at <a href="http://extendd.com/plugins/tag/custom-login-extension">Extendd.com</a>.
+ * Version: 2.1.1
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.1.0';
+	var $version = '2.1.1';
 	
 	/**
 	 * Plugin vars
@@ -59,6 +59,7 @@ class Custom_Login {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new custom_login;
 			self::$instance->setup_constants();
+			self::$instance->plugin_textdomain();
 			self::$instance->required_functions();
 			self::$instance->init();
 		}
@@ -80,9 +81,6 @@ class Custom_Login {
 		/* Constants */
 		add_action( 'init',									array( $this, 'setup_constants' ) );
 		
-		/* Localization */
-		add_action( 'admin_init', 							array( $this, 'plugin_textdomain' ) );
-		
 		/* Scripts */
 		add_action( 'login_enqueue_scripts',				array( $this, 'enqueue_scripts' ) );
 		
@@ -100,13 +98,16 @@ class Custom_Login {
 		add_action( 'admin_init',							array( $this, 'admin_init' ), 9 );
 		add_action( 'admin_menu',							array( $this, 'admin_menu' ), 9 );
 		
-		/* Update button */
+		/* Clear transient cache button */
 		add_action( $this->id .
-			'_form_bottom_' . $this->id,					array( $this, 'delete_transient_button' ) );
+			'_form_bottom_' . $this->id,					array( $this, 'delete_transient_button_output' ) );
 			
 		/* Delete transient action */
         add_action( 'admin_action_' . 
-			$this->id . '-delete_transient',				array( $this, 'delete_script_style_transient' ) );
+			$this->id . '-delete_transient',				array( $this, 'delete_custom_login_transient_cache' ) );
+			
+		/* Notices */
+		add_action( 'admin_notices',						array( $this, 'admin_messages' ) );
 		
 		/* Add a settings page to the plugin menu */
 		add_filter( 'plugin_action_links',					array( $this, 'plugin_action_links' ), 10, 2 );
@@ -258,6 +259,7 @@ class Custom_Login {
 			require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/class.settings-api.php' );
 			$this->settings_api = new Extendd_Plugin_Settings_API;
 			$this->settings_api->set_prefix( $this->id );
+			$this->settings_api->set_domain( $this->domain );
 			$this->settings_api->set_version( $this->version );
 		}
 		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/templates.php' );
@@ -372,10 +374,19 @@ class Custom_Login {
                 array(
                     'name' 		=> 'html_background_position',
                     'label' 	=> __( 'HTML Background Position', $this->domain ),
-                    'desc' 		=> __( 'Allowed strings <code>left, top, center, right, bottom</code>. No more than two combined! Space delimiter.', $this->domain ),
-                    'type' 		=> 'text',
-					'size'		=> 'small',
-                    'default' 	=> 'left top'
+                    'desc' 		=> sprintf( __( '<a href="%s">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+                    ),
                 ),
                 array(
                     'name' 		=> 'html_background_repeat',
@@ -427,10 +438,19 @@ class Custom_Login {
                 array(
                     'name' 		=> 'logo_background_position',
                     'label' 	=> __( 'Logo Background Position', $this->domain ),
-                    'desc' 		=> __( 'Allowed strings <code>left, top, center, right, bottom</code>. No more than two combined! Space delimiter.', $this->domain ),
-                    'type' 		=> 'text',
-					'size'		=> 'small',
-                    'default' 	=> 'left top'
+                    'desc' 		=> sprintf( __( '<a href="%s">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+					),
                 ),
                 array(
                     'name' 		=> 'logo_background_repeat',
@@ -483,10 +503,19 @@ class Custom_Login {
                 array(
                     'name' 		=> 'login_form_background_position',
                     'label' 	=> __( 'Login Form Background Position', $this->domain ),
-                    'desc' 		=> __( 'Allowed strings <code>left, top, center, right, bottom</code>. No more than two combined! Space delimiter.', $this->domain ),
-                    'type' 		=> 'text',
-					'size'		=> 'small',
-                    'default' 	=> 'left top'
+                    'desc' 		=> sprintf( __( '<a href="%s">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+                    ),
                 ),
                 array(
                     'name' 		=> 'login_form_background_repeat',
@@ -540,7 +569,7 @@ class Custom_Login {
                 array(
                     'name' 		=> 'login_form_box_shadow',
                     'label' 	=> __( 'Login Form Box Shadow', $this->domain ),
-                    'desc' 		=> sprintf( __( 'Use <a href="%s">box shadow</a> syntax w/ out color. <code>%s</code>', $this->domain ), 'http://www.w3schools.com/cssref/css3_pr_box-shadow.asp', 'inset h-shadow v-shadow blur spread' ),
+                    'desc' 		=> sprintf( __( 'Use <a href="%s">box shadow</a> syntax w/ out color. <code>inset h-shadow v-shadow blur spread</code>', $this->domain ), 'http://www.w3schools.com/cssref/css3_pr_box-shadow.asp' ),
                     'type' 		=> 'text',
 					'size'		=> 'medium',
                     'default' 	=> '5px 5px 10px'
@@ -661,17 +690,27 @@ class Custom_Login {
 	 * Delete the transient
 	 *
 	 */
-	function delete_transient_button() {
+	function delete_transient_button_output() {
 		$button  = '<div style="padding-left: 10px">';
-		$button .= wpautop( sprintf( '<a href="%s" title="%s" class="button secondary">%s</a>', 
-				esc_url( wp_nonce_url( add_query_arg( array( 'action' => $this->id . '-delete_transient' ), admin_url() ), $this->id . '-delete_transient' ) ),
-				esc_attr__( 'Update the scripts and styles', $this->domain ),
-				__( 'Clear stylesheet cache', $this->domain )
-		) );
+		$button .= wpautop( $this->delete_transient_button_link() );
 		$button .= '<span class="description">' . __( 'If your stylesheet isn\'t updating click update above to delete the transient cache.', $this->domain ) . '</span>';
 		$button .= '</div>';
 		
 		echo $button;
+	}
+	
+	/**
+	 * Delete button link output
+	 *
+	 * @return string
+	 */
+	function delete_transient_button_link( $class = 'button' ) {
+		return sprintf( '<a href="%s" title="%s" class="%s">%s</a>', 
+			esc_url( wp_nonce_url( add_query_arg( array( 'action' => $this->id . '-delete_transient' ), admin_url() ), $this->id . '-delete_transient' ) ),
+			esc_attr__( 'Clear the transient cache', $this->domain ),
+			sanitize_html_class( $class ),
+			__( 'Clear stylesheet cache', $this->domain )
+		);
 	}
 	
 	/**
@@ -680,7 +719,7 @@ class Custom_Login {
 	 * 
 	 * @return array()
 	 */
-	function delete_script_style_transient() {
+	function delete_custom_login_transient_cache() {
 		
 		if ( !( isset( $_GET[$this->id . '-delete_transient'] ) || ( isset( $_REQUEST['action'] ) && $this->id . '-delete_transient' == $_REQUEST['action'] ) ) )
 			return;
@@ -691,8 +730,36 @@ class Custom_Login {
 		delete_transient( $this->id . '_script' );
 		
 		/* Redirect */
-		wp_redirect( admin_url( sprintf( 'options-general.php?page=%s&message=1', $this->domain ) ) );
+		wp_redirect( admin_url( sprintf( 'options-general.php?page=%s&settings-updated=true&message=1', $this->domain ) ) );
 		exit;
+	}
+	
+	/**
+	 * Show a message when prompted
+	 *
+	 * @return string|void
+	 */
+	function admin_messages() {
+		global $pagenow;
+		
+		if ( ( isset( $_GET['page'] ) && isset( $_GET['message'] ) ) && $pagenow == 'options-general.php' && $this->domain == $_GET['page'] ) {
+			
+			$html = '<div id="setting-error-transitent_deleted" class="updated"><p>'; 
+			
+			switch ( $_GET['message'] ) {
+				case 1 :
+					$html .= __( 'The cache has been deleted.', $this->domain );
+					break;
+					
+				case 2 :
+					$html .= '';
+					break;					
+			}
+			
+			$html .= '</p></div>';
+		
+			echo $html;
+		}
 	}
 	
 	/**
@@ -748,6 +815,8 @@ class Custom_Login {
 		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
 			$content .= '<li class="queries genericon-warning">' . $this->get_queries( true ) . '</li>';
 		}
+		
+		$content .= '<li class="delete genericon-warning">' . $this->delete_transient_button_link( '' ) . '</li>';
 
 		$content .= '</ul>';
 		$this->settings_api->postbox( $this->id . '_sidebar', sprintf( __( '<a href="%s">%s</a> | <code>version %s</code>', $this->domain ), 'http://extendd.com/plugin/custom-login', ucwords( str_replace( '-', ' ', $this->domain ) ), $this->version ), $content, true );

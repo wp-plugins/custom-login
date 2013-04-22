@@ -100,6 +100,15 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.1 (4/22/13) =
+
+* Fix untranslatable items in the settings page.
+* Added clear transient cache to Custom Login sidebar (as well as above save settings).
+* Changed HTML position from input field to dropdown.
+* Added notification on transient cache deletion.
+* Removed "test" echo.
+* Added delete transient on settings save.
+
 = Version 2.1.0 (4/18/13) =
 
 * Updated notice URL.

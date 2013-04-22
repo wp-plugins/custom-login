@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.2';
+	var $api_version = '1.0.4';
 
     /**
      * settings sections array
@@ -43,6 +43,13 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	 * @var string
 	 */
 	private $prefix;
+	
+	/**
+	 * The Plugin domain
+	 * 
+	 * @var string
+	 */
+	private $domain;
 	
 	/**
 	 * The Parent Plugin version
@@ -95,6 +102,16 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	}
 	
 	/**
+	 * Set parent domain
+	 * 
+	 * @param string $domain
+	 * @return void
+	 */
+	public function set_domain( $domain ) {
+		$this->domain = $domain;
+	}
+	
+	/**
 	 * Set parent version
 	 * 
 	 * @param string $version
@@ -107,7 +124,10 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
     /**
      * Enqueue scripts and styles
      */
-    function admin_enqueue_scripts() {
+    function admin_enqueue_scripts( $hook ) {
+		if ( 'options-general.php' !== $hook )
+			return;
+			
 		/* Core */
 		if ( function_exists( 'wp_enqueue_media' ) ) wp_enqueue_media();
 		wp_enqueue_script( 'wp-color-picker' );
@@ -118,7 +138,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		wp_enqueue_style( 'jquery-chosen', plugins_url( 'assets/css/chosen.css', CUSTOM_LOGIN_FILE ), false, '0.9.12', 'screen' );
 		
 		/* Admin */
-		wp_enqueue_style( $this->prefix, plugins_url( 'assets/css/admin.css', CUSTOM_LOGIN_FILE ), false, '', 'screen' );
+		wp_enqueue_style( $this->domain, plugins_url( 'assets/css/admin.css', CUSTOM_LOGIN_FILE ), false, '', 'screen' );
 		
 		/* Genericons */
 		wp_enqueue_style( 'genericons', plugins_url( 'assets/css/genericons.css', CUSTOM_LOGIN_FILE ), false, '', 'screen' );
@@ -295,7 +315,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			});
 			$('body').on('click', 'a[class^="button dodelete-"]', function(e) {
 				e.preventDefault();
-				console.log(this);
+			//	console.log(this);
 				
 				$(this).parent().remove();
 			});
@@ -328,7 +348,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		$html .= '<div class="checkbox-wrap">';
         $html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] . '_checkbox' );
         $html .= sprintf( '<input type="checkbox" class="checkbox" id="%1$s[%2$s]" name="%1$s[%2$s]" value="on"%4$s />', $args['section'], $args['id'] . '_checkbox', $check, checked( $check, 'on', false ) );
-        $html .= sprintf( '<label for="%1$s[%2$s]">Opacity</label>', $args['section'], $args['id'] . '_checkbox' );
+        $html .= sprintf( __( '<label for="%1$s[%2$s]">Opacity</label>', $this->domain ), $args['section'], $args['id'] . '_checkbox' );
         $html .= '</div>';
 		
 		/* Opacity */
@@ -639,6 +659,9 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      * Sanitize callback for Settings API
      */ 
     function sanitize_options( $options ) {
+		delete_transient( $this->prefix . '_style' );
+		delete_transient( $this->prefix . '_script' );
+		
         foreach( $options as $option_slug => $option_value ) {
             $sanitize_callback = $this->get_sanitize_callback( $option_slug );
 
@@ -753,11 +776,11 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			delete_user_meta( get_current_user_id(), $ignore, 1 );
 			delete_transient( $transient );
 			delete_option( $message );			
-			echo 'test';
+			//echo 'test';
 		}
 		
 		$html  = '<div class="updated" data-old-message="' . esc_attr( $old_message ) . '" data-announcement="' . esc_attr( $announcement->message ) . '"><p>'; 
-		$html .= sprintf( __( '%1$s | <a href="%2$s">Dismiss notice</a>', 'custom-login' ), $announcement->message, esc_url( add_query_arg( $ignore, wp_create_nonce( $ignore ), admin_url( 'options-general.php?page=custom-login' ) ) ) );
+		$html .= sprintf( __( '%1$s | <a href="%2$s">Dismiss notice</a>', $this->domain ), $announcement->message, esc_url( add_query_arg( $ignore, wp_create_nonce( $ignore ), admin_url( 'options-general.php?page=custom-login' ) ) ) );
 		$html .= '</p></div>';
 		
 		if ( !$user_meta && 1 !== $user_meta )
@@ -869,12 +892,12 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			$(clicked_group + '_sidebar').fadeIn();
 			e.preventDefault();
 		});
-		<?php if ( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] ) { ?>
+	<?php if ( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] ) { ?>
 		
 		setTimeout( function() {
-			$('#setting-error-settings_updated').fadeOut('slow');
+			$('#setting-error-settings_updated, #setting-error-transitent_deleted').fadeOut('slow');
 		}, 4000 );
-		<?php } ?>
+	<?php } ?>
 	});
 </script><?php
     }
@@ -942,7 +965,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		$content = '<ul>';
 		if ( !$rss_items ) {
-			$content .= '<li>' . __( 'Error fetching feed', 'custom-login' ) . '</li>';
+			$content .= '<li>' . __( 'Error fetching feed', $this->domain ) . '</li>';
 		} else {
 			foreach ( $rss_items as $item ) {
 				$url = preg_replace( '/#.*/', '', esc_url( $item->get_permalink(), null, 'display' ) );
@@ -953,14 +976,14 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		}
 		$content .= '</ul>';
 		$content .= '<ul class="social">';
-		$content .= '<li class="facebook"><a href="https://www.facebook.com/WPExtendd">' . __( 'Like Extendd on Facebook', 'custom-login' ) . '</a></li>';
-		$content .= '<li class="twitter"><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', 'custom-login' ) . '</a></li>';
-		$content .= '<li class="twitter"><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', 'custom-login' ) . '</a></li>';
-		$content .= '<li class="googleplus"><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', 'custom-login' ) . '</a></li>';
-		$content .= '<li class="email"><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', 'custom-login' ) . '</a></li>';
+		$content .= '<li class="facebook"><a href="https://www.facebook.com/WPExtendd">' . __( 'Like Extendd on Facebook', $this->domain ) . '</a></li>';
+		$content .= '<li class="twitter"><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
+		$content .= '<li class="twitter"><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', $this->domain ) . '</a></li>';
+		$content .= '<li class="googleplus"><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', $this->domain ) . '</a></li>';
+		$content .= '<li class="email"><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
 
 		$content .= '</ul>';
-		$this->postbox( 'extenddlatest', __( 'Latest plugins from Extendd.com' ), $content );
+		$this->postbox( 'extenddlatest', __( 'Latest plugins from Extendd.com', $this->domain ), $content );
 	}
 
 }

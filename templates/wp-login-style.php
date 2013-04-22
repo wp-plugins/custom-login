@@ -22,7 +22,7 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
 	$css = '';
 	$close_rule = "}\n";
 	
-	//if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) $css .= "/**\n *\n" . print_r( $cl_css_atts, true ) . " */\n\n";
+	if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) $css .= "/**\n *\n" . print_r( $cl_css_atts, true ) . " */\n\n";
 		
 	$css .= "
 /**
