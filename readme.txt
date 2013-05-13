@@ -100,6 +100,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.3 (5/13/13) =
+
+* Fixed `notice` in class.settings-api.php.
+
 = Version 2.1.2 (4/22/13) =
 
 * Changed wrong $hook prefix for scripts.
