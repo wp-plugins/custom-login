@@ -100,6 +100,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.4 (5/17/13) =
+
+* Fixed notification not clearing on 'dismiss notice'. Sorry about that.
+
 = Version 2.1.3 (5/13/13) =
 
 * Fixed `notice` in class.settings-api.php.
