@@ -100,6 +100,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.5 (5/20/13) =
+
+* Fix for some users who still can't dismess the notice.
+
 = Version 2.1.4 (5/17/13) =
 
 * Fixed notification not clearing on 'dismiss notice'. Sorry about that.

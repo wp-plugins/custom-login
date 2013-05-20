@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.6';
+	var $api_version = '1.0.7';
 
     /**
      * settings sections array
@@ -775,7 +775,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			}
 		}
 			
-		if ( trim( $old_message ) !== trim( $announcement->message ) ) {
+		if ( trim( $old_message ) !== trim( $announcement->message ) && !empty( $old_message ) ) {
 			delete_user_meta( get_current_user_id(), $ignore, 1 );
 			delete_transient( $transient );
 			delete_option( $this->prefix . '_announcement_message' );			
