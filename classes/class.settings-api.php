@@ -831,7 +831,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 
                             <?php do_action( $this->prefix . '_form_top_' . $form['id'], $form ); ?>
                             <?php settings_fields( $form['id'] ); ?>
-                            <?php do_settings_sections( $form['id'] ); ?>
+                            <div class="inside"><?php do_settings_sections( $form['id'] ); ?></div>
                             <?php do_action( $this->prefix . '_form_bottom_' . $form['id'], $form ); ?>
 
                             <div style="padding-left: 10px">
