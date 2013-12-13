@@ -177,10 +177,15 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
 		$css .= trailingsemicolonit( "background-position: {$logo_background_position}" );
 		$css .= trailingsemicolonit( "background-repeat: {$logo_background_repeat}" );
 			
-		if ( !empty( $logo_background_size ) && 'none' != $logo_background_size ) {
+		if ( !empty( $logo_background_size ) && 'none' !== $logo_background_size ) {
 			
-			$logo_background_size = ( 'flex' != $logo_background_size ) ? $logo_background_size : '100% auto';
+			$size = !empty( $logo_background_size_custom ) ? $logo_background_size_custom : '100% auto';
+			$logo_background_size = ( 'flex' !== $logo_background_size ) ? $logo_background_size : $size;
 			$css .= prefixit( 'background-size', $logo_background_size );
+			
+		} elseif ( !empty( $logo_background_size_custom ) ) { 
+		
+			$css .= prefixit( 'background-size', $logo_background_size_custom );
 			
 		}
 		

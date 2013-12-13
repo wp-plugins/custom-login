@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.7';
+	var $api_version = '1.0.8';
 
     /**
      * settings sections array
@@ -766,6 +766,11 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			if ( !is_wp_error( $site ) ) {
 				if ( isset( $site['body'] ) && strlen( $site['body'] ) > 0 ) {
 					$announcement = json_decode( wp_remote_retrieve_body( $site ) );
+					
+					// For when I mess up the JSON or github is down.
+					if ( is_wp_error( $announcement ) || empty( $announcement->message ) )
+						return;
+						
 					set_transient( $transient, $announcement, WEEK_IN_SECONDS * 2 ); // Cache for two weeks
 					update_option( $this->prefix . '_announcement_message', $announcement->message ); // Update the message
 				}

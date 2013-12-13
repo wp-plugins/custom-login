@@ -100,6 +100,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.7 (12/13/13) =
+
+* WordPress 3.8.x compatability. 
+* Adds custom background-size capability to fix new `80px X 80px` background-size standard.
+
 = Version 2.1.6 (11/21/13) =
 
 * Updated for PHP 5.4 &amp; WordPress 3.8.x compatibility. 
