@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.9';
+	var $api_version = '1.0.10';
 
     /**
      * settings sections array
@@ -273,6 +273,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      * @param array   $args settings field args
      */
     function callback_text_array( $args ) {
+		static $counter = 0;
 		
         $value = $this->get_option( $args['id'], $args['section'], $args['std'] );
         $size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
@@ -296,6 +297,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		$html .= '</ul>';
 		$html .= sprintf( '<a href="#" class="button docopy-%1$s[%2$s]">+</a>', $args['section'], $args['id'] );
 		
+		$counter++;
 		ob_start(); ?>
 		<script>
 		jQuery(document).ready(function($) {
@@ -322,7 +324,8 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			});
 		});
 		</script><?php
-		$html .= ob_get_clean();
+		
+		$html .= 1 === $counter ? ob_get_clean() : '';
 				
         $html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
 
@@ -335,6 +338,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      * @param array   $args settings field args
      */
     function callback_colorpicker( $args ) {
+		static $counter = 0;
 		
         $value	 = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 		$check	 = esc_attr( $this->get_option( $args['id'] . '_checkbox', $args['section'], $args['std'] ) );
@@ -360,6 +364,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
         }
         $html .= sprintf( '</select>' );
 		
+		$counter++;
 		ob_start(); ?>
         <script>
 		jQuery(document).ready(function($) {
@@ -379,18 +384,18 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			};
 			$('input[name="<?php echo $args['section'] . '[' . $args['id'] . ']'; ?>"]').wpColorPicker();
 		   
-		    $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').chosen();
+		    $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').removeClass('hidden').chosen().addClass('hidden');
 			if ( $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').hasClass('hidden') ) {
-		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chzn').hide();
+		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chosen').hide();
 			}
 			
 		    $('input[name="<?php echo $args['section'] . '[' . $args['id'] . '_checkbox]'; ?>"]').on('change', function() {
 		    	//$('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').toggle();
-		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chzn').toggle();
+		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chosen').toggle();
 			});
 		});
 		</script><?php
-		$html .= ob_get_clean();
+		$html .= 1 === $counter ? ob_get_clean() : '';
 		
 		/* Description */
         $html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
@@ -483,12 +488,14 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
             $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
         }
         $html .= sprintf( '</select>' );
+		
 		ob_start(); ?>
         <script>
 		jQuery(document).ready(function($) {
 		    $('select[name="<?php echo $args['section'] . '[' . $args['id'] . ']'; ?>"]').chosen();
 		});
 		</script><?php
+		
 		$html .= ob_get_clean();
         $html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
 
@@ -554,7 +561,9 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
         $html = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
         $html .= '<input type="button" class="button extendd-browse" id="'. $id .'_button" value="Browse" style="margin-left:5px" />';
         $html .= '<input type="button" class="button extendd-clear" id="'. $id .'_clear" value="Clear" style="margin-left:5px" />';
-		if ( 0 == $counter ) {
+		
+		$counter++;
+		if ( 1 === $counter ) {
 			ob_start(); ?>
 			<script>
 			jQuery(document).ready(function($) {			
@@ -639,7 +648,6 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
         $html .= sprintf( '<br><span class="description"> %s</span>', $args['desc'] );
 
         echo $html;
-		$counter++;
     }
 
     /**
@@ -937,7 +945,9 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	 * @return 	array|bool False on error, array of RSS items on success.
 	 */
 	public function fetch_rss_items( $num, $feed ) {
-		include_once( ABSPATH . WPINC . '/feed.php' );
+		if ( !function_exists( 'fetch_feed' ) )
+			include_once( ABSPATH . WPINC . '/feed.php' );
+			
 		$rss = fetch_feed( $feed );
 
 		// Bail if feed doesn't work

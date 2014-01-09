@@ -1,3 +1,8 @@
+Version 1.0.10 (1/8/14)
+
+Updated chosen() class names for 1.0.0
+Added static $couters to functions to output scripts once.
+
 Version 1.0.9 (12/17/13)
 
 Added admin.js

@@ -4,12 +4,12 @@
  * Plugin Name: Custom Login 2.0
  * Plugin URI: http://extendd.com/plugin/custom-login
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions at <a href="http://extendd.com/plugins/tag/custom-login-extension">Extendd.com</a>.
- * Version: 2.1.8
+ * Version: 2.1.9
  * Author: Austin Passy
  * Author URI: http://austinpassy.com
  * Text Domain: custom-login
  *
- * @copyright 2012 - 2013
+ * @copyright 2012 - 2014
  * @author Austin Passy
  * @link http://austinpassy.com/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -30,7 +30,7 @@ class Custom_Login {
 	/**
 	 * Version
 	 */
-	var $version = '2.1.8';
+	var $version = '2.1.9';
 	
 	/**
 	 * Plugin vars
@@ -436,6 +436,24 @@ class Custom_Login {
                     'default' 	=> '',
 					'page_id'	=> '0',
 					'sanitize_callback' => 'esc_url',
+                ),
+                array(
+                    'name' 		=> 'logo_background_size_width',
+                    'label' 	=> __( 'Logo Image width', $this->domain ),
+                    'desc' 		=> __( 'Enter your image size in "pixels" without the "px"', $this->domain ),
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
+                ),
+                array(
+                    'name' 		=> 'logo_background_size_height',
+                    'label' 	=> __( 'Logo Image height', $this->domain ),
+                    'desc' 		=> __( 'Enter your image size in "pixels" without the "px"', $this->domain ),
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
                 ),
                 array(
                     'name' 		=> 'logo_background_position',

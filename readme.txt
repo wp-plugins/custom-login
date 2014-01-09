@@ -100,6 +100,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.1.9 (1/8/14) =
+
+* Fixed chosen() JS 1.0.0 class variables on opacity options.
+* Be sure to only output one instace of the settings scripts.
+* Added actual width and height options to logo to fix WP 3.8 CSS settings.
+
 = Version 2.1.8 (12/17/13) =
 
 * Logo CSS fix.
@@ -196,6 +202,9 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 
 == Upgrade Notice ==
+
+= 2.1.9 =
+Happy New Year! Finally fixed the logo issue with WordPress 3.8! If you find this plugin useful please consider donating, I've spend countless hours making it better for you. 
 
 = 2.0.6 =
 Updated translation files and fixed dismiss notice from not getting removed.

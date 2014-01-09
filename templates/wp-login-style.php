@@ -176,6 +176,12 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
 	
 		$css .= cssrule( '#login h1 a' );
 	
+		if ( !empty( $logo_background_size_height ) && is_int( $logo_background_size_height ) )
+			$css .= trailingsemicolonit( "height: {$logo_background_size_height}px !important" );
+			
+		if ( !empty( $logo_background_size_width ) && is_int( $logo_background_size_width ) )
+			$css .= trailingsemicolonit( "width: {$logo_background_size_width}px !important" );
+		
 		$css .= trailingsemicolonit( "background-image: url('{$logo_background_url}')" );
 		$css .= trailingsemicolonit( "background-position: {$logo_background_position}" );
 		$css .= trailingsemicolonit( "background-repeat: {$logo_background_repeat}" );
@@ -199,9 +205,10 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
 		$image_attributes 	= wp_get_attachment_image_src( $attachment_id ); // returns an array
 		$css .= !empty( $image_attributes[2] ) ? trailingsemicolonit( "height: {$image_attributes[2]}" ) : trailingsemicolonit( "height: inherit" );
 		$css .= !empty( $image_attributes[1] ) ? trailingsemicolonit( "width: {$image_attributes[1]}" ) : trailingsemicolonit( "width: inherit" );
+		 *
+		$css .= !empty( $logo_background_height ) ? trailingsemicolonit( "height: {$logo_background_height}" ) : trailingsemicolonit( "height: inherit" );
+		$css .= !empty( $logo_background_width ) ? trailingsemicolonit( "width: {$logo_background_width}" ) : trailingsemicolonit( "width: inherit" );
 		 */
-		 $css .= !empty( $logo_background_height ) ? trailingsemicolonit( "height: {$logo_background_height}" ) : trailingsemicolonit( "height: inherit" );
-		 $css .= !empty( $logo_background_width ) ? trailingsemicolonit( "width: {$logo_background_width}" ) : trailingsemicolonit( "width: inherit" );
 		
 		/* CLOSE login h1 a */
 		$css .= $close_rule;
