@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.11';
+	var $api_version = '1.0.12';
 
     /**
      * settings sections array
@@ -513,7 +513,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		//$value = wp_specialchars_decode( stripslashes( $this->get_option( $args['id'], $args['section'], $args['std'] ) ), 1, 0, 1 );
         $size = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
 
-        $html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]">%4$s</textarea>', $size, $args['section'], $args['id'], $value );
+        $html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]">%4$s</textarea>', $size, $args['section'], $args['id'], stripslashes( $value ) );
         $html .= sprintf( '<br><span class="description"> %s</span>', $args['desc'] );
 
         echo $html;
@@ -754,8 +754,15 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	 *
 	 * @since 2.2
      */
-    function wp_remote_get_set_transient( $url = false, $transient, $type = 'message' ) {
+    function wp_remote_get_set_transient( $url = false, $transient, $type = 'message', $cache_time = null ) {
 		if ( !$url ) return;
+		
+		if ( is_null( $cache_time ) ) {
+			if ( defined( 'DAY_IN_SECONDS' ) )
+				$cache_time = DAY_IN_SECONDS;
+			else
+				$cache_time = 24 * 60 * 60;
+		}
 		
 		if ( false === ( $output = get_transient( $transient ) ) ) {
 			$site = wp_remote_get( $url, array( 'timeout' => 15, 'sslverify' => false ) );
@@ -767,7 +774,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 					if ( is_wp_error( $output ) || empty( $output->$type ) )
 						return false;
 						
-					set_transient( $transient, $output, WEEK_IN_SECONDS * 2 ); // Cache for two weeks
+					set_transient( $transient, $output, $cache_time ); // Cache for two weeks
 					update_option( $transient . '_message', $output->$type ); // Update the message
 					
 					// Return the data
@@ -1017,7 +1024,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
 		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', $this->domain ) . '</a></li>';
 		$content .= '<li class="googleplus"><span class="genericon genericon-googleplus"></span><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', $this->domain ) . '</a></li>';
-		$content .= '<li class="email"><span class="genericon genericon-mail"></span><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
+		$content .= '<li class="email"><span class="genericons genericons-mail"></span><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
 
 		$content .= '</ul>';
 		$this->postbox( 'extenddlatest', __( 'Latest plugins from Extendd.com', $this->domain ), $content );
