@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.10';
+	var $api_version = '1.0.11';
 
     /**
      * settings sections array
@@ -142,7 +142,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		wp_enqueue_style( $this->domain, plugins_url( 'assets/css/admin.css', CUSTOM_LOGIN_FILE ), false, $this->version, 'screen' );
 		
 		/* Genericons */
-		wp_enqueue_style( 'genericons', plugins_url( 'assets/css/genericons.css', CUSTOM_LOGIN_FILE ), false, $this->version, 'screen' );
+		wp_enqueue_style( 'genericons', plugins_url( 'assets/css/genericons.css', CUSTOM_LOGIN_FILE ), false, '3.0.3', 'screen' );
     }
 
     /**
@@ -748,6 +748,39 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 
         echo $html;
     }
+	
+	/**
+     * Helper function to make remote calls
+	 *
+	 * @since 2.2
+     */
+    function wp_remote_get_set_transient( $url = false, $transient, $type = 'message' ) {
+		if ( !$url ) return;
+		
+		if ( false === ( $output = get_transient( $transient ) ) ) {
+			$site = wp_remote_get( $url, array( 'timeout' => 15, 'sslverify' => false ) );
+			if ( !is_wp_error( $site ) ) {
+				if ( isset( $site['body'] ) && strlen( $site['body'] ) > 0 ) {
+					$output = json_decode( wp_remote_retrieve_body( $site ) );
+					
+					// For when I mess up the JSON or github is down.
+					if ( is_wp_error( $output ) || empty( $output->$type ) )
+						return false;
+						
+					set_transient( $transient, $output, WEEK_IN_SECONDS * 2 ); // Cache for two weeks
+					update_option( $transient . '_message', $output->$type ); // Update the message
+					
+					// Return the data
+					return $output;
+				}
+			} else {
+				// Error, lets return!
+				return false;
+			}
+		}
+		return $output;
+		
+	}
 
     /**
      * Show the section settings forms
@@ -759,7 +792,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
     function show_notifications() {
 		$transient		= $this->prefix . '_announcement';	
 		$ignore			= $this->prefix . '_ignore_announcement';		
-		$old_message	= get_option( $this->prefix . '_announcement_message' );
+		$old_message	= get_option( $transient . '_message' );
 		$user_meta		= get_user_meta( get_current_user_id(), $ignore, true );		
 		
 //		delete_user_meta( get_current_user_id(), $ignore, 1 );
@@ -770,29 +803,16 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		if ( !current_user_can( 'manage_options' ) )
 			return;
 		
-		if ( false === ( $announcement = get_transient( $transient ) ) ) {
-			$site = wp_remote_get( 'https://raw.github.com/thefrosty/custom-login/master/extensions.json', array( 'timeout' => 15, 'sslverify' => false ) );
-			if ( !is_wp_error( $site ) ) {
-				if ( isset( $site['body'] ) && strlen( $site['body'] ) > 0 ) {
-					$announcement = json_decode( wp_remote_retrieve_body( $site ) );
-					
-					// For when I mess up the JSON or github is down.
-					if ( is_wp_error( $announcement ) || empty( $announcement->message ) )
-						return;
-						
-					set_transient( $transient, $announcement, WEEK_IN_SECONDS * 2 ); // Cache for two weeks
-					update_option( $this->prefix . '_announcement_message', $announcement->message ); // Update the message
-				}
-			} else {
-				// Error, lets return!
-				return;
-			}
-		}
+		$announcement = $this->wp_remote_get_set_transient( 'https://raw.github.com/thefrosty/custom-login/master/extensions.json', $transient, 'message' );
+		
+		//print_r( $announcement );
+		
+		if ( false === $announcement ) return;
 			
 		if ( trim( $old_message ) !== trim( $announcement->message ) && !empty( $old_message ) ) {
 			delete_user_meta( get_current_user_id(), $ignore, 1 );
 			delete_transient( $transient );
-			delete_option( $this->prefix . '_announcement_message' );			
+			delete_option( $transient . '_message' );
 			//echo 'test';
 		}
 		
@@ -829,11 +849,9 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
      *
      * This function displays every sections in a different form
      */
-    function show_forms() {
-?>
-        <div class="metabox-left-wrapper" style="float:left; width:73%">
-        <div class="metabox-holder">
-            <div class="postbox">
+    function show_forms() { ?>
+        <div class="section col-group">
+            <div class="postbox col span_2_of_3">
                 <?php foreach ( $this->settings_sections as $form ) { ?>
                     <div id="<?php echo $form['id']; ?>" class="group">
                         <form method="post" action="options.php">
@@ -850,10 +868,10 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
                     </div>
                 <?php } ?>
             </div>
-        </div>
-        </div><!-- .metabox-left-wrapper -->
-        <div style="float:right; max-width:300px; width:25%;">
+        <div class="col span_1_of_3" style="margin-top:0">
         	<?php do_action( $this->prefix . '_settings_sidebars', $this->settings_sidebars ); ?>
+        </div>
+        
         </div>
         <br class="clear">
         <?php
@@ -975,7 +993,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		$defaults = array(
 			'items' => 6,
-			'feed' 	=> 'http://extendd.com/feed/?post_type=plugin',
+			'feed' 	=> 'http://extendd.com/feed/?post_type=download',
 		);
 		
 		$args = wp_parse_args( $args, $defaults );
