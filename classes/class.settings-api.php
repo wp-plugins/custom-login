@@ -1013,11 +1013,11 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		}
 		$content .= '</ul>';
 		$content .= '<ul class="social">';
-		$content .= '<li class="facebook"><span class="genericons genericons-facebook"></span><a href="https://www.facebook.com/WPExtendd">' . __( 'Like Extendd on Facebook', $this->domain ) . '</a></li>';
-		$content .= '<li class="twitter"><span class="genericons genericons-twitter"></span><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
-		$content .= '<li class="twitter"><span class="genericons genericons-twitter"></span><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', $this->domain ) . '</a></li>';
-		$content .= '<li class="googleplus"><span class="genericons genericons-googleplus"></span><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', $this->domain ) . '</a></li>';
-		$content .= '<li class="email"><span class="genericons genericons-mail"></span><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
+		$content .= '<li class="facebook"><span class="genericon genericon-facebook"></span><a href="https://www.facebook.com/WPExtendd">' . __( 'Like Extendd on Facebook', $this->domain ) . '</a></li>';
+		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
+		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', $this->domain ) . '</a></li>';
+		$content .= '<li class="googleplus"><span class="genericon genericon-googleplus"></span><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', $this->domain ) . '</a></li>';
+		$content .= '<li class="email"><span class="genericon genericon-mail"></span><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
 
 		$content .= '</ul>';
 		$this->postbox( 'extenddlatest', __( 'Latest plugins from Extendd.com', $this->domain ), $content );
