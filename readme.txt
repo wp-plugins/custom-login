@@ -100,6 +100,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.2.2 (1/28/14) =
+
+* Allowed variables to account for unicode in Custom CSS.
+* - Use `%%BLASH%%` for a backslash.
+
 = Version 2.2.1 (1/25/14) =
 
 * $version variable not loading.

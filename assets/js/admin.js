@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	// Remote API helper
-	$('#custom_login_extensions a[data-toggle]').on('click',function(e) {
+	$('#custom_login a[data-toggle]').on('click',function(e) {
 		e.preventDefault();
 		$('#' + $(this).data('toggle')).toggle();
 	});
