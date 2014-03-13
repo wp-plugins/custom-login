@@ -102,6 +102,11 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.3 (3/13/14) =
+
+* Renamed helper functions to avoid function exists errors even though I've wrapped those functions in `function_exists`
+* New: Class 'Custom_Login_Scripts_Styles'.
+
 = Version 2.2.3 (1/28/14) =
 
 * Added image previews after file fields.
