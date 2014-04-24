@@ -102,6 +102,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.3.2 (4/24/14) =
+
+* Fixed Fatal Error. Sorry.
+
 = Version 2.3.1 (4/24/14) =
 
 * Added new extension to manage redirects.
