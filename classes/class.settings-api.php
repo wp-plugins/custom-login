@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.14';
+	var $api_version = '1.0.15';
 
     /**
      * settings sections array
@@ -159,6 +159,8 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		/* Genericons */
 		wp_enqueue_style( 'genericons', plugins_url( 'assets/css/genericons.css', CUSTOM_LOGIN_FILE ), false, '3.0.3', 'screen' );
+			
+		do_action( 'custom_login_admin_enqueue_scripts' );
     }
 
     /**
