@@ -35,7 +35,7 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
  * Plugin URI	: http://austin.passy.co/wordpress-plugins/custom-login
  * Version		: $version
  * Author URI	: http://austin.passy.co
- * Extensions	: http://extendd.com/plugins/tag/custom-login-extension/
+ * Extensions	: https://extendd.com/plugins/tag/custom-login-extension/
  */\n\n";
 	
 	/* Custom user input */

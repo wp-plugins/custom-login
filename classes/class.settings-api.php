@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.15';
+	var $api_version = '1.0.16';
 
     /**
      * settings sections array
@@ -105,6 +105,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		add_action( 'admin_notices',			array( $this, 'show_notifications' ) );
 		add_action( 'admin_init',				array( $this, 'notification_ignore' ) );
+		add_action( 'admin_menu',				array( $this, 'modify_transient' ) );
 	}
 	
 	/**
@@ -886,6 +887,38 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		/* If user clicks to ignore the notice, add that to their user meta */
 		add_user_meta( get_current_user_id(), $ignore, 1, true );
 	}
+	
+	/**
+	 */
+	function load_edd_add_ons_page() {
+		if ( ! class_exists( 'Easy_Digital_Downloads' ) )
+			return;
+			
+		global $edd_add_ons_page;
+		add_action( 'load-' . $edd_add_ons_page, array( $this, 'modify_transient' ), 11 );
+	}
+	
+	/**
+	 */
+	function modify_transient() {
+			
+		if ( false !== ( $cache = get_transient( 'easydigitaldownloads_add_ons_feed' ) ) ) {
+			
+			if ( false === ( $cl = get_transient( 'custom_login_edd_add_ons_feed' ) ) ) {
+				// Replace ?utm_* link
+				//$cache	= preg_replace( '/(\?|\&|&#038;)utm_[a-z]+=[a-zA-Z0-9-]+/', '', $cache );				
+				//var_dump( $cache ); exit;				
+				// Replace 'ref=1' on "Get the Add On" link.
+				$cache	= preg_replace( '/ref=(\d+)/i', 'ref=116', $cache );				
+				//echo( $cache ); exit;
+				delete_transient( 'easydigitaldownloads_add_ons_feed' );
+				set_transient( 'easydigitaldownloads_add_ons_feed', $cache, WEEK_IN_SECONDS * 2 );
+				set_transient( 'custom_login_edd_add_ons_feed', '1', WEEK_IN_SECONDS * 2 );
+				echo 'fart';
+			}
+		}
+	
+	}
 
     /**
      * Show the section settings forms
@@ -1036,7 +1069,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		$defaults = array(
 			'items' => 6,
-			'feed' 	=> 'http://extendd.com/feed/?post_type=download',
+			'feed' 	=> 'https://extendd.com/feed/?post_type=download',
 		);
 		
 		$args = wp_parse_args( $args, $defaults );
@@ -1057,7 +1090,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		$content .= '</ul>';
 		$content .= '<ul class="social">';
 		$content .= '<li class="facebook"><span class="genericon genericon-facebook"></span><a href="https://www.facebook.com/WPExtendd">' . __( 'Like Extendd on Facebook', $this->domain ) . '</a></li>';
-		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
+		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="https://twitter.com/WPExtendd">' . __( 'Follow Extendd on Twitter', $this->domain ) . '</a></li>';
 		$content .= '<li class="twitter"><span class="genericon genericon-twitter"></span><a href="http://twitter.com/TheFrosty">' . __( 'Follow Austin on Twitter', $this->domain ) . '</a></li>';
 		$content .= '<li class="googleplus"><span class="genericon genericon-googleplus"></span><a href="https://plus.google.com/113609352601311785002/">' . __( 'Circle Extendd on Google+', $this->domain ) . '</a></li>';
 		$content .= '<li class="email"><span class="genericons genericons-mail"></span><a href="http://eepurl.com/vi0bz">' . __( 'Subscribe via email', $this->domain ) . '</a></li>';
