@@ -14,7 +14,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 	/**
 	 * Version
 	 */
-	var $api_version = '1.0.16';
+	var $api_version = '1.0.17';
 
     /**
      * settings sections array
@@ -359,11 +359,12 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
     function callback_colorpicker( $args ) {
 		static $counter = 0;
 		
-        $value	 = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$check	 = esc_attr( $this->get_option( $args['id'] . '_checkbox', $args['section'], $args['std'] ) );
-        $opacity = esc_attr( $this->get_option( $args['id'] . '_opacity', $args['section'], $args['std'] ) );
-        $size	 = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'small';
+		$value	 	= esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+		$check	 	= esc_attr( $this->get_option( $args['id'] . '_checkbox', $args['section'], $args['std'] ) );
+		$opacity 	= esc_attr( $this->get_option( $args['id'] . '_opacity', $args['section'], $args['std'] ) );
+		$size	 	= isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'small';
 		$opaque_options = array( '1', '0.9', '0.8', '0.7', '0.6', '0.5', '0.4', '0.3', '0.2', '0.1', '0', );
+		$class		= 'on' != $check ? ' hidden' : '';
 		
 		/* Color */
         $html  = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" style="float:left"/>', $size, $args['section'], $args['id'], $value );
@@ -377,7 +378,7 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		
 		/* Opacity */
        // $html .= sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" style="margin-left:70px;%5$s" />', $size, $args['section'], $args['id'] . '_opacity', $opacity, ( 'on' !== $check ? 'display:none;' : '' ) );
-	   $html .= sprintf( '<select class="%1$s%4$s" name="%2$s[%3$s]" id="%2$s[%3$s]" style="margin-left:70px;">', $size, $args['section'], $args['id'] . '_opacity', ( 'on' !== $check ? ' hidden' : '' ) );
+	   $html .= sprintf( '<select class="%1$s%4$s" name="%2$s[%3$s]" id="%2$s[%3$s]" style="margin-left:70px;">', $size, $args['section'], $args['id'] . '_opacity', $class );
         foreach ( $opaque_options as $key ) {
             $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $opacity, $key, false ), $key );
         }
@@ -403,13 +404,17 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 			};
 			$('input[name="<?php echo $args['section'] . '[' . $args['id'] . ']'; ?>"]').wpColorPicker();
 		   
-		    $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').removeClass('hidden').chosen().addClass('hidden');
 			if ( $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').hasClass('hidden') ) {
-		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chosen').hide();
+				$('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').removeClass('hidden').chosen().addClass('hidden');
+			} else {
+				$('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').chosen();
+			}
+			
+			if ( $('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').hasClass('hidden') ) {
+				$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chosen').hide();
 			}
 			
 		    $('input[name="<?php echo $args['section'] . '[' . $args['id'] . '_checkbox]'; ?>"]').on('change', function() {
-		    	//$('select[name="<?php echo $args['section'] . '[' . $args['id'] . '_opacity]'; ?>"]').toggle();
 		    	$('#<?php echo str_replace( '[', '_', $args['section'] . '[' . $args['id'] . '_opacity' ); ?>__chosen').toggle();
 			});
 		});
@@ -417,7 +422,8 @@ if ( !class_exists( 'Extendd_Plugin_Settings_API' ) ):
 		$html .= 1 === $counter ? ob_get_clean() : '';
 		
 		/* Description */
-        $html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
+		if ( !empty( $args['desc'] ) )
+			$html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
 
         echo $html;
     }

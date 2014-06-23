@@ -4,7 +4,7 @@
  * Plugin Name: Custom Login
  * Plugin URI: https://extendd.com/plugin/custom-login
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions at <a href="https://extendd.com/plugins/tag/custom-login-extension">Extendd.com</a>.
- * Version: 2.3.5
+ * Version: 2.3.6
  * Author: Austin Passy
  * Author URI: http://austin.passy.co
  * Text Domain: custom-login
@@ -31,7 +31,7 @@ class Custom_Login {
 	 * Plugin vars
 	 * @return string
 	 */
-	var $version = '2.3.5',
+	var $version = '2.3.6',
 		$domain,
 		$id;
 	
@@ -77,20 +77,20 @@ class Custom_Login {
 		add_action( 'admin_init',							array( $this, 'check_version' ), 1 );
 		
 		/* Constants */
-		add_action( 'init',									array( $this, 'setup_constants' ) );
+		add_action( 'init',								array( $this, 'setup_constants' ) );
 		
 		/* Scripts */
 		add_action( 'login_enqueue_scripts',				array( $this, 'enqueue_scripts' ) );
 		
 		/* Custom jQuery templates */
-		add_action( 'login_footer',							array( $this, 'login_footer_jquery' ) );
+		add_action( 'login_footer',						array( $this, 'login_footer_jquery' ) );
 		
 		/* Includes */
-		add_action( 'init',									array( $this, 'required_classes' ) );
-		add_action( 'init',									array( $this, 'required_functions' ) );
+		add_action( 'init',								array( $this, 'required_classes' ) );
+		add_action( 'init',								array( $this, 'required_functions' ) );
 		
 		/* Shortcodes */
-		add_action( 'init',									array( $this, 'add_shortcodes' ) );
+		add_action( 'init',								array( $this, 'add_shortcodes' ) );
 		
 		/* Settings */
 		add_action( 'admin_init',							array( $this, 'admin_init' ), 9 );
@@ -108,16 +108,16 @@ class Custom_Login {
 		add_action( 'admin_notices',						array( $this, 'admin_messages' ) );
 		
 		/* Add a settings page to the plugin menu */
-		add_filter( 'plugin_action_links',					array( $this, 'plugin_action_links' ), 10, 2 );
+		add_filter( 'plugin_action_links',				array( $this, 'plugin_action_links' ), 10, 2 );
 		
 		/* Filter in your URL */
-		add_filter( 'login_headerurl',						array( $this, 'login_url' ) );
+		add_filter( 'login_headerurl',					array( $this, 'login_url' ) );
 		
 		/* Filter in your description */
 		add_filter( 'login_headertitle',					array( $this, 'login_title' ) );			
 		
 		/* Custom HTML */
-		add_action( 'login_footer',							array( $this, 'login_footer_html' ) );
+		add_action( 'login_footer',						array( $this, 'login_footer_html' ) );
 	}
 	
 	/**

@@ -102,6 +102,12 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.3.6 (6/23/14) =
+
+* Update Chosen.js to 1.1.0
+* Update admin.css 
+* Fix opacity select options from being hidden when opacity is checked (on).
+
 = Version 2.3.5 (6/18/14) =
 
 * Update all extendd URLs to https.
