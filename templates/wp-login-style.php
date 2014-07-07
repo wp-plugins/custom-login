@@ -225,11 +225,11 @@ if ( false === ( $css = get_transient( $login->id . '_style' ) ) ) :
 	/**
 	 * Open form label
 	 *
-	 * @rule	#loginform label
+	 * @rule	.login label | #loginform label, #lostpasswordform label
 	 */
 	if ( !empty( $label_color ) ) {	
 		
-		$css .= $ss->cssrule( '#loginform label' );
+		$css .= $ss->cssrule( '.login label' );
 		
 		if ( 'on' === $label_color_checkbox ) {
 			

@@ -102,6 +102,10 @@ Screenshots of working example in our [Flickr group](http://flickr.com/groups/cu
 
 == Changelog ==
 
+= Version 2.3.7 (7/7/14) =
+
+* Fixes CSS issue on lost password page. Issue [<a href="https://github.com/thefrosty/custom-login/issues/1#issue-37305001">#1].
+
 = Version 2.3.6 (6/23/14) =
 
 * Update Chosen.js to 1.1.0
