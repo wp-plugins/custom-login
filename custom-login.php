@@ -1,272 +1,1002 @@
 <?php
+
 /**
- * Plugin Name: Custom Login lite
- * Plugin URI: http://austinpassy.com/wordpress-plugins/custom-login
- * Description: A simple way to customize your WordPress login screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. So simple a neanderthal can do it! Now featuring a HTML &amp; CSS box for advanced users. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or upgrade to the <a href="http://thefrosty.com/custom-login-pro/">PRO</a> version!
- * Version: 1.1.4
+ * Plugin Name: Custom Login
+ * Plugin URI: https://extendd.com/plugin/custom-login
+ * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! Use the built in, easy to use <a href="./options-general.php?page=custom-login">settings</a> page to do the work for you. Share you designs on <a href="http://flickr.com/groups/custom-login/">Flickr</a> or get Custom Login extensions at <a href="https://extendd.com/plugins/tag/custom-login-extension">Extendd.com</a>.
+ * Version: 2.4.0
  * Author: Austin Passy
- * Author URI: http://austinpassy.com
+ * Author URI: http://austin.passy.co
+ * Text Domain: custom-login
  *
- * @copyright 2009 - 2013
+ * @copyright 2012 - 2014
  * @author Austin Passy
- * @link http://frostywebdesigns.com/
+ * @link http://austin.passy.co/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @package CustomLogin
+ * @class custom_login_pro
  */
+ 
+if ( !class_exists( 'Custom_Login' ) ) :
+class Custom_Login {
+	
+	/** Singleton *************************************************************/
+	private static $instance;
+	
+	/**
+	 * Plugin vars
+	 * @return string
+	 */
+	var $version = '2.4.0',
+		$domain,
+		$id;
+	
+	/**
+	 * Private settings
+	 */
+	private $settings_api,
+			$remote_install,
+			$sections;
+	
+	/**
+	 * Options page
+	 */
+	public $options_page;
 
-/* Set up the plugin. */
-add_action( 'plugins_loaded', 'custom_login_setup' );
-
-/**
- * Sets up the Custom Login plugin and loads files at the appropriate time.
- *
- * @since 0.8
- */
-function custom_login_setup() {
-	/* Load translations. */
-	load_plugin_textdomain( 'custom-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
-	/* Set constant path to the Custom Login plugin directory. */
-	define( 'CUSTOM_LOGIN', 'custom-login' );
-	define( 'CUSTOM_LOGIN_SETTINGS', 'custom_login_settings' );
-	define( 'CUSTOM_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'CUSTOM_LOGIN_ADMIN', CUSTOM_LOGIN_DIR . 'library/admin/' );
-	define( 'CUSTOM_LOGIN_FILE', __FILE__ );
-
-	/* Set constant path to the Custom Login plugin URL. */
-	define( 'CUSTOM_LOGIN_URL', plugin_dir_url( __FILE__ ) );
-	define( 'CUSTOM_LOGIN_CSS', CUSTOM_LOGIN_URL . 'library/css/' );
-	define( 'CUSTOM_LOGIN_JS', CUSTOM_LOGIN_URL . 'library/js/' );
-
-	if ( is_admin() ) {
-		require_once( CUSTOM_LOGIN_ADMIN . 'admin.php' );
-		
-		if ( custom_login_get_setting( 'hide_dashboard' ) != true )
-			require_once( CUSTOM_LOGIN_ADMIN . 'dashboard.php' );
-		
-		if ( custom_login_get_setting( 'disable_presstrends' ) != true )
-			require_once( CUSTOM_LOGIN_ADMIN . 'presstrends.php' );
+	/**
+	 * Main Instance
+	 *
+	 * @staticvar 	array 	$instance
+	 * @return 		The one true instance
+	 */
+	public static function instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self;
+			self::$instance->setup_constants();
+			self::$instance->plugin_textdomain();
+			self::$instance->required_functions();
+			self::$instance->init();
+		}
+		return self::$instance;
 	}
 	
-	/* Add a settings page to the plugin menu */
-	add_filter( 'plugin_action_links', 'custom_login_plugin_actions', 10, 2 );
-	
-	/* Filter in your URL */
-	add_filter( 'login_headerurl', 'custom_login_url' );
-	/* Filter in your description */
-	add_filter( 'login_headertitle', 'custom_login_title' );
-	
-	/* Load the login head */
-	add_action( 'login_head', 'custom_login_head', 1 );
-	add_action( 'login_enqueue_scripts', 'custom_login_login_scripts' );
-	
-	add_action( 'login_footer', 'custom_login_custom_html' );
-	add_action( 'login_footer', 'custom_login_footer_js' );
-
-	do_action( 'custom_login_loaded' );
-}
-
-/**
- * Replace the defualt link to your URL
- *
- * @since 0.8
- */
-function custom_login_url() {
-	return get_bloginfo( 'siteurl' );
-}
-
-/**
- * Replace the defualt title to your description
- *
- * @since 0.8
- */
-function custom_login_title() {
-	return get_bloginfo( 'description' );
-}
-
-/**
- * Function for quickly grabbing settings for the plugin without having to call get_option() 
- * every time we need a setting.
- *
- * @since 	0.8
- * @update	1.1
- */
-function custom_login_get_setting( $option = '' ) {
-	global $custom_login;
-
-	if ( !$option )
-		return false;
-	
-	/* Hopefully a fix to the PHP 5.4 issue */
-	if ( !$custom_login ) {
-		$custom_login = new stdClass;
-	}
-
-	if ( !isset( $custom_login->settings ) )
-		$custom_login->settings = get_option( 'custom_login_settings' ); //Getting error in PHP 5.4 (http://wordpress.org/support/topic/custom-login-and-php-54?replies=2#post-3702829)
-	
-	if ( !is_array( $custom_login->settings ) || empty( $custom_login->settings[$option] ) )
-		return false;
+	/**
+	 * To infinity and beyond
+	 */
+	function init() {
 		
-	return $custom_login->settings[$option];
-}
-
-/**
- * WordPress 3.x check
- *
- * @since 	0.8
- */
-if ( !function_exists( 'is_version' ) ) {
-	function is_version( $version = '3.0' ) {
+		/* vars */
+		$this->domain	= 'custom-login';
+		$this->id		= 'custom_login';
+		
+		/* Constants */
+		add_action( 'admin_init',							array( $this, 'check_version' ), 1 );
+		
+		/* Constants */
+		add_action( 'init',								array( $this, 'setup_constants' ) );
+		
+		/* Scripts */
+		add_action( 'login_enqueue_scripts',				array( $this, 'enqueue_scripts' ) );
+		
+		/* Custom jQuery templates */
+		add_action( 'login_footer',						array( $this, 'login_footer_jquery' ) );
+		
+		/* Includes */
+		add_action( 'init',								array( $this, 'required_classes' ) );
+		add_action( 'init',								array( $this, 'required_functions' ) );
+		
+		/* Shortcodes */
+		add_action( 'init',								array( $this, 'add_shortcodes' ) );
+		
+		/* Settings */
+		add_action( 'admin_init',							array( $this, 'admin_init' ), 9 );
+		add_action( 'admin_menu',							array( $this, 'admin_menu' ), 9 );
+		
+		/* Clear transient cache button */
+		add_action( $this->id .
+			'_form_bottom_' . $this->id,					array( $this, 'delete_transient_button_output' ) );
+			
+		/* Delete transient action */
+        add_action( 'admin_action_' . 
+			$this->id . '-delete_transient',				array( $this, 'delete_custom_login_transient_cache' ) );
+			
+		/* Notices */
+		add_action( 'admin_notices',						array( $this, 'admin_messages' ) );
+		
+		/* Add a settings page to the plugin menu */
+		add_filter( 'plugin_action_links',				array( $this, 'plugin_action_links' ), 10, 2 );
+		
+		/* Filter in your URL */
+		add_filter( 'login_headerurl',					array( $this, 'login_url' ) );
+		
+		/* Filter in your description */
+		add_filter( 'login_headertitle',					array( $this, 'login_title' ) );			
+		
+		/* Custom HTML */
+		add_action( 'login_footer',						array( $this, 'login_footer_html' ) );
+	}
+	
+	/**
+	 * WordPress version check
+	 *
+	 * @since 2.0.3
+	 */
+	function check_version() {
 		global $wp_version;
 		
-		if ( version_compare( $wp_version, $version, '<' ) ) {
+		if ( version_compare( $wp_version, '3.5', '<' ) ) {
+			add_action( 'admin_notices', array( $this, 'version_notification' ) );
+			if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) deactivate_plugins( plugin_basename( __FILE__ ) );
+		}
+	}
+	
+	/**
+	 * Deactivation notice
+	 *
+	 */
+	function version_notification() {
+		global $wp_version;
+		
+		$html  = '<div class="error"><p>'; 
+		$html .= sprintf( __( 'Custom Login has been deactivated because it requires a WordPress version greater than 3.5. You are running <code>%s</code>', $this->domain ), $wp_version );
+		$html .= '</p></div>';
+		
+		echo $html;
+	}
+	
+	/**
+	 * Setup plugin constants
+	 *
+	 * @since 2.0
+	 * @access private
+	 * @uses plugin_dir_path()
+	 * @uses plugin_dir_url()
+	 */
+	function setup_constants() {
+		
+		// Plugin version
+		if ( ! defined( 'CUSTOM_LOGIN_VERSION' ) )
+			define( 'CUSTOM_LOGIN_VERSION', $this->version );
+			
+		// Plugin settings
+		if ( ! defined( 'CUSTOM_LOGIN_SETTINGS' ) )
+			define( 'CUSTOM_LOGIN_SETTINGS', $this->id );
+
+		// Plugin Folder URL
+		if ( ! defined( 'CUSTOM_LOGIN_URL' ) )
+			define( 'CUSTOM_LOGIN_URL', plugin_dir_url( __FILE__ ) );
+
+		// Plugin Folder Path
+		if ( ! defined( 'CUSTOM_LOGIN_DIR' ) )
+			define( 'CUSTOM_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+		// Plugin Root File
+		if ( ! defined( 'CUSTOM_LOGIN_FILE' ) )
+			define( 'CUSTOM_LOGIN_FILE', __FILE__ );
+		
+		// Plugin version
+		if ( ! defined( 'EXTENDD_API_URL' ) )
+			define( 'EXTENDD_API_URL', 'http://extendd.com' );
+	}
+	
+	/**
+	 * Load the plugin translations
+	 *
+	 */
+	function plugin_textdomain() {
+		load_plugin_textdomain( 'custom-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+	
+	/**
+	 * Enqueue additional scripts.
+	 *
+	 * @since	2.0
+	 * @updated	2.1
+	 */
+	function enqueue_scripts() {
+		if ( !$this->is_active() )
+			return;	
+		
+		global $cl_css_atts;
+
+		$cl_css_atts = array(
+			'version'	=> CUSTOM_LOGIN_VERSION,
+		);
+		$cl_css_atts = wp_parse_args( get_option( $this->id, array() ), $cl_css_atts );
+		
+		ob_start();
+			echo "<style type=\"text/css\">\n";
+				$login_template = new Custom_Login_Templates;
+				$login_template->get_template_part( 'wp-login', 'style' );
+			echo "\n</style>";
+		echo ob_get_clean();
+		
+		/* Custom jQuery */
+		$jquery = $this->get_option( 'custom_jquery', $this->id );
+		if ( !empty( $jquery ) ) {
+			wp_enqueue_script( array( 'jquery' ) );
+		}
+	}
+	
+	/**
+	 * Database access to the scripts and styles.
+	 *
+	 * @since	2.1
+	 * @return string|void
+	 */
+	function login_footer_jquery() {		
+		$jquery = $this->get_option( 'custom_jquery', $this->id );
+		if ( !empty( $jquery ) ) :
+					
+			global $cl_js_atts;
+		
+			$cl_js_atts = array(
+				'version'	=> CUSTOM_LOGIN_VERSION,
+			);
+			$cl_js_atts = wp_parse_args( get_option( $this->id, array() ), $cl_js_atts );
+			
+			foreach( $cl_js_atts as $atts => $value ) {
+				if ( 'custom_jquery' !== $atts && 'version' !== $atts )
+					unset( $cl_js_atts[$atts] );
+			}
+			
+			ob_start();
+				echo "<script type=\"text/javascript\">\n";
+					$login_template = new Custom_Login_Templates;
+					$login_template->get_template_part( 'wp-login', 'script' );
+				echo "\n</script>";				
+			echo ob_get_clean();
+			
+		endif; // jQUery
+	}
+	
+	/**
+	 * Includes required functions
+	 *
+	 */
+	function required_classes() {
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/class.settings-api.php' );
+		$this->settings_api = EXTENDD_PLUGIN_SETTINGS_API();
+		
+		if ( is_admin() ) {
+			// Settings API
+			$this->settings_api->set_prefix( $this->id );
+			$this->settings_api->set_domain( $this->domain );
+			$this->settings_api->set_version( $this->version );
+			
+			// Welcome API
+			require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/welcome.php' );
+			
+			// Extensions install API
+			if ( $this->class_exists_require( 'Extendd_Remote_Install_Client', 'edd-remote-install-client/EDD_Remote_Install_Client.php' ) ) {
+				$this->remote_install = new Extendd_Remote_Install_Client( EXTENDD_API_URL, 'settings_page_' . $this->domain,
+					array( 'skipplugincheck' => true, 'url' => home_url() )
+				);
+				add_action( 'eddri-install-complete-settings_page_' . $this->domain, array( $this, 'custom_login_extension_install_complete' ), 10, 1 );
+			}
+		}
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/templates.php' );
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/scripts-styles.php' );
+	}
+	
+	/**
+	 * Includes required functions
+	 *
+	 */
+	function required_functions() {
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/upgrades/upgrade-functions.php' );
+		require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'functions/upgrades/upgrades.php' );
+	}
+	
+	/**
+	 * Helper function to require classes if they do not exist.
+	 *
+	 */
+	function class_exists_require( $class_name, $dir_path = null ) {
+		if ( !class_exists( $class_name ) ) {
+			$dir_path = trailingslashit( plugin_dir_path( __FILE__ ) ) . 'classes/' . $dir_path;
+			
+			if ( file_exists( $dir_path ) )	{
+				require_once( $dir_path );
+				return true;
+			}
 			return false;
 		}
-		return true;
-	}
-}
-
-/**
- * Add stylesheet to the login head
- *
- * @since 	1.1.2
- */
-function custom_login_head() {	
-}
-
-/**
- * Add stylesheet to the login head
- * For some reason wp_enqueue_script enqueue's but doesn't output 
- * 	the scripts. So I have to *_print_scripts.
- *
- * @since 	1.1.2
- */
-function custom_login_login_scripts() {
-	/* Generator */
-	echo '<meta name="generator" content="Custom Login lite" />' . "\n";
-	
-	/* Scripts */
-	wp_register_script( 'gravatar', CUSTOM_LOGIN_JS . 'gravatar.js', array( 'jquery' ), '1.2', false );
-	
-	if ( ( custom_login_get_setting( 'custom_jquery' ) != '' || custom_login_get_setting( 'gravatar' ) != false ) && get_option( 'users_can_register' ) ) {
-		wp_enqueue_script( array( 'jquery', 'gravatar' ) ); // Enqueue to the $wp_scripts engine (doesn't output).
-		wp_print_scripts( array( 'jquery', 'gravatar' ) ); // Output the registered scripts.
+		return false;
 	}
 	
-	/* Styles */
-	wp_register_style( 'custom-login-defualt', CUSTOM_LOGIN_CSS . 'custom-login.css', false, '0.8', 'screen' );
-	
-	if ( custom_login_get_setting( 'custom' ) != false ) {		
-		require_once( trailingslashit( CUSTOM_LOGIN_DIR ) . 'library/css/custom-login.css.php' );		
-	} else {		
-		wp_enqueue_style( 'custom-login-defualt' );
-		wp_print_styles( 'custom-login-defualt' );		
+	/**
+	 * Add shortcodes
+	 *
+	 */
+	function add_shortcodes() {
+		#add_shortcode( 'custom-login', array( $this, 'login_shortcode' ) );
 	}
-}
-
-/**
- * Add html to the footer
- *
- * @since 	0.4.6
- * @updated	1.1.2
- */
-function custom_login_footer_js() {
-	global $custom_login;
 	
-	if ( false != custom_login_get_setting( 'gravatar' ) ) { ?>
-    
-<script type='text/javascript'>
-//<![CDATA[
-jQuery(document).ready(
-function($) {		
-	<?php if ( get_option( 'users_can_register' ) ) { ?>
-	var email = $('#user_email').size();		
-	if ( email > 0 ) {
-		$('#user_email').parent().parent().css('position','relative');
-		$('#user_email').parent().append('<span id="working"></span>');
-		$('#user_email').parent().append('<img id="gravatar" style="display:none; position:relative; top:10px; width:37px" />');
-		$('#user_email').css('width','80.4%').getGravatar({
-			avatarSize: 48,
-			start: function(){
-				$('#working').fadeIn('fast');
-			},
-			stop: function(){
-				$('#working').fadeOut('slow');
-			},
-			url: '/includes/get-gravatar.php',
-			fallback: 'http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536'
-		});
+	/**
+	 * Login shortcode
+	 *
+	 */
+	function login_shortcode( $atts ) {
+		return '';
+	}
+	
+	/**
+	 * Get the value of a settings field
+	 *
+	 * $this->get_option( 'field_name', 'section_name', 'default value' );
+	 *
+	 * @param string $option settings field name
+	 * @param string $section the section name this field belongs to
+	 * @param string $default default text if it's not found
+	 * @return mixed
+	 */
+	public function get_option( $option, $section, $default = '' ) {
+	 
+		$options = get_option( $section );
+	 
+		if ( isset( $options[$option] ) ) {
+			return $options[$option];
+		}
+	 
+		return $default;
+	}
+	
+	/** 
+	 * Registers settings section and fields
+ 	 */
+    function admin_init() {
+				
+        $this->sections = array(
+            array(
+                'id'	=> $this->id,
+                'title' => __( 'General Settings', $this->domain )
+            ),
+        );
+
+        $fields = array(
+            $this->id => array(
+                array(
+                    'name'		=> 'active',
+                    'label'		=> __( 'Activate', $this->domain ),
+                    'desc'		=> __( 'Toggle this plugin on &amp; off.', $this->domain ),
+                    'type'		=> 'checkbox'
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_1',
+                    'label'		=> __( '<h4><abbr title="Hyper Text Markup Language">HTML</abbr></h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'html_background_color',
+                    'label' 	=> __( 'HTML Background Color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> '',
+                ),
+                array(
+                    'name' 		=> 'html_background_url',
+                    'label' 	=> __( 'HTML Background Image', $this->domain ),
+                    'desc' 		=> __( 'Upload an image or a repeating pattern (optional).', $this->domain ),
+                    'type' 		=> 'file',
+                    'default' 	=> '',
+					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
+                ),
+                array(
+                    'name' 		=> 'html_background_position',
+                    'label' 	=> __( 'HTML Background Position', $this->domain ),
+                    'desc' 		=> sprintf( __( '<a href="%s" target="_blank">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+                    ),
+                ),
+                array(
+                    'name' 		=> 'html_background_repeat',
+                    'label' 	=> __( 'HTML Background repeat', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'no-repeat'	=> 'no-repeat',
+                        'repeat' 	=> 'repeat',
+                        'repeat-x' 	=> 'repeat-x',
+                        'repeat-y' 	=> 'repeat-y',
+                    )
+                ),
+                array(
+                    'name' 		=> 'html_background_size',
+                    'label' 	=> __( 'HTML Background size', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'none'		=> 'none',
+                        'cover' 	=> 'cover',
+                        'contain' 	=> 'contain',
+                        'flex' 		=> 'flex',
+                    )
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_2',
+                    'label'		=> __( '<h4>Logo</h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+                array(
+                    'name'		=> 'hide_wp_logo',
+                    'label'		=> __( 'Hide the WP logo', $this->domain ),
+                    'desc'		=> __( 'Works when there is no logo present, otherwise the WP logo is replaced by your logo.', $this->domain ),
+                    'type'		=> 'checkbox'
+                ),
+                array(
+                    'name' 		=> 'logo_background_url',
+                    'label' 	=> __( 'Logo', $this->domain ),
+                    'desc' 		=> __( 'Replace the WordPress logo (optional).', $this->domain ),
+                    'type' 		=> 'file',
+                    'default' 	=> '',
+					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
+                ),
+                array(
+                    'name' 		=> 'logo_background_size_width',
+                    'label' 	=> __( 'Logo Image width', $this->domain ),
+                    'desc' 		=> __( 'Enter your image size in "pixels" without the "px"', $this->domain ),
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
+                ),
+                array(
+                    'name' 		=> 'logo_background_size_height',
+                    'label' 	=> __( 'Logo Image height', $this->domain ),
+                    'desc' 		=> __( 'Enter your image size in "pixels" without the "px"', $this->domain ),
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
+                ),
+                array(
+                    'name' 		=> 'logo_background_position',
+                    'label' 	=> __( 'Logo Background Position', $this->domain ),
+                    'desc' 		=> sprintf( __( '<a href="%s" target="_blank">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+					),
+                ),
+                array(
+                    'name' 		=> 'logo_background_repeat',
+                    'label' 	=> __( 'Logo Background repeat', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'no-repeat'	=> 'no-repeat',
+                        'repeat' 	=> 'repeat',
+                        'repeat-x' 	=> 'repeat-x',
+                        'repeat-y' 	=> 'repeat-y',
+                    )
+                ),
+                array(
+                    'name' 		=> 'logo_background_size',
+                    'label' 	=> __( 'Logo Background size', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'none'		=> 'none',
+                        'cover' 	=> 'cover',
+                        'contain' 	=> 'contain',
+                        'flex' 		=> 'flex',
+                        'custom' 	=> 'custom',
+                    )
+                ),
+                array(
+                    'name' 		=> 'logo_background_size_custom',
+                    'label' 	=> __( 'Logo Background size (custom)', $this->domain ),
+                    'desc' 		=> sprintf( __( 'Use size values in format "INT unit INT unit". Example: 10px 15px or 55px 55px etc. %sNote: Logo Background size MUST be set to none.%s', $this->domain ), '<strong>', '</strong>' ),
+                    'type' 		=> 'text',
+					'size'		=> 'medium',
+                    'default' 	=> '',
+					'sanitize_callback' => '',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_3',
+                    'label'		=> __( '<h4>Login form</h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'login_form_background_color',
+                    'label' 	=> __( 'Login Form Background Color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> ''
+                ),
+                array(
+                    'name' 		=> 'login_form_background_url',
+                    'label' 	=> __( 'Login Form Background URL', $this->domain ),
+                    'desc' 		=> __( 'Add an image to the form (optional).', $this->domain ),
+                    'type' 		=> 'file',
+                    'default' 	=> '',
+					'page_id'	=> '0',
+					'sanitize_callback' => 'esc_url',
+                ),
+                array(
+                    'name' 		=> 'login_form_background_position',
+                    'label' 	=> __( 'Login Form Background Position', $this->domain ),
+                    'desc' 		=> sprintf( __( '<a href="%s" target="_blank">html background position</a>.', $this->domain ), 'http://www.w3schools.com/cssref/pr_background-position.asp' ),
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'left top'		=> 'left top',
+						'left center'	=> 'left center',
+						'left bottom'	=> 'left bottom',
+						'right top'		=> 'right top',
+						'right center'	=> 'right center',
+						'right bottom'	=> 'right bottom',
+						'center top'	=> 'center top',
+						'center center'	=> 'center center',
+						'center bottom'	=> 'center bottom',
+                    ),
+                ),
+                array(
+                    'name' 		=> 'login_form_background_repeat',
+                    'label' 	=> __( 'Login Form Background repeat', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'no-repeat'	=> 'no-repeat',
+                        'repeat' 	=> 'repeat',
+                        'repeat-x' 	=> 'repeat-x',
+                        'repeat-y' 	=> 'repeat-y',
+                    )
+                ),
+                array(
+                    'name' 		=> 'login_form_background_size',
+                    'label' 	=> __( 'Login Form Background size', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'select',
+                    'options' 	=> array(
+                        'none'		=> 'none',
+                        'cover' 	=> 'cover',
+                        'contain' 	=> 'contain',
+                        'flex' 		=> 'flex',
+                    )
+                ),
+                array(
+                    'name' 		=> 'login_form_border_radius',
+                    'label' 	=> __( 'Login Form Border Radius', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
+                ),
+                array(
+                    'name' 		=> 'login_form_border_size',
+                    'label' 	=> __( 'Login Form Border Size', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'text',
+					'size'		=> 'small',
+                    'default' 	=> '',
+					'sanitize_callback' => 'absint',
+                ),
+                array(
+                    'name' 		=> 'login_form_border_color',
+                    'label' 	=> __( 'Login Form Border Color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> ''
+                ),
+                array(
+                    'name' 		=> 'login_form_box_shadow',
+                    'label' 	=> __( 'Login Form Box Shadow', $this->domain ),
+                    'desc' 		=> sprintf( __( 'Use <a href="%s" target="_blank">box shadow</a> syntax w/ out color. <code>inset h-shadow v-shadow blur spread</code>', $this->domain ), 'http://www.w3schools.com/cssref/css3_pr_box-shadow.asp' ),
+                    'type' 		=> 'text',
+					'size'		=> 'medium',
+                    'default' 	=> '5px 5px 10px'
+                ),
+                array(
+                    'name' 		=> 'login_form_box_shadow_color',
+                    'label' 	=> __( 'Login Form Box Shadow Color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> ''
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_4',
+                    'label'		=> __( '<h4>Misc.</h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'label_color',
+                    'label' 	=> __( 'Login Form Label Color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> ''
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_5',
+                    'label'		=> __( '<h4>Below form anchor</h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'nav_color',
+                    'label' 	=> __( 'Below form nav color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> '',
+                ),
+                array(
+                    'name' 		=> 'nav_text_shadow_color',
+                    'label' 	=> __( 'Below form nav text-shadow color', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> '',
+                ),
+                array(
+                    'name' 		=> 'nav_hover_color',
+                    'label' 	=> __( 'Below form nav color hover', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> '',
+                ),
+                array(
+                    'name' 		=> 'nav_text_shadow_hover_color',
+                    'label' 	=> __( 'Below form nav text-shadow hover', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'colorpicker',
+                    'default' 	=> '',
+                ),
+				/** BREAK **/
+                array(
+                    'name' 		=> 'break_6',
+                    'label'		=> __( '<h4>Custom HTML/CSS &amp; jQuery</h4>', $this->domain ),
+                    'desc' 		=> '',
+                    'type' 		=> 'html',
+                ),
+				/** BREAK **/
+				array(
+					'name' 		=> 'custom_css',
+					'label' 	=> __( 'Custom CSS', $this->domain ),
+					'desc' 		=> sprintf( __( 'Use the "Tab" key to format your CSS.<br><strong>New:</strong> %sAllowed variables%s. %s', $this->domain ), '<a href="#" data-toggle="custom-css-variables">', '</a>', '<div id="custom-css-variables" style="display:none"><ul>
+					<li>%%BSLASH%% = "\" (backslash)</li>
+					<li><a href="http://wordpress.org/support/topic/quotes-in-custom-css-gets-replaced-with-useless-quote?replies=4">Request others</a></li>
+					</ul></div>' ),
+					'type' 		=> 'textarea',
+					'sanitize_callback' => 'wp_filter_nohtml_kses',
+				),
+				array(
+					'name' 		=> 'custom_html',
+					'label' 	=> __( 'Custom HTML', $this->domain ),
+					'desc' 		=> '',
+					'type' 		=> 'textarea',
+					'sanitize_callback' => 'wp_kses_post', //Allow HTML
+				),
+				array(
+					'name' 		=> 'custom_jquery',
+					'label' 	=> __( 'Custom jQuery', $this->domain ),
+					'desc' 		=> '',
+					'type' 		=> 'textarea',
+					'sanitize_callback' => 'wp_specialchars_decode',
+				),
+			),
+        );
 		
-		$('#working').hide();
-		$('img#gravatar').delay(2000).fadeTo(400,1);
+        //set sections and fields
+		$this->settings_api->set_sections( $this->sections );
+		$this->settings_api->set_fields( $fields );
+
+		//initialize them
+		$this->settings_api->admin_init();
+		
+		add_action( $this->id . '_settings_sidebars', array( $this, 'sidebar' ), 1 );
+		add_action( $this->id . '_settings_sidebars', array( $this, 'extensions' ), 12 );
+		
+		return $this;
+//		wp_die( "Bork! <br><pre>" . print_r( $this->settings_api, true ) . "</pre>" );
+    }
+
+    /**
+	 * Register the plugin page
+	 */
+    function admin_menu() {
+        $this->options_page = add_options_page( __( 'Custom Login Settings', $this->domain ), __( 'Custom Login', $this->domain ), 'manage_options', $this->domain, array( $this, 'plugin_page' ) );
+		
+		add_action( 'admin_footer-' . $this->options_page, array( $this->settings_api, 'inline_jquery' ) );
+    }
+	
+	/**
+	 * Delete the transient
+	 *
+	 */
+	function delete_transient_button_output() {
+		$button  = '<div style="padding-left: 10px">';
+		$button .= wpautop( $this->delete_transient_button_link() );
+		$button .= '<span class="description">' . __( 'If your stylesheet isn\'t updating click update above to delete the transient cache.', $this->domain ) . '</span>';
+		$button .= '</div>';
+		
+		echo $button;
 	}
-	<?php } ?>
-}
-);
-//]]>
-</script>
-	<?php }
 	
-		if ( '' != custom_login_get_setting( 'custom_jquery' ) ) { ?>
-    
-<script type='text/javascript'>
-//<![CDATA[
-jQuery(document).ready(
-function($) {
-	<?php $jquery = str_replace( '\n', '', custom_login_get_setting( 'custom_jquery' ) ); ?>
-	<?php $jquery = wp_specialchars_decode( stripslashes( $jquery ), 1, 0, 1 ); ?>
-	<?php $jquery = htmlspecialchars( $jquery, ENT_NOQUOTES ); ?>
-	<?php echo $jquery; ?>
+	/**
+	 * Delete button link output
+	 *
+	 * @return string
+	 */
+	function delete_transient_button_link( $class = 'button' ) {
+		return sprintf( '<a href="%s" title="%s" class="%s">%s</a>', 
+			esc_url( wp_nonce_url( add_query_arg( array( 'action' => $this->id . '-delete_transient' ), admin_url() ), $this->id . '-delete_transient' ) ),
+			esc_attr__( 'Clear the transient cache', $this->domain ),
+			sanitize_html_class( $class ),
+			__( 'Clear stylesheet cache', $this->domain )
+		);
+	}
+	
+	/**
+	 * Check for post activation on edit.php, when proper action
+	 * is called set the post ID and write the content (CSS) to file.
+	 * 
+	 * @return array()
+	 */
+	function delete_custom_login_transient_cache() {
+		
+		if ( !( isset( $_GET[$this->id . '-delete_transient'] ) || ( isset( $_REQUEST['action'] ) && $this->id . '-delete_transient' == $_REQUEST['action'] ) ) )
+			return;
+			
+		check_admin_referer( $this->id . '-delete_transient' );
+		
+		delete_transient( $this->id . '_style' );
+		delete_transient( $this->id . '_script' );
+		
+		/* Redirect */
+		wp_redirect( admin_url( sprintf( 'options-general.php?page=%s&settings-updated=true&message=1', $this->domain ) ) );
+		exit;
+	}
+	
+	/**
+	 * Show a message when prompted
+	 *
+	 * @return string|void
+	 */
+	function admin_messages() {
+		global $pagenow;
+		
+		if ( ( isset( $_GET['page'] ) && isset( $_GET['message'] ) ) && $pagenow == 'options-general.php' && $this->domain == $_GET['page'] ) {
+			
+			$html = '<div id="setting-error-transitent_deleted" class="updated"><p>'; 
+			
+			switch ( $_GET['message'] ) {
+				case 1 :
+					$html .= __( 'The cache has been deleted.', $this->domain );
+					break;
+					
+				case 2 :
+					$html .= '';
+					break;					
+			}
+			
+			$html .= '</p></div>';
+		
+			echo $html;
+		}
+	}
+	
+	/**
+	 * Plugin Action
+	 */
+	function plugin_action_links( $links, $file ) {
+		if ( plugin_basename( __FILE__ ) === $file ) {
+			$settings_link = '<a href="' . admin_url( 'options-general.php?page=custom-login' ) . '">' . __( 'Settings', $this->domain ) . '</a>';
+			array_unshift( $links, $settings_link ); // before other links
+		}
+		return $links;
+	}
+
+	/**
+	 * Display the plugin settings options page
+	 */
+    function plugin_page() {
+        echo '<div class="wrap">';
+
+        $this->settings_api->show_navigation();
+        $this->settings_api->show_forms();
+
+        echo '</div>';
+		
+		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV && WP_DEBUG ) {
+			/**
+			foreach( apply_filters( $this->id . '_add_settings_sections', $this->sections ) as $section )
+				echo '<pre data-id="'.$section['id'].'">' . print_r( get_option( $section['id'] ), true ) . '</pre>';
+			echo '<pre data-id="custom_login_settings">' . print_r( get_option( 'custom_login_settings' ), true ) . '</pre>';
+			
+			echo '<pre data-id="' . $this->id . '_ignore_announcement">' . print_r( get_user_meta( get_current_user_id(), $this->id . '_ignore_announcement', true ), true ) . '</pre>';
+			echo '<pre data-id="' . $this->id . '_announcement_message">' . print_r( get_option( $this->id . '_announcement_message' ), true ) . '</pre>';
+			// */
+		}
+		
+    }
+
+	/**
+	 * Sidebar info about this plugin
+	 *
+	 * @since	2.0
+	 * @return	string
+	 */
+	function sidebar( $args ) {
+		$content  = '<ul class="social">';
+		$content .= '<li><span class="genericon genericon-user"></span>&nbsp;<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X4JPT57AWMTYW">' . __( 'Support this plugin and buy me a beer', $this->domain ) . '</a></li>';
+		$content .= '<li><span class="genericon genericon-star"></span>&nbsp;<a href="https://wordpress.org/extend/plugins/custom-login/">' . __( 'Rate this plugin on WordPress.org', $this->domain ) . '</a></li>';
+		$content .= '<li><span class="genericon genericon-share"></span>&nbsp;<a href="http://www.flickr.com/groups/custom-login/">' . __( 'Share your designs on <strong style="color:#0066DC;">Flick</strong><strong style="color:#ff0084;">r</strong>', $this->domain ) . '</a></li>';
+		$content .= '<li><span class="genericon genericon-wordpress"></span>&nbsp;<a href="https://wordpress.org/support/plugin/custom-login">' . __( 'Get support on WordPress.org', $this->domain ) . '</a></li>';
+		$content .= '<li><span class="genericon genericon-github"></span>&nbsp;<a href="https://github.com/thefrosty/custom-login">' . __( 'Contribute development on GitHub', $this->domain ) . '</a></li>';
+		$content .= '<li><span class="genericon genericon-link"></span>&nbsp;<a href="https://extendd.com/plugins/tag/custom-login-extension/">' . __( 'Get Custom Login Extensions', $this->domain ) . '</a></li>';
+		
+		if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
+			$content .= '<li><span class="genericon genericon-warning"></span>&nbsp;' . $this->get_queries( true ) . '</li>';
+		}
+		
+		$content .= '<li><span class="genericon genericon-warning"></span>&nbsp;' . $this->delete_transient_button_link( '' ) . '</li>';
+
+		$content .= '</ul>';
+		$this->settings_api->postbox( $this->id . '_sidebar', sprintf( __( '<a href="%s">%s</a> | <code>version %s</code>', $this->domain ), 'https://extendd.com/plugin/custom-login', ucwords( str_replace( '-', ' ', $this->domain ) ), $this->version ), $content, false );
+	}
+	
+	/**
+	 * Sidebar info to remote install extensions
+	 *
+	 * @since	2.2
+	 * @return	string
+	 */
+	function extensions( $args ) {
+		$content  = wpautop( __( '<a href="#" data-toggle="extendd-license">Please read!</a> | <a href="#" data-toggle="extendd-license-help">Help</a>', $this->domain ) );
+		
+		$content .= wpautop( sprintf( __( '<span id="extendd-license" style="display:none">Most of these extensions require a license key which can be purchased on <a href="%1$s" target="_blank">%2$s</a>. You\'ll have to have the key ready to install the extension.</span>', $this->domain ), 'https://extendd.com/plugins/tag/custom-login-extension/', 'Extendd.com' ) );
+		
+		$content .= wpautop( __( '<span id="extendd-license-help" style="display:none">Click "install" to auto-install the extension on your site (which will also auto-activate it).<br>Free extensions will auto-install, while paid extensions will need a valid license key. Prices subject to change. Clicking "Purchase License" will show a quick link to purchase the extension (license) directly through PayPal. Choose which license you\'d like and you\'ll receive an email with your license key.</span>', $this->domain ) );
+				
+		$transient	= $this->id . '_extensions';	
+		$old_html	= get_option( $transient . '_message' );
+		
+		$extensions = $this->settings_api->wp_remote_get_set_transient( 'https://raw.github.com/thefrosty/custom-login/master/extensions.json', $transient, 'html' );		
+		if ( false === $extensions ) {
+			// FIND THIS CODE in wp.dev (mu-plugins)
+			$content .= '<div class="eddri-addon"> <div class="eddri-addon-container"> <div class="eddri-img-wrap"> <a href="http://extendd.com/plugin/custom-login-stealth-login/?utm_source=wordpressorg&utm_medium=custom-login&utm_campaign=eddri" target="_blank"><img class="eddri-thumbnail" src="https://i.imgur.com/mhuymPG.jpg"></a> <p>Protect your wp-login.php page from brute force attacks.</p> </div> <h3>Stealth Login</h3> <span class="eddri-status">Not Installed</span> <a class="button" data-edd-install="Custom Login Stealth Login">Install</a> <a class="button show-if-not-purchased" data-toggle="purchase-links-1" style="display:none">Purchase License</a> <div id="purchase-links-1" style="display:none"> <ul> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=7819&edd_options[price_id]=0">Single site license ($25)</a></li> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=7819&edd_options[price_id]=1">Up to 5 site licenses ($70)</a></li> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=7819&edd_options[price_id]=2">Unlimited site licenses ($100)</a></li> </ul> </div> </div> </div><div class="eddri-addon"> <div class="eddri-addon-container"> <div class="eddri-img-wrap"> <a href="http://extendd.com/plugin/custom-login-page-template/?utm_source=wordpressorg&utm_medium=custom-login&utm_campaign=eddri" target="_blank"><img class="eddri-thumbnail" src="https://i.imgur.com/A0rzS9q.jpg"></a> <p>Add a login form to any WordPress page.</p> </div> <h3>Page Template</h3> <span class="eddri-status">Not Installed</span> <a class="button" data-edd-install="Custom Login Page Template">Install</a> <a class="button show-if-not-purchased" data-toggle="purchase-links-2" style="display:none">Purchase License</a> <div id="purchase-links-2" style="display:none"> <ul> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=13528">One price! ($35)</a></li> </ul> </div> </div> </div><div class="eddri-addon"> <div class="eddri-addon-container"> <div class="eddri-img-wrap"> <a href="http://extendd.com/plugin/wordpress-login-redirects/?utm_source=wordpressorg&utm_medium=custom-login&utm_campaign=eddri" target="_blank"><img class="eddri-thumbnail" src="https://i.imgur.com/aNGoyAa.jpg"></a> <p>Manage redirects after logging in.</p> </div> <h3>Login Redirects</h3> <span class="eddri-status">Not Installed</span> <a class="button" data-edd-install="WordPress Login Redirects">Install</a> <a class="button show-if-not-purchased" data-toggle="purchase-links-3" style="display:none">Purchase License</a> <div id="purchase-links-3" style="display:none"> <ul> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=14333&edd_options[price_id]=0">Single site license ($30)</a></li> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=14333&edd_options[price_id]=1">Up to 5 site licenses ($70)</a></li> <li><a href="http://extendd.com/checkout?edd_action=straight_to_gateway&download_id=14333&edd_options[price_id]=2">Unlimited site licenses ($150)</a></li> </ul> </div> </div> </div>';
+		}
+		else {
+			$content .= $extensions->html;
+			
+			if ( trim( $old_html ) !== trim( $extensions->html ) && !empty( $old_html ) ) {
+				delete_transient( $transient );
+				delete_option( $transient . '_message' );
+			}
+		}
+		
+		$this->settings_api->postbox( $this->id . '_extensions', __( 'Custom Login Extensions', $this->domain ), $content, false );
+	}
+	
+	/**
+	 * Is plugin active
+	 *
+	 */
+	function is_active() {
+		$active = $this->get_option( 'active', $this->id );
+		if ( isset( $active ) && 'on' === $active )
+			return true;
+			
+		return false;
+	}
+	
+	/**
+	 * Replace the default link to your URL
+	 *
+	 */
+	function login_url() {
+		if ( !is_multisite() ) return home_url( '/' );
+		else return network_home_url( '/' );
+	}
+	
+	/**
+	 * Replace the default title to your description
+	 *
+	 */
+	function login_title() {
+		return get_bloginfo( 'description' );
+	}
+	
+	/**
+	 * If there is custom HTML set in the settings echo it to the
+	 * `login_footer` hook in wp-login.php.
+	 *
+	 */
+	function login_footer_html() {
+		$custom_html = $this->get_option( 'custom_html', $this->id );
+		$html  = '';
+		
+		if ( !empty( $custom_html ) )
+			$html .= $custom_html;
+		
+		$html .= defined( 'WP_DEBUG' ) && WP_DEBUG ? $this->get_queries() : '';
+		$html .= "\n";
+		
+		echo $html;
+	}
+	
+	/**
+	 * Helper function to get total numer of queries and execution time
+	 *
+	 */
+	function get_queries( $display = false ) {
+		return sprintf( ( $display ? '' : '<div style="display:none">' ) . esc_attr__( '%s queries in %s seconds.', $this->domain ) . ( $display ? '' : '</div>' ), get_num_queries(), timer_stop() );
+	}
+	
+	/**
+	 * Activate the license key for the Extendd Settings API.
+	 *
+	 * Extendd settings format: 'extendd_' . 'plugin_folder_name'
+	 */
+	function custom_login_extension_install_complete( $args ) {
+		$plugin	= 'extendd_' . str_replace( '-', '_', $args['slug'] ); 
+		$option = get_option( $plugin, array() );
+		
+		if ( empty( $option ) || empty( $option['license_key'] ) ) {
+			$option['license_key']	= $args['license'];
+			$option['license_active']	= $args['license_active'];
+			// Update the settings
+			update_option( $plugin, $option );
+		}
+	}
+	
 }
-);
-//]]>
-</script>
-	<?php }
-}
+endif;
 
 /**
- * Add html to the login footer
- * @since 1.1.0
- */
-function custom_login_custom_html() {	
-	if ( '' != custom_login_get_setting( 'custom_html' ) )
-		echo wp_specialchars_decode( stripslashes( custom_login_get_setting( 'custom_html' ) ), 1, 0, 1 );
-}
-
-
-/**
- * Browser prefixes
+ * The main function responsible for returning the one true
+ * Instance to functions everywhere.
  *
- * @since	1.1 (1/8/13)
+ * Use this function like you would a global variable, except without needing
+ * to declare the global.
+ *
+ * Example: <?php $custom_login = CUSTOMLOGIN(); ?>
+ *
+ * @return The one true Instance
  */
-function custom_login_prefix_it( $input, $option ) {
-	$prefixs = array( '-webkit-', '-moz-', '-ms-', '-o-', '' );
-	
-	echo "\n\t";
-	
-	foreach ( $prefixs as $prefix ) {
-		echo trailingsemicolonit( $prefix . $input . ': ' . esc_attr( $option ) );
+if ( !function_exists( 'CUSTOMLOGIN' ) ) {
+	function CUSTOMLOGIN() {
+		return Custom_Login::instance();
 	}
 }
 
-/**
- * Add a semi colon
- *
- * Remove esc_attr since it's encoding single quotes in image urls with quotes.
- * 
- * @since	1.1 (1/8/13)
- * @updated	1.1.1 (1/9/13)
- */
-function trailingsemicolonit( $input ) {
-	$input = rtrim( $input, ';' );
-	
-	return $input . ";\n\t";
-}
-
-?>
+// Out of the frying pan, and into the fire.
+CUSTOMLOGIN();
