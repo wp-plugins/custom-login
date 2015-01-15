@@ -52,7 +52,7 @@ class CL_WP_Login {
 	
 	private function filters() {
 		
-		add_filter( 'auth_cookie_expiration',			array( $this, 'auth_cookie_expiration' ), 99, 3 );
+	#	add_filter( 'auth_cookie_expiration',			array( $this, 'auth_cookie_expiration' ), 99, 3 );
 		add_filter( 'allow_password_reset',				array( $this, 'allow_password_reset' ) );
 		add_filter( 'gettext',							array( $this, 'remove_lostpassword_text' ), 20, 2 );
 	}
