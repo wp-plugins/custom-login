@@ -5,7 +5,7 @@
  * Description: A simple way to customize your WordPress <code>wp-login.php</code> screen! A <a href="https://frosty.media/">Frosty Media</a> plugin.
  * Version: 3.2
  * Author: Austin Passy
- * Author URI: https://austin.passy.co
+ * Author URI: http://austin.passy.co
  * Text Domain: custom-login
  * GitHub Plugin URI: https://github.com/thefrosty/custom-login
  * GitHub Branch: master
