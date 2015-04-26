@@ -3,7 +3,7 @@ Contributors: austyfrosty, frostymedia
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7431290
 Tags: admin, branding, customization, custom login, login, logo, error, login error, custom login pro
 Requires at least: 4.0
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -114,6 +114,11 @@ Custom Login showcase on the [Flickr group](http://flickr.com/groups/custom-logi
 4. Custom Login Extensions Installer (an active license key is required).
 
 == Changelog ==
+
+= Version 3.2.1 (04/20/15) =
+
+* Fix: XSS security flaw.
+* Fix: Settings page not showing. (Fixes Issue: [#6](https://github.com/thefrosty/custom-login/pull/6) /ht @[DrewAPicture](https://github.com/DrewAPicture).
 
 = Version 3.2 (02/09/15) =
 

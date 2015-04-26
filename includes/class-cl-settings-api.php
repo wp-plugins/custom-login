@@ -11,7 +11,7 @@ class CL_Settings_API {
 	/**
 	 * Version
 	 */
-	var $api_version = '2.0.3';
+	var $api_version = '2.0.4';
 	
 	/**
 	 * @var array
@@ -205,11 +205,11 @@ class CL_Settings_API {
 					'options' 		=> isset( $option['options'] ) ? $option['options'] : '',
 					'default'		=> isset( $option['default'] ) ? $option['default'] : '',
 					'sanitize'		=> isset( $option['sanitize'] ) ? $option['sanitize'] : '',
-					'class'			=> isset( $option['class'] ) ? $option['class'] : $this,
+					'callback'		=> isset( $option['class'] ) ? $option['class'] : $this,
 				);
 				$args = wp_parse_args( $args, $option );
 				
-				add_settings_field( $section . '[' . $option['name'] . ']', $option['label'], array( $args['class'], 'callback_' . $type ), $section, $section, $args );
+				add_settings_field( $section . '[' . $option['name'] . ']', $option['label'], array( $args['callback'], 'callback_' . $type ), $section, $section, $args );
 			}
 		}
 
@@ -774,14 +774,14 @@ class CL_Settings_API {
 			</a>', _x( 'Rate', 'rate; as in rate this plugin', $this->settings['domain'] ) );
 		
 		$content .= '<ul>';
-		$content .= sprintf( '<li>%s: <a href="http://austin.passy.co" target="_blank">Austin Passy</a></li>', _x( 'Author', 'the author of this plugin', $this->settings['domain'] ) );
+		$content .= sprintf( '<li>%s: <a href="https://austin.passy.co" target="_blank">Austin Passy</a></li>', _x( 'Author', 'the author of this plugin', $this->settings['domain'] ) );
 		$content .= sprintf( '<li>%s: <a href="https://twitter.com/TheFrosty" target="_blank">TheFrosty</a></li>', __( 'Twitter', $this->settings['domain'] ) );
 		$content .= '</ul>';
 		
 		$content .= sprintf( __( '<small>If you have suggestions for a new add-on, feel free to open a support request on <a href="%s" target="_blank">GitHub</a>. Want regular updates? Follow me on <a href="%s" target="_blank">Twitter</a> or visit my <a href="%s" target="_blank">blog</a>.</small>' ),
 			'https://github.com/thefrosty/custom-login/issues',
 			'https://twitter.com/TheFrosty',
-			'http://austin.passy.co'
+			'https://austin.passy.co'
 		);
 		
 		$this->postbox( 'frosty-media-author', __( 'Custom Login', $this->settings['domain'] ), $content );
